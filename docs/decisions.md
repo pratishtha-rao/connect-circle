@@ -1,0 +1,2 @@
+NEXT_PUBLIC_SUPABASE_URL=https://btxqgxlvuzpplelmygsk.supabase.co
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_DyNg58m3x0a1j3GqTQuxQw_Byw3T77r
