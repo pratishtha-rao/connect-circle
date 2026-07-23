@@ -1,0 +1,117 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  USER
+  WORKER
+  ORG_ADMIN
+  SUPER_ADMIN
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
+model Profile {
+  id       String   @id @default(cuid())
+  authId   String   @unique
+  email    String   @unique
+  fullName String
+  phone    String?
+  role     UserRole @default(USER)
+
+  bookings Booking[]
+  worker   Worker?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Organization {
+  id          String  @id @default(cuid())
+  name        String
+  description String?
+
+  workers  OrganizationWorker[]
+  services Service[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Worker {
+  id String @id @default(cuid())
+
+  profileId String  @unique
+  profile   Profile @relation(fields: [profileId], references: [id])
+
+  bio String?
+
+  organizations OrganizationWorker[]
+  bookings      Booking[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model OrganizationWorker {
+  id String @id @default(cuid())
+
+  organizationId String
+  workerId       String
+
+  verified   Boolean @default(false)
+  primaryOrg Boolean @default(false)
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  worker       Worker       @relation(fields: [workerId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([organizationId, workerId])
+}
+
+model Service {
+  id String @id @default(cuid())
+
+  title       String
+  description String?
+  price       Float
+  duration    Int
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  bookings Booking[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Booking {
+  id String @id @default(cuid())
+
+  date   DateTime
+  status BookingStatus @default(PENDING)
+  notes  String?
+
+  profileId String
+  workerId  String
+  serviceId String
+
+  profile Profile @relation(fields: [profileId], references: [id])
+  worker  Worker  @relation(fields: [workerId], references: [id])
+  service Service @relation(fields: [serviceId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
