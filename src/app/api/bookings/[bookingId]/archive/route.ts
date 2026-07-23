@@ -13,25 +13,13 @@ export async function PATCH(
 ) {
   const { bookingId } = await params;
 
-  const body = await req.json();
-
-  const data: any = {
-    status: body.status,
-  };
-
-  if (body.status === "CANCELLED") {
-    data.cancellationReason = body.reason;
-    data.cancelledAt = new Date();
-  } else {
-    data.cancellationReason = null;
-    data.cancelledAt = null;
-  }
-
   await prisma.booking.update({
     where: {
       id: bookingId,
     },
-    data,
+    data: {
+      deletedAt: new Date(),
+    },
   });
 
   return NextResponse.json({

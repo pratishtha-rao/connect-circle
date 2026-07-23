@@ -38,14 +38,14 @@ export default function BookingActions({
 
       <button
         onClick={() => updateStatus("CONFIRMED")}
-        className="rounded-lg bg-green-600 px-5 py-3 font-semibold text-white hover:bg-green-700"
+        className="rounded-lg bg-blue-600 px-5 py-3 font-semibold text-white hover:bg-green-700"
       >
         Confirm
       </button>
 
       <button
         onClick={() => updateStatus("COMPLETED")}
-        className="rounded-lg bg-orange-500 px-5 py-3 font-semibold text-white hover:bg-orange-600"
+        className="rounded-lg bg-green-500 px-5 py-3 font-semibold text-white hover:bg-orange-600"
       >
         Complete
       </button>

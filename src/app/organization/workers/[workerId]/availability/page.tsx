@@ -64,7 +64,7 @@ export default async function WorkerAvailabilityPage({
 
   return (
     <main className="mx-auto max-w-5xl p-8">
-      <h1 className="mb-2 text-4xl font-bold">
+      <h1 className="text-4xl font-bold">
         {worker.profile.fullName}
       </h1>
 
@@ -74,7 +74,7 @@ export default async function WorkerAvailabilityPage({
 
       {worker.availability.length === 0 ? (
         <div className="rounded-xl border bg-white p-6 shadow-sm">
-          This worker has not added availability yet.
+          No availability has been added yet.
         </div>
       ) : (
         <div className="space-y-4">
@@ -83,12 +83,12 @@ export default async function WorkerAvailabilityPage({
               key={slot.id}
               className="rounded-xl border bg-white p-6 shadow-sm"
             >
-              <h2 className="text-lg font-semibold">
+              <p className="font-semibold">
                 {DAYS[slot.dayOfWeek]}
-              </h2>
+              </p>
 
               <p className="text-gray-600">
-                {slot.startTime} - {slot.endTime}
+                {slot.startTime} – {slot.endTime}
               </p>
             </div>
           ))}
