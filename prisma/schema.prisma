@@ -1,6 +1,5 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -10,6 +9,7 @@ datasource db {
 enum UserRole {
   USER
   WORKER
+  INDEPENDENT_WORKER
   ORG_ADMIN
   SUPER_ADMIN
 }
@@ -21,28 +21,48 @@ enum BookingStatus {
   CANCELLED
 }
 
-model Profile {
-  id       String   @id @default(cuid())
-  authId   String   @unique
-  email    String   @unique
-  fullName String
-  phone    String?
-  role     UserRole @default(USER)
+enum PaymentStatus {
+  PENDING
+  PAID
+  REFUNDED
+  FAILED
+}
 
-  bookings Booking[]
-  worker   Worker?
+model Profile {
+  id                 String   @id @default(cuid())
+  authId             String   @unique
+  email              String   @unique
+  fullName           String
+  phone              String?
+  role               UserRole @default(USER)
+  onboardingComplete Boolean  @default(false)
+
+  organization Organization?
+  worker       Worker?
+  bookings     Booking[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Organization {
-  id          String  @id @default(cuid())
+  id String @id @default(cuid())
+
+  ownerId String @unique
+  owner   Profile @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
   name        String
   description String?
+  address     String?
+  phone       String?
+  website     String?
+  logo        String?
+  timezone    String?
 
-  workers  OrganizationWorker[]
-  services Service[]
+  workers    OrganizationWorker[]
+  services   Service[]
+  categories ServiceCategory[]
+  notes      Note[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -51,13 +71,18 @@ model Organization {
 model Worker {
   id String @id @default(cuid())
 
-  profileId String  @unique
+  profileId String @unique
   profile   Profile @relation(fields: [profileId], references: [id])
 
-  bio String?
+  bio       String?
+  photo     String?
+  languages String?
 
   organizations OrganizationWorker[]
+  services      WorkerService[]
+  availability  Availability[]
   bookings      Booking[]
+  notes         Note[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -69,15 +94,36 @@ model OrganizationWorker {
   organizationId String
   workerId       String
 
-  verified   Boolean @default(false)
+  verified  Boolean @default(false)
   primaryOrg Boolean @default(false)
 
   organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  worker       Worker       @relation(fields: [workerId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
+  worker       Worker @relation(fields: [workerId], references: [id], onDelete: Cascade)
 
   @@unique([organizationId, workerId])
+}
+
+model WorkerService {
+  id String @id @default(cuid())
+
+  workerId  String
+  serviceId String
+
+  worker  Worker  @relation(fields: [workerId], references: [id], onDelete: Cascade)
+  service Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@unique([workerId, serviceId])
+}
+
+model ServiceCategory {
+  id String @id @default(cuid())
+
+  name String
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  services Service[]
 }
 
 model Service {
@@ -88,13 +134,40 @@ model Service {
   price       Float
   duration    Int
 
-  organizationId String
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  categoryId String?
+  category   ServiceCategory? @relation(fields: [categoryId], references: [id])
+
+  organizationId String?
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  workers WorkerService[]
 
   bookings Booking[]
+  supplies Supply[]
+  notes    Note[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Supply {
+  id String @id @default(cuid())
+
+  name String
+
+  serviceId String
+  service   Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+}
+
+model Availability {
+  id String @id @default(cuid())
+
+  workerId String
+  worker   Worker @relation(fields: [workerId], references: [id], onDelete: Cascade)
+
+  dayOfWeek Int
+  startTime String
+  endTime   String
 }
 
 model Booking {
@@ -102,16 +175,51 @@ model Booking {
 
   date   DateTime
   status BookingStatus @default(PENDING)
-  notes  String?
+
+  notes String?
 
   profileId String
-  workerId  String
   serviceId String
+  workerId  String?
 
   profile Profile @relation(fields: [profileId], references: [id])
-  worker  Worker  @relation(fields: [workerId], references: [id])
   service Service @relation(fields: [serviceId], references: [id])
+  worker  Worker? @relation(fields: [workerId], references: [id])
+
+  payment Payment?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Payment {
+  id String @id @default(cuid())
+
+  bookingId String @unique
+  booking Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+
+  amount Float
+  stripePaymentIntent String?
+
+  status PaymentStatus @default(PENDING)
+
+  refundedAmount Float?
+  paidAt DateTime?
+}
+
+model Note {
+  id String @id @default(cuid())
+
+  text String
+
+  organizationId String?
+  workerId       String?
+  serviceId      String?
+
+  organization Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  worker       Worker? @relation(fields: [workerId], references: [id], onDelete: Cascade)
+  service      Service? @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+}
+
