@@ -29,10 +29,9 @@ export default async function WorkerDashboard() {
         orderBy: {
           date: "asc",
         },
-        take: 5,
         include: {
-          service: true,
           profile: true,
+          service: true,
         },
       },
     },
@@ -43,168 +42,184 @@ export default async function WorkerDashboard() {
   }
 
   return (
-    <main className="mx-auto max-w-6xl p-8">
+    <main className="mx-auto max-w-7xl p-8">
+      <div className="mb-10">
+        <h1 className="text-4xl font-bold">
+          Worker Dashboard
+        </h1>
 
-      <h1 className="mb-8 text-4xl font-bold">
-        Worker Dashboard
-      </h1>
+        <p className="mt-2 text-gray-600">
+          Welcome back, {profile.fullName}. Manage your profile,
+          availability, services and schedule.
+        </p>
+      </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
 
         {/* Profile */}
 
-        <div className="rounded-xl border p-6 shadow-sm">
-
-          <h2 className="mb-4 text-2xl font-semibold">
+        <section className="flex h-full flex-col rounded-2xl border bg-white p-6 shadow-sm">
+          <h2 className="text-2xl font-semibold">
             Profile
           </h2>
 
-          <p>
-            <strong>Name:</strong> {profile.fullName}
+          <p className="mt-2 text-gray-600">
+            Keep your information up to date.
           </p>
 
-          <p>
-            <strong>Email:</strong> {profile.email}
-          </p>
+          <div className="mt-6 flex-1 space-y-3">
+            <div>
+              <p className="text-sm text-gray-500">
+                Name
+              </p>
 
-          <p>
-            <strong>Bio:</strong>{" "}
-            {worker.bio || "Not added yet"}
-          </p>
+              <p>{profile.fullName}</p>
+            </div>
 
-          <div className="mt-6">
-            <Link
-              href="/worker/profile"
-              className="rounded-lg bg-orange-500 px-4 py-2 font-semibold text-white"
-            >
-              Edit Profile
-            </Link>
+            <div>
+              <p className="text-sm text-gray-500">
+                Email
+              </p>
+
+              <p>{profile.email}</p>
+            </div>
+
+            <div>
+              <p className="text-sm text-gray-500">
+                Bio
+              </p>
+
+              <p>{worker.bio || "Not completed"}</p>
+            </div>
           </div>
 
-        </div>
-
-        {/* Organizations */}
-
-        <div className="rounded-xl border p-6 shadow-sm">
-
-          <h2 className="mb-4 text-2xl font-semibold">
-            Organizations
-          </h2>
-
-          {worker.organizations.length === 0 ? (
-            <p>No organizations.</p>
-          ) : (
-            <ul className="space-y-2">
-
-              {worker.organizations.map((membership) => (
-
-                <li key={membership.id}>
-                  {membership.organization.name}
-                </li>
-
-              ))}
-
-            </ul>
-          )}
-
-        </div>
-
-        {/* Services */}
-
-        <div className="rounded-xl border p-6 shadow-sm">
-
-          <h2 className="mb-4 text-2xl font-semibold">
-            Services
-          </h2>
-
-          {worker.services.length === 0 ? (
-            <p>No services assigned.</p>
-          ) : (
-            <ul className="space-y-2">
-
-              {worker.services.map((service) => (
-
-                <li key={service.id}>
-                  {service.service.title}
-                </li>
-
-              ))}
-
-            </ul>
-          )}
-
-        </div>
+          <Link
+            href="/worker/profile"
+            className="mt-8 rounded-lg bg-orange-500 px-5 py-3 text-center font-semibold text-white hover:bg-orange-600"
+          >
+            Manage Profile
+          </Link>
+        </section>
 
         {/* Availability */}
 
-        <div className="rounded-xl border p-6 shadow-sm">
-
-          <h2 className="mb-4 text-2xl font-semibold">
+        <section className="flex h-full flex-col rounded-2xl border bg-white p-6 shadow-sm">
+          <h2 className="text-2xl font-semibold">
             Availability
           </h2>
 
-          <p>
-            {worker.availability.length} schedule entries
+          <p className="mt-2 text-gray-600">
+            Configure when customers can book you.
           </p>
 
-          <div className="mt-6">
+          <div className="mt-6 flex-1">
+            <p className="text-5xl font-bold text-orange-500">
+              {worker.availability.length}
+            </p>
 
-            <Link
-              href="/worker/availability"
-              className="rounded-lg bg-orange-500 px-4 py-2 font-semibold text-white"
-            >
-              Edit Availability
-            </Link>
-
+            <p className="mt-2 text-gray-600">
+              schedule entries
+            </p>
           </div>
 
-        </div>
+          <Link
+            href="/worker/availability"
+            className="mt-8 rounded-lg bg-orange-500 px-5 py-3 text-center font-semibold text-white hover:bg-orange-600"
+          >
+            Manage Availability
+          </Link>
+        </section>
 
-      </div>
+        {/* Organizations */}
 
-      {/* Upcoming Bookings */}
+        <section className="flex h-full flex-col rounded-2xl border bg-white p-6 shadow-sm">
+          <h2 className="text-2xl font-semibold">
+            Organizations
+          </h2>
 
-      <div className="mt-10 rounded-xl border p-6 shadow-sm">
+          <p className="mt-2 text-gray-600">
+            Organizations you're connected with.
+          </p>
 
-        <h2 className="mb-5 text-2xl font-semibold">
-          Upcoming Bookings
-        </h2>
-
-        {worker.bookings.length === 0 ? (
-          <p>No upcoming bookings.</p>
-        ) : (
-          <div className="space-y-4">
-
-            {worker.bookings.map((booking) => (
-
-              <div
-                key={booking.id}
-                className="rounded-lg border p-4"
-              >
-                <p>
-                  <strong>Customer:</strong>{" "}
-                  {booking.profile.fullName}
-                </p>
-
-                <p>
-                  <strong>Service:</strong>{" "}
-                  {booking.service.title}
-                </p>
-
-                <p>
-                  <strong>Date:</strong>{" "}
-                  {booking.date.toLocaleString()}
-                </p>
-
-              </div>
-
-            ))}
-
+          <div className="mt-6 flex-1 space-y-3">
+            {worker.organizations.length === 0 ? (
+              <p className="text-gray-500">
+                No organizations.
+              </p>
+            ) : (
+              worker.organizations.map((membership) => (
+                <div
+                  key={membership.id}
+                  className="rounded-lg border p-3"
+                >
+                  {membership.organization.name}
+                </div>
+              ))
+            )}
           </div>
-        )}
+        </section>
+
+        {/* Services */}
+
+        <section className="flex h-full flex-col rounded-2xl border bg-white p-6 shadow-sm">
+          <h2 className="text-2xl font-semibold">
+            Services
+          </h2>
+
+          <p className="mt-2 text-gray-600">
+            Services assigned to you.
+          </p>
+
+          <div className="mt-6 flex-1">
+            <p className="text-5xl font-bold text-orange-500">
+              {worker.services.length}
+            </p>
+
+            <p className="mt-2 text-gray-600">
+              assigned service
+              {worker.services.length !== 1 && "s"}
+            </p>
+          </div>
+
+          <Link
+            href="/worker/services"
+            className="mt-8 rounded-lg bg-orange-500 px-5 py-3 text-center font-semibold text-white hover:bg-orange-600"
+          >
+            View Services
+          </Link>
+        </section>
+
+        {/* Schedule */}
+
+        <section className="flex h-full flex-col rounded-2xl border bg-white p-6 shadow-sm">
+          <h2 className="text-2xl font-semibold">
+            Schedule
+          </h2>
+
+          <p className="mt-2 text-gray-600">
+            View your upcoming appointments.
+          </p>
+
+          <div className="mt-6 flex-1">
+            <p className="text-5xl font-bold text-orange-500">
+              {worker.bookings.length}
+            </p>
+
+            <p className="mt-2 text-gray-600">
+              upcoming appointment
+              {worker.bookings.length !== 1 && "s"}
+            </p>
+          </div>
+
+          <Link
+            href="/worker/schedule"
+            className="mt-8 rounded-lg bg-orange-500 px-5 py-3 text-center font-semibold text-white hover:bg-orange-600"
+          >
+            View Schedule
+          </Link>
+        </section>
 
       </div>
-
     </main>
   );
 }

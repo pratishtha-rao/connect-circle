@@ -40,24 +40,21 @@ export default function AvailabilityForm({
   );
 
   async function save() {
-    const res = await fetch(
-      "/api/worker/availability",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type":
-            "application/json",
-        },
-        body: JSON.stringify(days),
-      }
-    );
+const res = await fetch("/api/workers/availability", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify(days),
+});
 
     if (!res.ok) {
       alert("Failed to save.");
       return;
     }
 
-    alert("Availability saved!");
+alert("Availability saved.");
+window.location.href = "/worker";
   }
 
   return (

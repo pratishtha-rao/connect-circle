@@ -143,22 +143,36 @@ export default async function WorkersPage() {
                   {worker.profile.email}
                 </p>
 
-                <div className="mt-6 flex gap-3">
+<div className="mt-6 flex gap-3">
 
-                  <Link
-                    href={`/organization/workers/${worker.id}/edit`}
-                    className="rounded-lg bg-orange-500 px-4 py-2 font-semibold text-white hover:bg-orange-600"
-                  >
-                    Edit
-                  </Link>
+  <Link
+    href={`/organization/workers/${worker.id}/edit`}
+    className="rounded-lg bg-orange-500 px-4 py-2 font-semibold text-white hover:bg-orange-600"
+  >
+    Edit
+  </Link>
 
-                  <button
-                    className="rounded-lg bg-red-600 px-4 py-2 font-semibold text-white hover:bg-red-700"
-                  >
-                    Delete
-                  </button>
+  <Link
+    href={`/organization/workers/${worker.id}/availability`}
+    className="rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700"
+  >
+    Availability
+  </Link>
 
-                </div>
+  <Link
+    href={`/organization/workers/${worker.id}/services`}
+    className="rounded-lg bg-green-600 px-4 py-2 font-semibold text-white hover:bg-green-700"
+  >
+    Services
+  </Link>
+
+  <button
+    className="rounded-lg bg-red-600 px-4 py-2 font-semibold text-white hover:bg-red-700"
+  >
+    Delete
+  </button>
+
+</div>
 
               </div>
 

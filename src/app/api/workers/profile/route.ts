@@ -6,12 +6,7 @@ export async function POST(req: Request) {
   try {
     const profile = await getCurrentProfile();
 
-    console.log("====================================");
-    console.log("PROFILE:", profile);
-
     if (!profile) {
-      console.log("❌ No profile found.");
-
       return NextResponse.json(
         {
           error: "Unauthorized",
@@ -28,11 +23,7 @@ export async function POST(req: Request) {
       },
     });
 
-    console.log("WORKER:", worker);
-
     if (!worker) {
-      console.log("❌ Worker not found.");
-
       return NextResponse.json(
         {
           error: "Worker not found.",
@@ -43,46 +34,51 @@ export async function POST(req: Request) {
       );
     }
 
-    const availability = await req.json();
+    const body = await req.json();
 
-    console.log("BODY:", availability);
+    if (!body.fullName?.trim()) {
+      return NextResponse.json(
+        {
+          error: "Full name is required.",
+        },
+        {
+          status: 400,
+        }
+      );
+    }
 
-    await prisma.availability.deleteMany({
+    await prisma.profile.update({
       where: {
-        workerId: worker.id,
+        id: profile.id,
+      },
+      data: {
+        fullName: body.fullName.trim(),
+        phone: body.phone?.trim() || null,
       },
     });
 
-    const rows = availability
-      .filter((day: any) => day.enabled)
-      .map((day: any) => ({
-        workerId: worker.id,
-        dayOfWeek: day.dayOfWeek,
-        startTime: day.startTime,
-        endTime: day.endTime,
-      }));
-
-    console.log("ROWS TO INSERT:", rows);
-
-    if (rows.length > 0) {
-      await prisma.availability.createMany({
-        data: rows,
-      });
-    }
-
-    console.log("✅ Availability saved successfully.");
-    console.log("====================================");
+    await prisma.worker.update({
+      where: {
+        id: worker.id,
+      },
+      data: {
+        bio: body.bio?.trim() || null,
+        languages: body.languages?.trim() || null,
+      },
+    });
 
     return NextResponse.json({
       success: true,
     });
   } catch (error) {
+    console.error("Worker Profile Error:", error);
+
     return NextResponse.json(
       {
         error:
           error instanceof Error
             ? error.message
-            : "Failed to save availability.",
+            : "Failed to update profile.",
       },
       {
         status: 500,
