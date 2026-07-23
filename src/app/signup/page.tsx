@@ -1,38 +1,39 @@
 "use client";
 
 import { useForm } from "react-hook-form";
+import { useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
 type SignupForm = {
   fullName: string;
   email: string;
   password: string;
-  role: "USER" | "WORKER" | "INDEPENDENT_WORKER" | "ORG_ADMIN";
 };
 
 export default function SignupPage() {
   const supabase = createClient();
 
+  const searchParams = useSearchParams();
+
+  const redirect =
+    searchParams.get("redirect") ?? "/dashboard";
+
   const {
     register,
     handleSubmit,
-  } = useForm<SignupForm>({
-    defaultValues: {
-      role: "USER",
-    },
-  });
+  } = useForm<SignupForm>();
 
   async function onSubmit(data: SignupForm) {
-    const { data: authData, error } = await supabase.auth.signUp({
-      email: data.email,
-      password: data.password,
-      options: {
-        data: {
-          full_name: data.fullName,
-          role: data.role,
+    const { data: authData, error } =
+      await supabase.auth.signUp({
+        email: data.email,
+        password: data.password,
+        options: {
+          data: {
+            full_name: data.fullName,
+          },
         },
-      },
-    });
+      });
 
     if (error) {
       alert(error.message);
@@ -44,7 +45,10 @@ export default function SignupPage() {
       return;
     }
 
-    if (!authData.session && !authData.user.identities?.length) {
+    if (
+      !authData.session &&
+      !authData.user.identities?.length
+    ) {
       alert("An account with this email already exists.");
       return;
     }
@@ -58,16 +62,18 @@ export default function SignupPage() {
         authId: authData.user.id,
         email: authData.user.email,
         fullName: data.fullName,
-        role: data.role,
+        role: "USER",
       }),
     });
 
     if (!response.ok) {
-      alert("Failed to create profile.");
+      const data = await response.json().catch(() => null);
+
+      alert(data?.error ?? "Failed to create profile.");
       return;
     }
 
-window.location.href = "/dashboard";
+    window.location.href = redirect;
   }
 
   return (
@@ -81,36 +87,31 @@ window.location.href = "/dashboard";
         </h1>
 
         <input
-          {...register("fullName", { required: true })}
+          {...register("fullName", {
+            required: true,
+          })}
           placeholder="Full Name"
           className="w-full rounded-lg border p-3"
         />
 
         <input
-          {...register("email", { required: true })}
+          {...register("email", {
+            required: true,
+          })}
           type="email"
           placeholder="Email"
           className="w-full rounded-lg border p-3"
         />
 
         <input
-          {...register("password", { required: true, minLength: 6 })}
+          {...register("password", {
+            required: true,
+            minLength: 6,
+          })}
           type="password"
           placeholder="Password"
           className="w-full rounded-lg border p-3"
         />
-
-        <select
-          {...register("role")}
-          className="w-full rounded-lg border p-3"
-        >
-          <option value="USER">Customer</option>
-          <option value="ORG_ADMIN">Organization</option>
-          <option value="WORKER">Organization Worker</option>
-          <option value="INDEPENDENT_WORKER">
-            Independent Worker
-          </option>
-        </select>
 
         <button
           type="submit"

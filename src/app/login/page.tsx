@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { createClient } from "@/lib/supabase/client";
 
@@ -11,21 +12,34 @@ type LoginForm = {
 export default function LoginPage() {
   const supabase = createClient();
 
-  const { register, handleSubmit } = useForm<LoginForm>();
+  const searchParams = useSearchParams();
 
-  async function onSubmit(data: LoginForm) {
-    const { error } = await supabase.auth.signInWithPassword({
-      email: data.email,
-      password: data.password,
-    });
+  const redirect =
+    searchParams.get("redirect") ?? "/dashboard";
 
-    if (error) {
+  const {
+    register,
+    handleSubmit,
+  } = useForm<LoginForm>();
+
+async function onSubmit(data: LoginForm) {
+  const { error } = await supabase.auth.signInWithPassword({
+    email: data.email,
+    password: data.password,
+  });
+
+  if (error) {
+    if (error.message.toLowerCase().includes("invalid login")) {
+      alert("Incorrect email or password.");
+    } else {
       alert(error.message);
-      return;
     }
 
-window.location.href = "/dashboard";
+    return;
   }
+
+  window.location.href = redirect;
+}
 
   return (
     <main className="flex min-h-screen items-center justify-center p-6">
@@ -33,7 +47,9 @@ window.location.href = "/dashboard";
         onSubmit={handleSubmit(onSubmit)}
         className="w-full max-w-md space-y-4 rounded-xl border p-6"
       >
-        <h1 className="text-3xl font-bold">Login</h1>
+        <h1 className="text-3xl font-bold">
+          Login
+        </h1>
 
         <input
           {...register("email")}
@@ -59,5 +75,3 @@ window.location.href = "/dashboard";
     </main>
   );
 }
-
-

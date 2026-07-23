@@ -13,22 +13,45 @@ export async function POST(req: Request) {
         ? UserRole.SUPER_ADMIN
         : body.role;
 
-    const profile = await prisma.profile.upsert({
+    // First try to find the profile by authId
+    let profile = await prisma.profile.findUnique({
       where: {
         authId: body.authId,
       },
-      update: {
-        fullName: body.fullName,
-        role,
-      },
-      create: {
-        authId: body.authId,
-        email: body.email,
-        fullName: body.fullName,
-        role,
-        onboardingComplete: false,
-      },
     });
+
+    // If not found, try by email
+    if (!profile) {
+      profile = await prisma.profile.findUnique({
+        where: {
+          email: body.email,
+        },
+      });
+    }
+
+    if (profile) {
+      profile = await prisma.profile.update({
+        where: {
+          id: profile.id,
+        },
+        data: {
+          authId: body.authId,
+          email: body.email,
+          fullName: body.fullName,
+          role,
+        },
+      });
+    } else {
+      profile = await prisma.profile.create({
+        data: {
+          authId: body.authId,
+          email: body.email,
+          fullName: body.fullName,
+          role,
+          onboardingComplete: false,
+        },
+      });
+    }
 
     if (
       role === UserRole.WORKER ||
@@ -51,7 +74,10 @@ export async function POST(req: Request) {
 
     return NextResponse.json(
       {
-        error: "Failed to create profile",
+        error:
+          error instanceof Error
+            ? error.message
+            : "Failed to create profile",
       },
       {
         status: 500,
