@@ -2,27 +2,31 @@ import { prisma } from "@/lib/prisma";
 import UnarchiveBooking from "./unarchive-booking";
 
 export default async function ArchiveBookingsPage() {
-  const bookings = await prisma.booking.findMany({
-    where: {
-      deletedAt: {
-        not: null,
-      },
+const bookings = await prisma.booking.findMany({
+  where: {
+    organizationArchivedAt: {
+      not: null,
     },
-    include: {
-      profile: true,
-      service: true,
-      worker: {
-        include: {
-          profile: true,
-        },
-      },
-    },
-    orderBy: {
-      deletedAt: "desc",
-    },
-  });
+  },
 
-  return (
+  include: {
+    profile: true,
+
+    service: true,
+
+    worker: {
+      include: {
+        profile: true,
+      },
+    },
+  },
+
+  orderBy: {
+    organizationArchivedAt: "desc",
+  },
+});
+
+return (
     <main className="mx-auto max-w-6xl p-8">
       <h1 className="mb-8 text-4xl font-bold">
         Archived Bookings
@@ -59,7 +63,7 @@ export default async function ArchiveBookingsPage() {
 
               <p>
                 <strong>Archived:</strong>{" "}
-                {booking.deletedAt?.toLocaleString()}
+                {booking.organizationArchivedAt?.toLocaleString()}
               </p>
 
 {booking.status === "CANCELLED" &&

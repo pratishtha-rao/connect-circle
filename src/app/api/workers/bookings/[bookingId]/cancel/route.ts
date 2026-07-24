@@ -44,12 +44,12 @@ export async function PATCH(
 
       status: "CANCELLED",
 
-      cancellationReason: body.reason,
+      workerCancellationReason: body.reason,
 
-      cancelledAt: new Date(),
+      workerCancelledAt: new Date(),
 
-      workerCancellationReason: null,
-      workerCancelledAt: null,
+      cancellationReason: null,
+      cancelledAt: null,
     },
   });
 

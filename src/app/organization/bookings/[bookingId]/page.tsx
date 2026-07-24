@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import BookingStatusButtons from "./booking-status-buttons";
 import AssignWorker from "./assign-worker";
-import ArchiveBooking from "./archive-booking";
+import BookingStatusButtons from "./booking-status-buttons";
 import CancelBooking from "./cancel-booking";
+import ArchiveBooking from "./archive-booking";
 import OrganizationNotes from "./organization-notes";
 
 type Props = {
@@ -24,12 +24,12 @@ export default async function BookingPage({
     include: {
       profile: true,
       service: true,
+      payment: true,
       worker: {
         include: {
           profile: true,
         },
       },
-      payment: true,
     },
   });
 
@@ -89,28 +89,46 @@ export default async function BookingPage({
           <p>{booking.notes || "None"}</p>
         </div>
 
-<OrganizationNotes
-  bookingId={booking.id}
-  currentNotes={booking.organizationNotes ?? ""}
-/>
+        <OrganizationNotes
+          bookingId={booking.id}
+          currentNotes={booking.organizationNotes ?? ""}
+        />
 
-{booking.status === "CANCELLED" &&
-  booking.cancellationReason && (
-    <div className="rounded-xl border border-red-200 bg-red-50 p-5">
-      <h2 className="text-lg font-semibold text-red-700">
-        Cancellation Reason
-      </h2>
+        {booking.cancellationReason && (
+          <div className="rounded-xl border border-red-200 bg-red-50 p-5">
 
-      <p className="mt-2">
-        {booking.cancellationReason}
-      </p>
-    </div>
-)}
+            <h2 className="text-lg font-semibold text-red-700">
+              Cancelled by Organization
+            </h2>
+
+            <p className="mt-2">
+              {booking.cancellationReason}
+            </p>
+
+          </div>
+        )}
+
+        {booking.workerCancellationReason && (
+          <div className="rounded-xl border border-orange-200 bg-orange-50 p-5">
+
+            <h2 className="text-lg font-semibold text-orange-700">
+              Cancelled by Worker
+            </h2>
+
+            <p className="mt-2">
+              {booking.workerCancellationReason}
+            </p>
+
+          </div>
+        )}
+
         <hr />
 
-        <CancelBooking
-          bookingId={booking.id}
-        />
+        {booking.status !== "CANCELLED" && (
+          <CancelBooking
+            bookingId={booking.id}
+          />
+        )}
 
         {(booking.status === "COMPLETED" ||
           booking.status === "CANCELLED") && (

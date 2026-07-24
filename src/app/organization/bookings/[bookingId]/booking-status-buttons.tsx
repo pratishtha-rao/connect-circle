@@ -51,9 +51,17 @@ export default function BookingStatusButtons({
         <button
           disabled={saving}
           onClick={() => updateStatus("PENDING")}
-          className="rounded-lg bg-orange-600 px-4 py-2 font-semibold text-white"
+          className="rounded-lg bg-yellow-600 px-4 py-2 font-semibold text-white"
         >
           Pending
+        </button>
+
+        <button
+          disabled={saving}
+          onClick={() => updateStatus("PENDING_PAYMENT")}
+          className="rounded-lg bg-orange-600 px-4 py-2 font-semibold text-white"
+        >
+          Pending Payment
         </button>
 
         <button

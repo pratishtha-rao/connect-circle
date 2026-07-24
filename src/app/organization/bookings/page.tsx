@@ -71,7 +71,7 @@ export default async function OrganizationBookingsPage({
   );
 
   bookings = bookings
-    .filter((booking) => booking.deletedAt === null)
+    .filter((booking) => booking.organizationArchivedAt === null)
     .filter((booking) => {
       if (status && booking.status !== status) return false;
 

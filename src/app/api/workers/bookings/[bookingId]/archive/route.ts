@@ -13,8 +13,6 @@ export async function PATCH(
 ) {
   const { bookingId } = await params;
 
-  const body = await req.json();
-
   const booking = await prisma.booking.findUnique({
     where: {
       id: bookingId,
@@ -22,16 +20,20 @@ export async function PATCH(
   });
 
   if (!booking) {
-    return NextResponse.json(
-      { error: "Booking not found." },
-      { status: 404 }
-    );
+    return new NextResponse("Booking not found.", {
+      status: 404,
+    });
   }
 
-  if (booking.status === "CANCELLED") {
-    return NextResponse.json(
-      { error: "Booking is already cancelled." },
-      { status: 400 }
+  if (
+    booking.status !== "COMPLETED" &&
+    booking.status !== "CANCELLED"
+  ) {
+    return new NextResponse(
+      "Only completed or cancelled bookings can be archived.",
+      {
+        status: 400,
+      }
     );
   }
 
@@ -40,16 +42,7 @@ export async function PATCH(
       id: bookingId,
     },
     data: {
-      previousStatus: booking.status,
-
-      status: "CANCELLED",
-
-      cancellationReason: body.reason,
-
-      cancelledAt: new Date(),
-
-      workerCancellationReason: null,
-      workerCancelledAt: null,
+      workerArchivedAt: new Date(),
     },
   });
 

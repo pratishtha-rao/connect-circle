@@ -2,34 +2,20 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 
-type Worker = {
-  id: string;
-  profile: {
-    fullName: string;
-  };
-};
-
 type Service = {
   id: string;
   title: string;
 };
 
-type Props = {
-  workers: Worker[];
-  services: Service[];
-};
-
-export default function BookingFilters({
-  workers,
+export default function WorkerBookingFilters({
   services,
-}: Props) {
+}: {
+  services: Service[];
+}) {
   const router = useRouter();
   const params = useSearchParams();
 
-  function update(
-    key: string,
-    value: string
-  ) {
+  function update(key: string, value: string) {
     const search = new URLSearchParams(params);
 
     if (value) {
@@ -38,9 +24,7 @@ export default function BookingFilters({
       search.delete(key);
     }
 
-    router.push(
-      `/organization/bookings?${search.toString()}`
-    );
+    router.push(`/worker/bookings?${search.toString()}`);
   }
 
   return (
@@ -67,25 +51,6 @@ export default function BookingFilters({
         <option value="CONFIRMED">Confirmed</option>
         <option value="COMPLETED">Completed</option>
         <option value="CANCELLED">Cancelled</option>
-      </select>
-
-      <select
-        defaultValue={params.get("worker") ?? ""}
-        onChange={(e) =>
-          update("worker", e.target.value)
-        }
-        className="rounded-lg border p-2"
-      >
-        <option value="">All Workers</option>
-
-        {workers.map((worker) => (
-          <option
-            key={worker.id}
-            value={worker.id}
-          >
-            {worker.profile.fullName}
-          </option>
-        ))}
       </select>
 
       <select

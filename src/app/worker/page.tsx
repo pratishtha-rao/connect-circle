@@ -41,6 +41,10 @@ export default async function WorkerDashboard() {
     return <p>Worker not found.</p>;
   }
 
+  const activeBookings = worker.bookings.filter(
+    (booking) => booking.organizationArchivedAt === null
+  );
+
   return (
     <main className="mx-auto max-w-7xl p-8">
       <div className="mb-10">
@@ -189,33 +193,61 @@ export default async function WorkerDashboard() {
           </Link>
         </section>
 
-        {/* Schedule */}
+        {/* My Bookings */}
 
         <section className="flex h-full flex-col rounded-2xl border bg-white p-6 shadow-sm">
           <h2 className="text-2xl font-semibold">
-            Schedule
+            My Bookings
           </h2>
 
           <p className="mt-2 text-gray-600">
-            View your upcoming appointments.
+            Manage appointments assigned to you.
           </p>
 
           <div className="mt-6 flex-1">
             <p className="text-5xl font-bold text-orange-500">
-              {worker.bookings.length}
+              {activeBookings.length}
             </p>
 
             <p className="mt-2 text-gray-600">
-              upcoming appointment
-              {worker.bookings.length !== 1 && "s"}
+              active bookings
             </p>
           </div>
 
           <Link
-            href="/worker/schedule"
+            href="/worker/bookings"
             className="mt-8 rounded-lg bg-orange-500 px-5 py-3 text-center font-semibold text-white hover:bg-orange-600"
           >
-            View Schedule
+            Open Booking Portal
+          </Link>
+        </section>
+
+        {/* Calendar */}
+
+        <section className="flex h-full flex-col rounded-2xl border bg-white p-6 shadow-sm">
+          <h2 className="text-2xl font-semibold">
+            Calendar
+          </h2>
+
+          <p className="mt-2 text-gray-600">
+            View your appointments in calendar format.
+          </p>
+
+          <div className="mt-6 flex-1">
+            <p className="text-5xl">
+              📅
+            </p>
+
+            <p className="mt-2 text-gray-600">
+              Daily & Monthly Views
+            </p>
+          </div>
+
+          <Link
+            href="/worker/calendar"
+            className="mt-8 rounded-lg bg-orange-500 px-5 py-3 text-center font-semibold text-white hover:bg-orange-600"
+          >
+            Open Calendar
           </Link>
         </section>
 

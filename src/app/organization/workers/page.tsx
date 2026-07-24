@@ -146,13 +146,6 @@ export default async function WorkersPage() {
 <div className="mt-6 flex gap-3">
 
   <Link
-    href={`/organization/workers/${worker.id}/edit`}
-    className="rounded-lg bg-orange-500 px-4 py-2 font-semibold text-white hover:bg-orange-600"
-  >
-    Edit
-  </Link>
-
-  <Link
     href={`/organization/workers/${worker.id}/availability`}
     className="rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700"
   >

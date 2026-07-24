@@ -18,7 +18,7 @@ export async function PATCH(
       id: bookingId,
     },
     data: {
-      deletedAt: null,
+      organizationArchivedAt: null,
     },
   });
 
