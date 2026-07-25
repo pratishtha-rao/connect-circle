@@ -89,12 +89,35 @@ export async function POST(req: Request) {
     const body = await req.json();
     console.log("Body:", body);
 
-    const category = await prisma.serviceCategory.create({
-      data: {
-        name: body.name,
-        organizationId: organization.id,
-      },
-    });
+    const name = body.name.trim();
+
+    const existing = await prisma.serviceCategory.findFirst({
+  where: {
+    organizationId: organization.id,
+    name: {
+      equals: name,
+      mode: "insensitive",
+    },
+  },
+});
+
+if (existing) {
+  return NextResponse.json(
+    {
+      error: "A category with that name already exists.",
+    },
+    {
+      status: 400,
+    }
+  );
+}
+
+const category = await prisma.serviceCategory.create({
+  data: {
+    name,
+    organizationId: organization.id,
+  },
+});
 
     console.log("Created:", category);
 

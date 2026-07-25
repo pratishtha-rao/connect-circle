@@ -2,6 +2,7 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { getCurrentProfile } from "@/lib/profile";
 import CopyInviteButton from "./copy-invite-button";
+import RemoveWorkerButton from "./remove-worker-button";
 
 export default async function WorkersPage() {
   const profile = await getCurrentProfile();
@@ -159,11 +160,7 @@ export default async function WorkersPage() {
     Services
   </Link>
 
-  <button
-    className="rounded-lg bg-red-600 px-4 py-2 font-semibold text-white hover:bg-red-700"
-  >
-    Delete
-  </button>
+<RemoveWorkerButton workerId={worker.id} />
 
 </div>
 

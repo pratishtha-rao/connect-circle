@@ -5,15 +5,22 @@ import { useState } from "react";
 type Props = {
   bookingId: string;
   currentStatus: string;
+  customerCancelledAt: string | null;
 };
 
 export default function BookingStatusButtons({
   bookingId,
   currentStatus,
+  customerCancelledAt,
 }: Props) {
   const [status, setStatus] = useState(currentStatus);
   const [saving, setSaving] = useState(false);
 
+    const customerCancelled =
+    customerCancelledAt !== null;
+
+    if (customerCancelled) return;
+    
   async function updateStatus(newStatus: string) {
     setSaving(true);
 
@@ -43,13 +50,16 @@ export default function BookingStatusButtons({
     <div className="space-y-4">
 
       <div>
-        <strong>Current Status:</strong> {status}
-      </div>
+{customerCancelled && (
+  <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+    This booking was cancelled by the customer and cannot be reopened.
+  </div>
+)}      </div>
 
       <div className="flex flex-wrap gap-3">
 
         <button
-          disabled={saving}
+disabled={saving || customerCancelled}
           onClick={() => updateStatus("PENDING")}
           className="rounded-lg bg-yellow-600 px-4 py-2 font-semibold text-white"
         >

@@ -110,11 +110,6 @@ export default async function WorkerBookingPage({
 
         </div>
 
-        <div>
-          <strong>Payment</strong>
-          <p>{booking.payment?.status ?? "No payment"}</p>
-        </div>
-
         <hr />
 
         <div>
@@ -156,6 +151,19 @@ export default async function WorkerBookingPage({
           </div>
 
         </div>
+
+{booking.customerCancellationReason && (
+  <div className="mt-4 rounded-lg border border-blue-200 bg-blue-50 p-4">
+    <h3 className="font-semibold text-blue-700">
+      Cancelled by Customer
+    </h3>
+
+    <p className="mt-2">
+      {booking.customerCancellationReason}
+    </p>
+  </div>
+)}
+
 
         {booking.cancellationReason && (
 

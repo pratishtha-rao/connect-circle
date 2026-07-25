@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { getCurrentProfile } from "@/lib/profile";
-import DeleteServiceButton from "./delete-service-button";
+import DeleteServiceButton from "./archive-service-button";
 
 export default async function ServicesPage() {
   const profile = await getCurrentProfile();
@@ -23,6 +23,7 @@ export default async function ServicesPage() {
   const services = await prisma.service.findMany({
     where: {
       organizationId: organization.id,
+      archived: false,
     },
     include: {
       category: true,
@@ -38,6 +39,15 @@ export default async function ServicesPage() {
         <h1 className="text-4xl font-bold">
           Services
         </h1>
+</div>
+
+<div className="flex gap-3">
+  <Link
+    href="/organization/services/archived"
+    className="rounded-xl border px-5 py-3"
+  >
+    Archived
+  </Link>
 
         <Link
           href="/organization/services/new"
@@ -61,6 +71,12 @@ export default async function ServicesPage() {
               <h2 className="text-xl font-semibold">
                 {service.title}
               </h2>
+
+{service.archived && (
+  <span className="mt-2 inline-block rounded-full bg-gray-200 px-3 py-1 text-xs font-semibold text-gray-700">
+    Archived
+  </span>
+)}
 
               {service.description && (
                 <p className="mt-2 text-gray-600">
@@ -87,12 +103,14 @@ export default async function ServicesPage() {
 <div className="mt-6 flex gap-3">
   <Link
     href={`/organization/services/${service.id}/edit`}
-    className="rounded-lg bg-orange-500 px-4 py-2 font-semibold text-white hover:bg-orange-600"
+    className="rounded-lg bg-orange-500 px-4 py-2 font-arial text-white hover:bg-orange-700"
   >
-    ✏️ Edit
+    Edit
   </Link>
 
+{!service.archived && (
   <DeleteServiceButton id={service.id} />
+)}
 </div>
             </div>
           ))}

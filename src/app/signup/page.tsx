@@ -8,6 +8,7 @@ type SignupForm = {
   fullName: string;
   email: string;
   password: string;
+  role: "USER" | "WORKER" | "ORG_ADMIN";
 };
 
 export default function SignupPage() {
@@ -21,7 +22,11 @@ export default function SignupPage() {
   const {
     register,
     handleSubmit,
-  } = useForm<SignupForm>();
+  } = useForm<SignupForm>({
+    defaultValues: {
+      role: "USER",
+    },
+  });
 
   async function onSubmit(data: SignupForm) {
     const { data: authData, error } =
@@ -45,14 +50,6 @@ export default function SignupPage() {
       return;
     }
 
-    if (
-      !authData.session &&
-      !authData.user.identities?.length
-    ) {
-      alert("An account with this email already exists.");
-      return;
-    }
-
     const response = await fetch("/api/profile", {
       method: "POST",
       headers: {
@@ -62,14 +59,14 @@ export default function SignupPage() {
         authId: authData.user.id,
         email: authData.user.email,
         fullName: data.fullName,
-        role: "USER",
+        role: data.role,
       }),
     });
 
     if (!response.ok) {
-      const data = await response.json().catch(() => null);
+      const json = await response.json().catch(() => null);
 
-      alert(data?.error ?? "Failed to create profile.");
+      alert(json?.error ?? "Failed to create profile.");
       return;
     }
 
@@ -113,9 +110,32 @@ export default function SignupPage() {
           className="w-full rounded-lg border p-3"
         />
 
+        <div>
+          <label className="mb-2 block font-semibold">
+            I am a
+          </label>
+
+          <select
+            {...register("role")}
+            className="w-full rounded-lg border p-3"
+          >
+            <option value="USER">
+              Customer
+            </option>
+
+            <option value="WORKER">
+              Employee
+            </option>
+
+            <option value="ORG_ADMIN">
+              Organization
+            </option>
+          </select>
+        </div>
+
         <button
           type="submit"
-          className="w-full rounded-lg bg-primary p-3 text-primary-foreground"
+          className="w-full rounded-lg bg-orange-500 p-3 font-semibold text-white hover:bg-orange-600"
         >
           Create Account
         </button>

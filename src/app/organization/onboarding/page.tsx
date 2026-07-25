@@ -3,8 +3,18 @@ import { getCurrentProfile } from "@/lib/profile";
 import { prisma } from "@/lib/prisma";
 import OrganizationForm from "./organization-form";
 
-export default async function OrganizationOnboardingPage() {
+type Props = {
+  searchParams: Promise<{
+    force?: string;
+  }>;
+};
+
+export default async function OrganizationOnboardingPage({
+  searchParams,
+}: Props) {
+  
   const profile = await getCurrentProfile();
+const { force } = await searchParams;
 
   if (!profile) {
     redirect("/login");
@@ -24,10 +34,12 @@ export default async function OrganizationOnboardingPage() {
     },
   });
 
-  if (organization) {
-    redirect("/organization");
-  }
-
+if (
+  organization &&
+  !(profile.role === "SUPER_ADMIN" && force === "true")
+) {
+  redirect("/organization");
+}
   return (
     <main className="mx-auto max-w-3xl p-8">
       <h1 className="mb-2 text-4xl font-bold">

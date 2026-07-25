@@ -88,11 +88,6 @@ export default async function WorkerArchivedBookingsPage() {
                 {booking.status}
               </p>
 
-              <p>
-                <strong>Payment:</strong>{" "}
-                {booking.payment?.status ?? "No payment"}
-              </p>
-
               {booking.organizationNotes && (
                 <div className="mt-4 rounded-lg border bg-orange-50 p-4">
                   <h3 className="font-semibold">
@@ -116,6 +111,19 @@ export default async function WorkerArchivedBookingsPage() {
                   </p>
                 </div>
               )}
+
+{booking.customerCancellationReason && (
+  <div className="mt-4 rounded-lg border border-blue-200 bg-blue-50 p-4">
+    <h3 className="font-semibold text-blue-700">
+      Cancelled by Customer
+    </h3>
+
+    <p className="mt-2">
+      {booking.customerCancellationReason}
+    </p>
+  </div>
+)}
+
 
               {booking.cancellationReason && (
                 <div className="mt-4 rounded-lg border border-red-200 bg-red-50 p-4">

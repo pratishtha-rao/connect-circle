@@ -74,25 +74,73 @@ export default async function BookingPage({
           <p>{booking.date.toLocaleString()}</p>
         </div>
 
+        <div>
+<div>
+  <strong>Status</strong>
+
+  <p>
+    {booking.status === "PENDING"
+      ? "Pending"
+      : booking.status === "PENDING_PAYMENT"
+      ? "Payment Pending"
+      : booking.status === "CONFIRMED"
+      ? "Confirmed"
+      : booking.status === "COMPLETED"
+      ? "Completed"
+      : booking.status === "CANCELLED"
+      ? "Cancelled"
+      : booking.status.replaceAll("_", " ")}
+  </p>
+</div>
+</div>
         <BookingStatusButtons
           bookingId={booking.id}
           currentStatus={booking.status}
+          customerCancelledAt={booking.customerCancelledAt?.toISOString() ?? null}
         />
 
-        <div>
-          <strong>Payment</strong>
-          <p>{booking.payment?.status ?? "No payment"}</p>
-        </div>
+<div>
+  <strong>Expected Payment</strong>
 
-        <div>
-          <strong>Customer Notes</strong>
-          <p>{booking.notes || "None"}</p>
-        </div>
+  <p>
+    ${booking.service.price}
+  </p>
+
+  {booking.payment && (
+    <p className="mt-1 text-sm text-gray-500">
+      Payment Status: {booking.payment.status}
+    </p>
+  )}
+</div>
+              {booking.notes && (
+                <div className="mt-4 rounded-lg border bg-yellow-50 p-4">
+                  <h3 className="font-semibold">
+                    Customer Notes
+                  </h3>
+
+                  <p className="mt-2">
+                    {booking.notes}
+                  </p>
+                </div>
+              )}
 
         <OrganizationNotes
           bookingId={booking.id}
           currentNotes={booking.organizationNotes ?? ""}
         />
+
+{booking.customerCancellationReason && (
+  <div className="mt-4 rounded-lg border border-blue-200 bg-blue-50 p-4">
+    <h3 className="font-semibold text-blue-700">
+      Cancelled by Customer
+    </h3>
+
+    <p className="mt-2">
+      {booking.customerCancellationReason}
+    </p>
+  </div>
+)}
+
 
         {booking.cancellationReason && (
           <div className="rounded-xl border border-red-200 bg-red-50 p-5">

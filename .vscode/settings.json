@@ -1,8 +1,12 @@
 {
     "cSpell.words": [
         "cuid",
+        "daygrid",
+        "fullcalendar",
         "fulltext",
+        "nowrap",
         "shadcn",
-        "SUPABASE"
+        "SUPABASE",
+        "timegrid"
     ]
 }

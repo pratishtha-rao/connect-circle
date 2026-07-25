@@ -1,9 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { useForm } from "react-hook-form";
 
 type Profile = {
   fullName: string;
+  email: string;
   phone: string | null;
 };
 
@@ -130,6 +132,82 @@ window.location.href = "/worker";
       >
         {isSubmitting ? "Saving..." : "Save Profile"}
       </button>
+
+<div className="my-8 border-t" />
+
+<div>
+
+  <h2 className="text-xl font-semibold">
+    Account
+  </h2>
+
+  <p className="mt-1 text-sm text-gray-500">
+    Manage your login credentials.
+  </p>
+
+</div>
+
+{/*
+
+<div className="mt-6 flex items-center justify-between rounded-xl border p-5">
+
+
+  <div>
+
+    <p className="font-semibold">
+      Login Email
+    </p>
+
+    <p className="mt-1 text-gray-500">
+      {profile.email}
+    </p>
+
+  </div>
+
+<div className="mt-3 space-y-3">
+
+  <Link
+    href="/worker/profile/change-email"
+    className="rounded-lg border px-4 py-3 text-center font-medium hover:bg-gray-50"
+  >
+    Change Email
+  </Link>
+
+
+</div>
+
+</div>
+
+*/}
+
+<div className="mt-6 flex items-center justify-between py-5">
+
+  <div>
+
+    <p className="font-semibold">
+      Password
+    </p>
+
+    <p className="mt-1 text-gray-500">
+      ••••••••••••••••
+    </p>
+
+  </div>
+
+<div>
+
+  <Link
+    href="/worker/profile/change-password"
+    className="rounded-lg border px-4 py-3 text-center font-medium hover:bg-gray-50"
+  >
+    Change Password
+  </Link>
+
+</div>
+
+</div>
+
     </form>
   );
 }
+

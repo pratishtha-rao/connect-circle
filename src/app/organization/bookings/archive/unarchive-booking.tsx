@@ -30,12 +30,16 @@ export default function UnarchiveBooking({
   }
 
   return (
+<div>
+  <br></br>
     <button
       onClick={restore}
       disabled={saving}
-      className="mt-4 rounded-lg bg-green-600 px-5 py-2 text-white hover:bg-green-700"
+      className="rounded-lg bg-orange-500 px-5 py-3 font-semibold text-white hover:bg-orange-600 disabled:opacity-50"
     >
       Restore Booking
     </button>
+    </div>
   );
 }
+

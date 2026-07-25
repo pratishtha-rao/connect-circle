@@ -19,12 +19,15 @@ export default function OrganizationForm() {
         timezone: formData.get("timezone"),
       }),
     });
+    
+if (!res.ok) {
+  const data = await res.json();
 
-    if (!res.ok) {
-      alert("Failed to create organization.");
-      setLoading(false);
-      return;
-    }
+  alert(data.error ?? "Failed to create organization.");
+
+  setLoading(false);
+  return;
+}
 
     window.location.href = "/organization";
   }

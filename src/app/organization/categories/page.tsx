@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { getCurrentProfile } from "@/lib/profile";
+import DeleteCategoryButton from "./delete-category-button";
 
 export default async function CategoriesPage() {
   const profile = await getCurrentProfile();
@@ -57,8 +58,12 @@ export default async function CategoriesPage() {
               <h2 className="font-semibold">
                 {category.name}
               </h2>
+            <DeleteCategoryButton id={category.id} />
+
             </div>
+            
           ))}
+
         </div>
       )}
     </main>

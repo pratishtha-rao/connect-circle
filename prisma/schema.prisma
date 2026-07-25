@@ -22,23 +22,30 @@ model Profile {
 }
 
 model Organization {
-  id          String               @id @default(cuid())
-  name        String
-  description String?
-  createdAt   DateTime             @default(now())
-  updatedAt   DateTime             @updatedAt
-  address     String?
-  logo        String?
-  phone       String?
-  timezone    String?
-  website     String?
-  ownerId     String               @unique
-  notes       Note[]
-  owner       Profile              @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  workers     OrganizationWorker[]
-  services    Service[]
-  categories  ServiceCategory[]
-  invites     WorkerInvite[]
+  id                    String               @id @default(cuid())
+  name                  String
+  description           String?
+  createdAt             DateTime             @default(now())
+  updatedAt             DateTime             @updatedAt
+  address               String?
+  logo                  String?
+  phone                 String?
+  timezone              String?
+  website               String?
+  ownerId               String               @unique
+  tags                  String[]
+  bookingNotes          String?
+  paymentInstructions   String?
+  allowWorkerSelection  Boolean              @default(true)
+  availabilityDays      Int[]
+  availabilityEndTime   String?
+  availabilityStartTime String?
+  notes                 Note[]
+  owner                 Profile              @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  workers               OrganizationWorker[]
+  services              Service[]
+  categories            ServiceCategory[]
+  invites               WorkerInvite[]
 }
 
 model Worker {
@@ -102,21 +109,24 @@ model ServiceCategory {
 }
 
 model Service {
-  id             String           @id @default(cuid())
-  title          String
-  description    String?
-  price          Float
-  duration       Int
-  organizationId String?
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
-  categoryId     String?
-  bookings       Booking[]
-  notes          Note[]
-  category       ServiceCategory? @relation(fields: [categoryId], references: [id])
-  organization   Organization?    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  supplies       Supply[]
-  workers        WorkerService[]
+  id                   String           @id @default(cuid())
+  title                String
+  description          String?
+  price                Float
+  duration             Int
+  organizationId       String?
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
+  categoryId           String?
+  allowWorkerSelection Boolean          @default(true)
+  instructions         String?
+  bookings             Booking[]
+  notes                Note[]
+  category             ServiceCategory? @relation(fields: [categoryId], references: [id])
+  organization         Organization?    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  supplies             Supply[]
+  workers              WorkerService[]
+  archived Boolean @default(false)
 }
 
 model Supply {
@@ -136,29 +146,37 @@ model Availability {
 }
 
 model Booking {
-  id                       String         @id @default(cuid())
-  date                     DateTime
-  status                   BookingStatus  @default(PENDING)
-  notes                    String?
-  profileId                String
-  workerId                 String?
-  serviceId                String
-  createdAt                DateTime       @default(now())
-  updatedAt                DateTime       @updatedAt
-  cancellationReason       String?
-  deletedAt                DateTime?
-  deletedReason            String?
-  cancelledAt              DateTime?
-  organizationNotes        String?
-  organizationArchivedAt DateTime?
-  workerArchivedAt         DateTime?
-  workerCancellationReason String?
-  workerCancelledAt        DateTime?
-  previousStatus           BookingStatus?
-  profile                  Profile        @relation(fields: [profileId], references: [id])
-  service                  Service        @relation(fields: [serviceId], references: [id])
-  worker                   Worker?        @relation(fields: [workerId], references: [id])
-  payment                  Payment?
+  id                         String         @id @default(cuid())
+  date                       DateTime
+  status                     BookingStatus  @default(PENDING)
+  notes                      String?
+  profileId                  String
+  workerId                   String?
+  serviceId                  String
+  createdAt                  DateTime       @default(now())
+  updatedAt                  DateTime       @updatedAt
+  cancellationReason         String?
+  deletedAt                  DateTime?
+  deletedReason              String?
+  cancelledAt                DateTime?
+  organizationNotes          String?
+  workerArchivedAt           DateTime?
+  workerCancellationReason   String?
+  workerCancelledAt          DateTime?
+  previousStatus             BookingStatus?
+  organizationArchivedAt     DateTime?
+  customerCancellationReason String?
+  customerCancelledAt        DateTime?
+  profile                    Profile        @relation(fields: [profileId], references: [id])
+  service                    Service        @relation(fields: [serviceId], references: [id])
+  worker                     Worker?        @relation(fields: [workerId], references: [id])
+  payment                    Payment?
+  serviceTitleSnapshot       String
+serviceDescriptionSnapshot String?
+servicePriceSnapshot       Float
+serviceDurationSnapshot    Int
+serviceInstructionsSnapshot String?
+categoryNameSnapshot String?
 }
 
 model Payment {
@@ -182,6 +200,12 @@ model Note {
   organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   service        Service?      @relation(fields: [serviceId], references: [id], onDelete: Cascade)
   worker         Worker?       @relation(fields: [workerId], references: [id], onDelete: Cascade)
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
 }
 
 enum UserRole {

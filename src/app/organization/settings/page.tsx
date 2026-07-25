@@ -8,25 +8,36 @@ export default async function SettingsPage() {
 
   if (!profile) notFound();
 
-  const organization = await prisma.organization.findFirst({
-    where: {
-      ownerId: profile.id,
-    },
-  });
+const organization = await prisma.organization.findFirst({
+  where: {
+    ownerId: profile.id,
+  },
+  include: {
+    owner: true,
+  },
+});  
 
   if (!organization) notFound();
 
-  return (
-    <main className="mx-auto max-w-3xl p-8">
+return (
+  <main className="mx-auto max-w-5xl p-8">
 
-      <h1 className="mb-8 text-4xl font-bold">
+    <div className="mb-10">
+
+      <h1 className="text-4xl font-bold text-gray-900">
         Organization Settings
       </h1>
 
-      <OrganizationSettingsForm
-        organization={organization}
-      />
+      <p className="mt-2 text-gray-600">
+        Manage your organization information and account settings.
+      </p>
 
-    </main>
-  );
+    </div>
+
+    <OrganizationSettingsForm
+      organization={organization}
+    />
+
+  </main>
+);
 }

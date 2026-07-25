@@ -47,7 +47,7 @@ export default function BookingFilters({
     <div className="mt-8 flex flex-wrap gap-4">
 
       <input
-        placeholder="Search customer..."
+        placeholder="Search..."
         defaultValue={params.get("search") ?? ""}
         onChange={(e) =>
           update("search", e.target.value)
@@ -55,20 +55,20 @@ export default function BookingFilters({
         className="rounded-lg border p-2"
       />
 
-      <select
-        defaultValue={params.get("status") ?? ""}
-        onChange={(e) =>
-          update("status", e.target.value)
-        }
-        className="rounded-lg border p-2"
-      >
-        <option value="">All Statuses</option>
-        <option value="PENDING">Pending</option>
-        <option value="CONFIRMED">Confirmed</option>
-        <option value="COMPLETED">Completed</option>
-        <option value="CANCELLED">Cancelled</option>
-      </select>
-
+<select
+  defaultValue={params.get("status") ?? ""}
+  onChange={(e) =>
+    update("status", e.target.value)
+  }
+  className="rounded-lg border p-2"
+>
+  <option value="">All Statuses</option>
+<option value="PENDING">Pending</option>
+<option value="PENDING_PAYMENT">Payment Pending</option>
+<option value="CONFIRMED">Confirmed</option>
+<option value="COMPLETED">Completed</option>
+<option value="CANCELLED">Cancelled</option>
+</select>
       <select
         defaultValue={params.get("worker") ?? ""}
         onChange={(e) =>

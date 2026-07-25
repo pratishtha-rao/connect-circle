@@ -31,7 +31,7 @@ export default function WorkerBookingFilters({
     <div className="mt-8 flex flex-wrap gap-4">
 
       <input
-        placeholder="Search customer..."
+        placeholder="Search..."
         defaultValue={params.get("search") ?? ""}
         onChange={(e) =>
           update("search", e.target.value)
@@ -48,6 +48,7 @@ export default function WorkerBookingFilters({
       >
         <option value="">All Statuses</option>
         <option value="PENDING">Pending</option>
+        <option value="PAYMENT_PENDING">Payment Pending</option>
         <option value="CONFIRMED">Confirmed</option>
         <option value="COMPLETED">Completed</option>
         <option value="CANCELLED">Cancelled</option>

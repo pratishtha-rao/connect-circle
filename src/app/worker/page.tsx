@@ -42,8 +42,42 @@ export default async function WorkerDashboard() {
   }
 
   const activeBookings = worker.bookings.filter(
-    (booking) => booking.organizationArchivedAt === null
+    (booking) => booking.workerArchivedAt === null
   );
+
+  const now = new Date();
+
+  const upcomingBookings = activeBookings
+    .filter(
+      (booking) =>
+        booking.date >= now &&
+        booking.status !== "COMPLETED" &&
+        booking.status !== "CANCELLED"
+    )
+    .slice(0, 3);
+
+  const pendingBookings = activeBookings
+    .filter(
+      (booking) =>
+        booking.status === "PENDING" ||
+        booking.status === "PENDING_APPROVAL" ||
+              booking.status === "PENDING_PAYMENT"
+    )
+    .slice(0, 5);
+
+  const confirmedBookings = activeBookings
+    .filter((booking) => booking.status === "CONFIRMED")
+    .slice(0, 5);
+
+  const completedBookings = [...activeBookings]
+    .filter((booking) => booking.status === "COMPLETED")
+    .sort((a, b) => b.date.getTime() - a.date.getTime())
+    .slice(0, 5);
+
+  const cancelledBookings = [...activeBookings]
+    .filter((booking) => booking.status === "CANCELLED")
+    .sort((a, b) => b.date.getTime() - a.date.getTime())
+    .slice(0, 5);
 
   return (
     <main className="mx-auto max-w-7xl p-8">
@@ -58,11 +92,193 @@ export default async function WorkerDashboard() {
         </p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <h2 className="mb-6 text-center text-3xl font-bold">
+        Appointment Overview
+      </h2>
 
-        {/* Profile */}
+      <div className="mx-auto mb-16 max-w-7xl">
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
 
-        <section className="flex h-full flex-col rounded-2xl border bg-white p-6 shadow-sm">
+          {/* Pending */}
+
+          <section className="rounded-2xl border bg-white p-5 shadow-sm">
+            <h2 className="text-xl font-semibold">
+              Pending
+            </h2>
+
+            <div className="mt-4 space-y-3">
+
+              {pendingBookings.length === 0 ? (
+
+                <p className="text-sm text-gray-500">
+                  No pending bookings.
+                </p>
+
+              ) : (
+
+                pendingBookings.map((booking) => (
+
+                  <div
+                    key={booking.id}
+                    className="rounded-lg border p-3"
+                  >
+                    <p className="font-semibold">
+                      {booking.profile.fullName}
+                    </p>
+
+                    <p className="text-sm text-gray-600">
+                      {booking.service.title}
+                    </p>
+                  </div>
+
+                ))
+
+              )}
+
+            </div>
+          </section>
+
+          {/* Confirmed */}
+
+          <section className="rounded-2xl border bg-white p-5 shadow-sm">
+            <h2 className="text-xl font-semibold">
+              Confirmed
+            </h2>
+
+            <div className="mt-4 space-y-3">
+
+              {confirmedBookings.length === 0 ? (
+
+                <p className="text-sm text-gray-500">
+                  No confirmed appointments.
+                </p>
+
+              ) : (
+
+                confirmedBookings.map((booking) => (
+
+                  <div
+                    key={booking.id}
+                    className="rounded-lg border p-3"
+                  >
+                    <p className="font-semibold">
+                      {booking.profile.fullName}
+                    </p>
+
+                    <p className="text-sm text-gray-600">
+                      {booking.service.title}
+                    </p>
+
+                    <p className="text-xs text-orange-600 mt-1">
+                      {booking.date.toLocaleString()}
+                    </p>
+                  </div>
+
+                ))
+
+              )}
+
+            </div>
+          </section>
+
+          {/* Completed */}
+
+          <section className="rounded-2xl border bg-white p-5 shadow-sm">
+            <h2 className="text-xl font-semibold">
+              Completed
+            </h2>
+
+            <div className="mt-4 space-y-3">
+
+              {completedBookings.length === 0 ? (
+
+                <p className="text-sm text-gray-500">
+                  No completed appointments.
+                </p>
+
+              ) : (
+
+                completedBookings.map((booking) => (
+
+                  <div
+                    key={booking.id}
+                    className="rounded-lg border p-3"
+                  >
+                    <p className="font-semibold">
+                      {booking.profile.fullName}
+                    </p>
+
+                    <p className="text-sm text-gray-600">
+                      {booking.service.title}
+                    </p>
+
+                    <p className="text-xs text-green-600 mt-1">
+                      {booking.date.toLocaleString()}
+                    </p>
+                  </div>
+
+                ))
+
+              )}
+
+            </div>
+          </section>
+
+          {/* Cancelled */}
+
+          <section className="rounded-2xl border bg-white p-5 shadow-sm">
+            <h2 className="text-xl font-semibold">
+              Cancelled
+            </h2>
+
+            <div className="mt-4 space-y-3">
+
+              {cancelledBookings.length === 0 ? (
+
+                <p className="text-sm text-gray-500">
+                  No cancelled appointments.
+                </p>
+
+              ) : (
+
+                cancelledBookings.map((booking) => (
+
+                  <div
+                    key={booking.id}
+                    className="rounded-lg border p-3"
+                  >
+                    <p className="font-semibold">
+                      {booking.profile.fullName}
+                    </p>
+
+                    <p className="text-sm text-gray-600">
+                      {booking.service.title}
+                    </p>
+
+                    <p className="text-xs text-red-600 mt-1">
+                      {booking.date.toLocaleString()}
+                    </p>
+                  </div>
+
+                ))
+
+              )}
+
+            </div>
+          </section>
+
+        </div>
+      </div>
+
+      <h2 className="mt-20 mb-6 text-center text-3xl font-bold">
+        Management
+      </h2>
+
+<div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+
+              {/* Profile */}
+
+        <section className="flex flex-col rounded-2xl border bg-white p-6 shadow-sm">
           <h2 className="text-2xl font-semibold">
             Profile
           </h2>
@@ -72,6 +288,7 @@ export default async function WorkerDashboard() {
           </p>
 
           <div className="mt-6 flex-1 space-y-3">
+
             <div>
               <p className="text-sm text-gray-500">
                 Name
@@ -95,6 +312,7 @@ export default async function WorkerDashboard() {
 
               <p>{worker.bio || "Not completed"}</p>
             </div>
+
           </div>
 
           <Link
@@ -107,7 +325,8 @@ export default async function WorkerDashboard() {
 
         {/* Availability */}
 
-        <section className="flex h-full flex-col rounded-2xl border bg-white p-6 shadow-sm">
+        <section className="flex flex-col rounded-2xl border bg-white p-6 shadow-sm">
+
           <h2 className="text-2xl font-semibold">
             Availability
           </h2>
@@ -117,6 +336,7 @@ export default async function WorkerDashboard() {
           </p>
 
           <div className="mt-6 flex-1">
+
             <p className="text-5xl font-bold text-orange-500">
               {worker.availability.length}
             </p>
@@ -124,6 +344,7 @@ export default async function WorkerDashboard() {
             <p className="mt-2 text-gray-600">
               schedule entries
             </p>
+
           </div>
 
           <Link
@@ -132,11 +353,13 @@ export default async function WorkerDashboard() {
           >
             Manage Availability
           </Link>
+
         </section>
 
         {/* Organizations */}
 
-        <section className="flex h-full flex-col rounded-2xl border bg-white p-6 shadow-sm">
+        <section className="flex flex-col rounded-2xl border bg-white p-6 shadow-sm">
+
           <h2 className="text-2xl font-semibold">
             Organizations
           </h2>
@@ -146,26 +369,36 @@ export default async function WorkerDashboard() {
           </p>
 
           <div className="mt-6 flex-1 space-y-3">
+
             {worker.organizations.length === 0 ? (
+
               <p className="text-gray-500">
                 No organizations.
               </p>
+
             ) : (
+
               worker.organizations.map((membership) => (
+
                 <div
                   key={membership.id}
                   className="rounded-lg border p-3"
                 >
                   {membership.organization.name}
                 </div>
+
               ))
+
             )}
+
           </div>
+
         </section>
 
         {/* Services */}
 
-        <section className="flex h-full flex-col rounded-2xl border bg-white p-6 shadow-sm">
+        <section className="flex flex-col rounded-2xl border bg-white p-6 shadow-sm">
+
           <h2 className="text-2xl font-semibold">
             Services
           </h2>
@@ -175,6 +408,7 @@ export default async function WorkerDashboard() {
           </p>
 
           <div className="mt-6 flex-1">
+
             <p className="text-5xl font-bold text-orange-500">
               {worker.services.length}
             </p>
@@ -183,6 +417,7 @@ export default async function WorkerDashboard() {
               assigned service
               {worker.services.length !== 1 && "s"}
             </p>
+
           </div>
 
           <Link
@@ -191,20 +426,22 @@ export default async function WorkerDashboard() {
           >
             View Services
           </Link>
+
         </section>
+                {/* My Bookings */}
 
-        {/* My Bookings */}
+        <section className="flex flex-col rounded-2xl border bg-white p-6 shadow-sm">
 
-        <section className="flex h-full flex-col rounded-2xl border bg-white p-6 shadow-sm">
           <h2 className="text-2xl font-semibold">
             My Bookings
           </h2>
 
           <p className="mt-2 text-gray-600">
-            Manage appointments assigned to you.
+            View and manage all appointments assigned to you.
           </p>
 
           <div className="mt-6 flex-1">
+
             <p className="text-5xl font-bold text-orange-500">
               {activeBookings.length}
             </p>
@@ -212,6 +449,7 @@ export default async function WorkerDashboard() {
             <p className="mt-2 text-gray-600">
               active bookings
             </p>
+
           </div>
 
           <Link
@@ -220,11 +458,13 @@ export default async function WorkerDashboard() {
           >
             Open Booking Portal
           </Link>
+
         </section>
 
         {/* Calendar */}
 
-        <section className="flex h-full flex-col rounded-2xl border bg-white p-6 shadow-sm">
+        <section className="flex flex-col rounded-2xl border bg-white p-6 shadow-sm">
+
           <h2 className="text-2xl font-semibold">
             Calendar
           </h2>
@@ -233,14 +473,12 @@ export default async function WorkerDashboard() {
             View your appointments in calendar format.
           </p>
 
-          <div className="mt-6 flex-1">
+          <div className="mt-6 flex-1 flex items-center">
+
             <p className="text-5xl">
               📅
             </p>
 
-            <p className="mt-2 text-gray-600">
-              Daily & Monthly Views
-            </p>
           </div>
 
           <Link
@@ -249,9 +487,11 @@ export default async function WorkerDashboard() {
           >
             Open Calendar
           </Link>
+
         </section>
 
       </div>
+
     </main>
-  );
+);
 }

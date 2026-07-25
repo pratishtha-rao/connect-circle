@@ -21,10 +21,16 @@ export async function POST(req: Request) {
       },
     });
 
-    if (existing) {
-      return NextResponse.json(existing);
+if (existing) {
+  return NextResponse.json(
+    {
+      error: "You already have an organization.",
+    },
+    {
+      status: 400,
     }
-
+  );
+}
     const organization = await prisma.organization.create({
       data: {
         ownerId: profile.id,
@@ -36,6 +42,15 @@ export async function POST(req: Request) {
         timezone: body.timezone,
       },
     });
+
+    await prisma.profile.update({
+  where: {
+    id: profile.id,
+  },
+  data: {
+    onboardingComplete: true,
+  },
+});
 
     return NextResponse.json(organization);
   } catch (error) {

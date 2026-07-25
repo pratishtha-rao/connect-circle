@@ -61,23 +61,67 @@ return (
                 {booking.status}
               </p>
 
-              <p>
-                <strong>Archived:</strong>{" "}
-                {booking.organizationArchivedAt?.toLocaleString()}
-              </p>
+              {booking.organizationNotes && (
+                <div className="mt-4 rounded-lg border bg-orange-50 p-4">
+                  <h3 className="font-semibold">
+                    Organization Notes
+                  </h3>
 
-{booking.status === "CANCELLED" &&
- booking.cancellationReason && (
-      <div className="mt-4 rounded-lg border border-red-200 bg-red-50 p-3">
-    <h3 className="font-semibold text-red-700">
-      Cancellation Reason
+                  <p className="mt-2">
+                    {booking.organizationNotes}
+                  </p>
+                </div>
+              )}
+
+              {booking.notes && (
+                <div className="mt-4 rounded-lg border bg-gray-50 p-4">
+                  <h3 className="font-semibold">
+                    Customer Notes
+                  </h3>
+
+                  <p className="mt-2">
+                    {booking.notes}
+                  </p>
+                </div>
+              )}
+
+{booking.customerCancellationReason && (
+  <div className="mt-4 rounded-lg border border-blue-200 bg-blue-50 p-4">
+    <h3 className="font-semibold text-blue-700">
+      Cancelled by Customer
     </h3>
 
     <p className="mt-2">
-      {booking.cancellationReason}
+      {booking.customerCancellationReason}
     </p>
   </div>
 )}
+
+
+              {booking.cancellationReason && (
+                <div className="mt-4 rounded-lg border border-red-200 bg-red-50 p-4">
+                  <h3 className="font-semibold text-red-700">
+                    Cancelled by Organization
+                  </h3>
+
+                  <p className="mt-2">
+                    {booking.cancellationReason}
+                  </p>
+                </div>
+              )}
+
+              {booking.workerCancellationReason && (
+                <div className="mt-4 rounded-lg border border-yellow-200 bg-yellow-50 p-4">
+                  <h3 className="font-semibold text-yellow-700">
+                    Cancelled by You
+                  </h3>
+
+                  <p className="mt-2">
+                    {booking.workerCancellationReason}
+                  </p>
+                </div>
+              )}
+
               <UnarchiveBooking
                 bookingId={booking.id}
               />

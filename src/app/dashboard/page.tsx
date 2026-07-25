@@ -3,47 +3,31 @@ import { getCurrentProfile } from "@/lib/profile";
 import { prisma } from "@/lib/prisma";
 
 export default async function DashboardPage() {
-  const profile = await getCurrentProfile();
+const profile = await getCurrentProfile();
 
-  if (!profile) {
-    redirect("/login");
-  }
-
-  switch (profile.role) {
-case "SUPER_ADMIN": {
-  const organization = await prisma.organization.findFirst({
-    where: {
-      ownerId: profile.id,
-    },
-  });
-
-  if (!organization) {
-    redirect("/organization/onboarding");
-  }
-
-  redirect("/organization");
+if (!profile) {
+  redirect("/login");
 }
 
-case "ORG_ADMIN": {
-  const organization = await prisma.organization.findUnique({
-    where: {
-      ownerId: profile.id,
-    },
-  });
-
-  if (!organization) {
-    redirect("/organization/onboarding");
-  }
-
-  redirect("/organization");
+if (
+  !profile.onboardingComplete &&
+  profile.role !== "SUPER_ADMIN"
+) {
+  redirect("/onboarding");
 }
 
-    case "WORKER":
-    case "INDEPENDENT_WORKER":
-      redirect("/worker/onboarding");
+switch (profile.role) {
+    case "SUPER_ADMIN":
+    redirect("/organization/onboarding?force=true");
 
-    case "USER":
-    default:
-      redirect("/customer/onboarding");
-  }
-}
+  case "ORG_ADMIN":
+    redirect("/organization");
+
+  case "WORKER":
+    redirect("/worker");
+
+  case "USER":
+  default:
+    redirect("/customer");
+}}
+

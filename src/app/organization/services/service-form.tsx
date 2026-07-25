@@ -11,6 +11,7 @@ type Service = {
   id: string;
   title: string;
   description: string | null;
+  instructions: string | null;
   price: number;
   duration: number;
   categoryId: string | null;
@@ -45,6 +46,7 @@ export default function ServiceForm({
           body: JSON.stringify({
             title: formData.get("title"),
             description: formData.get("description"),
+            instructions: formData.get("instructions"),
             price: Number(formData.get("price")),
             duration: Number(formData.get("duration")),
             categoryId: formData.get("categoryId") || null,
@@ -90,6 +92,13 @@ export default function ServiceForm({
         placeholder="Description"
         className="w-full rounded-xl border border-orange-200 p-3"
       />
+
+<textarea
+  name="instructions"
+  defaultValue={service?.instructions ?? ""}
+  placeholder="Instructions customers should read before booking..."
+  className="w-full rounded-xl border border-orange-200 p-3 min-h-40"
+/>
 
       <select
         name="categoryId"

@@ -39,6 +39,7 @@ export async function PUT(
       data: {
         title: body.title,
         description: body.description,
+        instructions: body.instructions,
         price: Number(body.price),
         duration: Number(body.duration),
         categoryId: body.categoryId || null,
@@ -106,11 +107,14 @@ export async function DELETE(
       );
     }
 
-    await prisma.service.delete({
-      where: {
-        id,
-      },
-    });
+await prisma.service.update({
+  where: {
+    id,
+  },
+  data: {
+    archived: true,
+  },
+});
 
     return NextResponse.json({
       success: true,

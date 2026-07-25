@@ -3,12 +3,13 @@ import { getCurrentProfile } from "@/lib/profile";
 import ProfileForm from "./profile-form";
 
 export default async function WorkerProfilePage() {
-  const profile = await getCurrentProfile();
 
-  if (!profile) {
+const profile = await getCurrentProfile();
+if (!profile) {
     return <p>Unauthorized.</p>;
   }
 
+  
   const worker = await prisma.worker.findUnique({
     where: {
       profileId: profile.id,
@@ -23,7 +24,7 @@ export default async function WorkerProfilePage() {
     <main className="mx-auto max-w-3xl p-8">
 
       <h1 className="mb-8 text-4xl font-bold">
-        Manage Profile
+       Manage Profile
       </h1>
 
       <ProfileForm
