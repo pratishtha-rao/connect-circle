@@ -19,7 +19,7 @@ model Profile {
   bookings           Booking[]
   organization       Organization?
   worker             Worker?
-    timezone           String?
+  timezone           String?
 }
 
 model Organization {
@@ -127,7 +127,7 @@ model Service {
   organization         Organization?    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   supplies             Supply[]
   workers              WorkerService[]
-  archived Boolean @default(false)
+  archived             Boolean          @default(false)
 }
 
 model Supply {
@@ -147,37 +147,37 @@ model Availability {
 }
 
 model Booking {
-  id                         String         @id @default(cuid())
-  date                       DateTime
-  status                     BookingStatus  @default(PENDING)
-  notes                      String?
-  profileId                  String
-  workerId                   String?
-  serviceId                  String
-  createdAt                  DateTime       @default(now())
-  updatedAt                  DateTime       @updatedAt
-  cancellationReason         String?
-  deletedAt                  DateTime?
-  deletedReason              String?
-  cancelledAt                DateTime?
-  organizationNotes          String?
-  workerArchivedAt           DateTime?
-  workerCancellationReason   String?
-  workerCancelledAt          DateTime?
-  previousStatus             BookingStatus?
-  organizationArchivedAt     DateTime?
-  customerCancellationReason String?
-  customerCancelledAt        DateTime?
-  profile                    Profile        @relation(fields: [profileId], references: [id])
-  service                    Service        @relation(fields: [serviceId], references: [id])
-  worker                     Worker?        @relation(fields: [workerId], references: [id])
-  payment                    Payment?
-  serviceTitleSnapshot       String?
-serviceDescriptionSnapshot String?
-servicePriceSnapshot       Float?
-serviceDurationSnapshot    Int?
-serviceInstructionsSnapshot String?
-categoryNameSnapshot String?
+  id                          String         @id @default(cuid())
+  date                        DateTime
+  status                      BookingStatus  @default(PENDING)
+  notes                       String?
+  profileId                   String
+  workerId                    String?
+  serviceId                   String
+  createdAt                   DateTime       @default(now())
+  updatedAt                   DateTime       @updatedAt
+  cancellationReason          String?
+  deletedAt                   DateTime?
+  deletedReason               String?
+  cancelledAt                 DateTime?
+  organizationNotes           String?
+  workerArchivedAt            DateTime?
+  workerCancellationReason    String?
+  workerCancelledAt           DateTime?
+  previousStatus              BookingStatus?
+  organizationArchivedAt      DateTime?
+  customerCancellationReason  String?
+  customerCancelledAt         DateTime?
+  profile                     Profile        @relation(fields: [profileId], references: [id])
+  service                     Service        @relation(fields: [serviceId], references: [id])
+  worker                      Worker?        @relation(fields: [workerId], references: [id])
+  payment                     Payment?
+  serviceTitleSnapshot        String?
+  serviceDescriptionSnapshot  String?
+  servicePriceSnapshot        Float?
+  serviceDurationSnapshot     Int?
+  serviceInstructionsSnapshot String?
+  categoryNameSnapshot        String?
 }
 
 model Payment {

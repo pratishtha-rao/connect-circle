@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { getCurrentProfile } from "@/lib/profile";
+import WorkerNavbar from "@/components/worker-navbar";
 
 export default async function WorkerServicesPage() {
   const profile = await getCurrentProfile();
@@ -26,7 +27,10 @@ export default async function WorkerServicesPage() {
   }
 
   return (
+
     <main className="mx-auto max-w-5xl p-8">
+                <WorkerNavbar />
+
       <h1 className="mb-2 text-4xl font-bold">
         My Services
       </h1>

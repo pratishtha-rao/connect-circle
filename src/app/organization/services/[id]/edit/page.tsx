@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { getCurrentProfile } from "@/lib/profile";
 import ServiceForm from "../../service-form";
+import OrganizationNavbar from "@/components/organization-navbar";
 
 export default async function EditServicePage({
   params,
@@ -48,6 +49,7 @@ export default async function EditServicePage({
 
   return (
     <main className="mx-auto max-w-2xl p-8">
+            <OrganizationNavbar />
       <h1 className="mb-8 text-4xl font-bold">
         Edit Service
       </h1>

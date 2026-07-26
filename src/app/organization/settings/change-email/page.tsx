@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 
 import { getCurrentProfile } from "@/lib/profile";
 import ChangeEmailForm from "./change-email-form";
+import OrganizationNavbar from "@/components/organization-navbar";
 
 export default async function ChangeOrganizationEmailPage() {
   const profile = await getCurrentProfile();
@@ -12,6 +13,7 @@ export default async function ChangeOrganizationEmailPage() {
 
   return (
     <main className="mx-auto max-w-2xl p-8">
+      <OrganizationNavbar />
 
       <div className="mb-8">
 

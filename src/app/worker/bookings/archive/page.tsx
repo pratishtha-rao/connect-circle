@@ -2,6 +2,7 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { getCurrentProfile } from "@/lib/profile";
 import UnarchiveBooking from "./unarchive-booking";
+import WorkerNavbar from "@/components/worker-navbar";
 
 export default async function WorkerArchivedBookingsPage() {
   const profile = await getCurrentProfile();
@@ -39,6 +40,8 @@ export default async function WorkerArchivedBookingsPage() {
 
   return (
     <main className="mx-auto max-w-6xl p-8">
+            <WorkerNavbar />
+
       <div className="mb-10 flex items-center justify-between">
         <div>
           <h1 className="text-4xl font-bold">

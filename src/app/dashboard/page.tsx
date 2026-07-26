@@ -1,33 +1,34 @@
 import { redirect } from "next/navigation";
 import { getCurrentProfile } from "@/lib/profile";
-import { prisma } from "@/lib/prisma";
 
 export default async function DashboardPage() {
-const profile = await getCurrentProfile();
+  const profile = await getCurrentProfile();
 
-if (!profile) {
-  redirect("/login");
-}
+  if (!profile) {
+    redirect("/login");
+  }
 
-if (
-  !profile.onboardingComplete &&
-  profile.role !== "SUPER_ADMIN"
-) {
-  redirect("/onboarding");
-}
-
-switch (profile.role) {
+  switch (profile.role) {
     case "SUPER_ADMIN":
-    redirect("/organization/onboarding?force=true");
+      redirect("/organization/onboarding?force=true");
 
-  case "ORG_ADMIN":
-    redirect("/organization");
+    case "ORG_ADMIN":
+      if (!profile.onboardingComplete) {
+        redirect("/organization/onboarding");
+      }
+      redirect("/organization");
 
-  case "WORKER":
-    redirect("/worker");
+    case "WORKER":
+      if (!profile.onboardingComplete) {
+        redirect("/worker");
+      }
+      redirect("/worker");
 
-  case "USER":
-  default:
-    redirect("/customer");
-}}
-
+    case "USER":
+    default:
+      if (!profile.onboardingComplete) {
+        redirect("/customer");
+      }
+      redirect("/customer");
+  }
+}

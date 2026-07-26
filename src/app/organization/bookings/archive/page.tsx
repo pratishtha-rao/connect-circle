@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import UnarchiveBooking from "./unarchive-booking";
+import OrganizationNavbar from "@/components/organization-navbar";
 
 export default async function ArchiveBookingsPage() {
 const bookings = await prisma.booking.findMany({
@@ -28,6 +29,7 @@ const bookings = await prisma.booking.findMany({
 
 return (
     <main className="mx-auto max-w-6xl p-8">
+            <OrganizationNavbar />
       <h1 className="mb-8 text-4xl font-bold">
         Archived Bookings
       </h1>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { getCurrentProfile } from "@/lib/profile";
+import OrganizationNavbar from "@/components/organization-navbar";
 
 export default async function WorkerServicesPage() {
   const profile = await getCurrentProfile();
@@ -33,6 +34,8 @@ export default async function WorkerServicesPage() {
 
   return (
     <main className="mx-auto max-w-4xl p-8">
+            <OrganizationNavbar />
+
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-4xl font-bold">
           My Services

@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 
 import { getCurrentProfile } from "@/lib/profile";
 import ChangePasswordForm from "./change-password-form";
+import OrganizationNavbar from "@/components/organization-navbar";
 
 export default async function ChangeOrganizationPasswordPage() {
   const profile = await getCurrentProfile();
@@ -12,6 +13,7 @@ export default async function ChangeOrganizationPasswordPage() {
 
   return (
     <main className="mx-auto max-w-2xl p-8">
+      <OrganizationNavbar />
 
       <div className="mb-8">
 

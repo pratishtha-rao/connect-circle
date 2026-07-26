@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { getCurrentProfile } from "@/lib/profile";
+import WorkerNavbar from "@/components/worker-navbar";
+
 
 export default async function WorkerDashboard() {
   const profile = await getCurrentProfile();
@@ -81,6 +83,8 @@ export default async function WorkerDashboard() {
 
   return (
     <main className="mx-auto max-w-7xl p-8">
+            <WorkerNavbar />
+
       <div className="mb-10">
         <h1 className="text-4xl font-bold">
           Employee Dashboard
@@ -92,6 +96,10 @@ export default async function WorkerDashboard() {
         </p>
       </div>
 
+<div className="mb-4 rounded-lg border border-yellow-300 bg-yellow-50 p-4 text-center text-sm text-yellow-800">
+  <strong>Please note:</strong> All appointment times are displayed in the respective organization's time zone.
+</div>
+
       <h2 className="mb-6 text-center text-3xl font-bold">
         Appointment Overview
       </h2>
@@ -99,54 +107,11 @@ export default async function WorkerDashboard() {
       <div className="mx-auto mb-16 max-w-7xl">
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
 
-<div className="mb-4 rounded-lg border border-yellow-300 bg-yellow-50 p-4 text-center text-sm text-yellow-800">
-  <strong>Please note:</strong> All appointment times are displayed in the respective organization's time zone.
-</div>
-
-          {/* Pending */}
-
-          <section className="rounded-2xl border bg-white p-5 shadow-sm">
-            <h2 className="text-xl font-semibold">
-              Pending
-            </h2>
-
-            <div className="mt-4 space-y-3">
-
-              {pendingBookings.length === 0 ? (
-
-                <p className="text-sm text-gray-500">
-                  No pending bookings.
-                </p>
-
-              ) : (
-
-                pendingBookings.map((booking) => (
-
-                  <div
-                    key={booking.id}
-                    className="rounded-lg border p-3"
-                  >
-                    <p className="font-semibold">
-                      {booking.profile.fullName}
-                    </p>
-
-                    <p className="text-sm text-gray-600">
-                      {booking.service.title}
-                    </p>
-                  </div>
-
-                ))
-
-              )}
-
-            </div>
-          </section>
-
           {/* Confirmed */}
 
           <section className="rounded-2xl border bg-white p-5 shadow-sm">
             <h2 className="text-xl font-semibold">
-              Confirmed
+              Upcoming Appointments
             </h2>
 
             <div className="mt-4 space-y-3">
@@ -185,11 +150,51 @@ export default async function WorkerDashboard() {
             </div>
           </section>
 
+          {/* Pending */}
+
+          <section className="rounded-2xl border bg-white p-5 shadow-sm">
+            <h2 className="text-xl font-semibold">
+              Pending Approval by Organization
+            </h2>
+
+            <div className="mt-4 space-y-3">
+
+              {pendingBookings.length === 0 ? (
+
+                <p className="text-sm text-gray-500">
+                  No pending bookings.
+                </p>
+
+              ) : (
+
+                pendingBookings.map((booking) => (
+
+                  <div
+                    key={booking.id}
+                    className="rounded-lg border p-3"
+                  >
+                    <p className="font-semibold">
+                      {booking.profile.fullName}
+                    </p>
+
+                    <p className="text-sm text-gray-600">
+                      {booking.service.title}
+                    </p>
+                  </div>
+
+                ))
+
+              )}
+
+            </div>
+          </section>
+
+
           {/* Completed */}
 
           <section className="rounded-2xl border bg-white p-5 shadow-sm">
             <h2 className="text-xl font-semibold">
-              Completed
+              Completed Appointments
             </h2>
 
             <div className="mt-4 space-y-3">
@@ -232,7 +237,7 @@ export default async function WorkerDashboard() {
 
           <section className="rounded-2xl border bg-white p-5 shadow-sm">
             <h2 className="text-xl font-semibold">
-              Cancelled
+              Cancelled Appointments
             </h2>
 
             <div className="mt-4 space-y-3">
@@ -384,12 +389,19 @@ export default async function WorkerDashboard() {
 
               worker.organizations.map((membership) => (
 
-                <div
-                  key={membership.id}
-                  className="rounded-lg border p-3"
-                >
-                  {membership.organization.name}
-                </div>
+<div
+  key={membership.id}
+  className="rounded-lg border p-3"
+>
+  <p className="font-medium">
+    {membership.organization.name}
+  </p>
+
+  <p className="mt-1 text-sm text-gray-500">
+    Time Zone:{" "}
+    {membership.organization.timezone ?? "Not configured"}
+  </p>
+</div>
 
               ))
 

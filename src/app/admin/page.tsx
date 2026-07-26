@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import AdminNavbar from "@/components/admin-navbar";
 
 import { prisma } from "@/lib/prisma";
 import { getCurrentProfile } from "@/lib/profile";
@@ -25,122 +26,129 @@ export default async function AdminPage() {
   startOfMonth.setDate(1);
   startOfMonth.setHours(0, 0, 0, 0);
 
-  const [
-    totalUsers,
-    totalWorkers,
-    totalOrganizations,
-    totalBookings,
+const [
+  totalUsers,
+  totalWorkers,
+  totalOrganizations,
+  totalBookings,
 
-    usersThisMonth,
-    workersThisMonth,
-    organizationsThisMonth,
-    bookingsThisMonth,
+  usersThisMonth,
+  workersThisMonth,
+  organizationsThisMonth,
+  bookingsThisMonth,
 
-    customerCount,
+  customerCount,
 
-    totalRevenue,
-    monthlyRevenue,
+  completedBookings,
+  monthlyCompletedBookings,
 
-    organizations,
-  ] = await Promise.all([
-    prisma.profile.count(),
+  organizations,
+] = await Promise.all([
+  prisma.profile.count(),
 
-    prisma.worker.count(),
+  prisma.worker.count(),
 
-    prisma.organization.count(),
+  prisma.organization.count(),
 
-    prisma.booking.count(),
+  prisma.booking.count(),
 
-    prisma.profile.count({
-      where: {
-        createdAt: {
-          gte: startOfMonth,
+  prisma.profile.count({
+    where: {
+      createdAt: {
+        gte: startOfMonth,
+      },
+    },
+  }),
+
+  prisma.worker.count({
+    where: {
+      createdAt: {
+        gte: startOfMonth,
+      },
+    },
+  }),
+
+  prisma.organization.count({
+    where: {
+      createdAt: {
+        gte: startOfMonth,
+      },
+    },
+  }),
+
+  prisma.booking.count({
+    where: {
+      createdAt: {
+        gte: startOfMonth,
+      },
+    },
+  }),
+
+  prisma.profile.count({
+    where: {
+      worker: null,
+      organization: null,
+    },
+  }),
+
+  prisma.booking.findMany({
+    where: {
+      status: "COMPLETED",
+    },
+    include: {
+      service: true,
+    },
+  }),
+
+  prisma.booking.findMany({
+    where: {
+      status: "COMPLETED",
+      date: {
+        gte: startOfMonth,
+      },
+    },
+    include: {
+      service: true,
+    },
+  }),
+
+  prisma.organization.findMany({
+    include: {
+      services: {
+        include: {
+          bookings: true,
         },
       },
-    }),
+    },
+  }),
+]);
 
-    prisma.worker.count({
-      where: {
-        createdAt: {
-          gte: startOfMonth,
-        },
-      },
-    }),
+const totalRevenue = completedBookings.reduce(
+  (sum, booking) => sum + booking.service.price,
+  0
+);
 
-    prisma.organization.count({
-      where: {
-        createdAt: {
-          gte: startOfMonth,
-        },
-      },
-    }),
-
-    prisma.booking.count({
-      where: {
-        createdAt: {
-          gte: startOfMonth,
-        },
-      },
-    }),
-
-    prisma.profile.count({
-      where: {
-        worker: null,
-        organization: null,
-      },
-    }),
-
-    prisma.payment.aggregate({
-      _sum: {
-        amount: true,
-      },
-      where: {
-        status: "PAID",
-      },
-    }),
-
-    prisma.payment.aggregate({
-      _sum: {
-        amount: true,
-      },
-      where: {
-        status: "PAID",
-        paidAt: {
-          gte: startOfMonth,
-        },
-      },
-    }),
-
-    prisma.organization.findMany({
-      include: {
-        services: {
-          include: {
-            bookings: {
-              include: {
-                payment: true,
-              },
-            },
-          },
-        },
-      },
-    }),
-  ]);
+const monthlyRevenue = monthlyCompletedBookings.reduce(
+  (sum, booking) => sum + booking.service.price,
+  0
+);
 
   const organizationAnalytics = organizations.map((organization) => {
     const bookings = organization.services.flatMap(
       (service) => service.bookings
     );
 
-    const revenue = bookings.reduce((sum, booking) => {
-      if (
-        booking.payment &&
-        booking.payment.status === "PAID"
-      ) {
-        return sum + booking.payment.amount;
-      }
+const revenue = bookings.reduce((sum, booking) => {
+  if (booking.status === "COMPLETED") {
+    const service = organization.services.find((service) =>
+      service.bookings.some((b) => b.id === booking.id)
+    );
 
-      return sum;
-    }, 0);
+    return sum + (service?.price ?? 0);
+  }
+
+  return sum;
+}, 0);
 
     return {
       id: organization.id,
@@ -160,6 +168,8 @@ export default async function AdminPage() {
 
   return (
     <main className="mx-auto max-w-7xl p-8">
+
+      <AdminNavbar />
 
       <div className="mb-10 flex items-center justify-between">
 
@@ -213,12 +223,10 @@ export default async function AdminPage() {
           value={totalBookings}
         />
 
-        <StatCard
-          title="Total Revenue"
-          value={`$${(
-            totalRevenue._sum.amount ?? 0
-          ).toLocaleString()}`}
-        />
+<StatCard
+  title="Total Revenue"
+  value={`$${totalRevenue.toLocaleString()}`}
+/>
 
       </div>
 
@@ -248,12 +256,10 @@ export default async function AdminPage() {
           value={bookingsThisMonth}
         />
 
-        <StatCard
-          title="Monthly Revenue"
-          value={`$${(
-            monthlyRevenue._sum.amount ?? 0
-          ).toLocaleString()}`}
-        />
+<StatCard
+  title="Monthly Revenue"
+  value={`$${monthlyRevenue.toLocaleString()}`}
+/>
 
       </div>
             <div className="mt-12 grid gap-8 lg:grid-cols-2">

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { getCurrentProfile } from "@/lib/profile";
 import DeleteServiceButton from "./archive-service-button";
+import OrganizationNavbar from "@/components/organization-navbar";
 
 export default async function ServicesPage() {
   const profile = await getCurrentProfile();
@@ -35,6 +36,7 @@ export default async function ServicesPage() {
 
   return (
     <main className="mx-auto max-w-5xl p-8">
+            <OrganizationNavbar />
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-4xl font-bold">
           Services

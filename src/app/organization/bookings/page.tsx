@@ -4,6 +4,7 @@ import { getCurrentProfile } from "@/lib/profile";
 
 import BookingFilters from "./booking-filters";
 import ArchiveBookingButton from "./archive-booking-button";
+import OrganizationNavbar from "@/components/organization-navbar";
 
 type Props = {
   searchParams: Promise<{
@@ -217,6 +218,7 @@ const total =
   cancelled.length;
         return (
     <main className="mx-auto max-w-7xl p-8">
+            <OrganizationNavbar />
       <div className="mb-10 flex items-center justify-between">
         <div>
           <h1 className="text-4xl font-bold">

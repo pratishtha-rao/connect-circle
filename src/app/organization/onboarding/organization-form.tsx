@@ -1,9 +1,25 @@
 "use client";
 
+import dynamic from "next/dynamic";
+import type { ITimezoneOption } from "react-timezone-select";
 import { useState } from "react";
 
 export default function OrganizationForm() {
   const [loading, setLoading] = useState(false);
+
+  const TimezoneSelect = dynamic(
+  () => import("react-timezone-select"),
+  { ssr: false }
+);
+
+const detectedTimezone =
+  Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+const [timezone, setTimezone] =
+  useState<ITimezoneOption>({
+    value: detectedTimezone,
+    label: detectedTimezone,
+  });
 
   async function onSubmit(formData: FormData) {
     setLoading(true);
@@ -16,7 +32,7 @@ export default function OrganizationForm() {
         phone: formData.get("phone"),
         website: formData.get("website"),
         address: formData.get("address"),
-        timezone: formData.get("timezone"),
+        timezone: timezone.value,
       }),
     });
     
@@ -66,12 +82,23 @@ if (!res.ok) {
         className="w-full rounded-xl border p-3"
       />
 
-      <input
-        name="timezone"
-        placeholder="Timezone"
-        defaultValue={Intl.DateTimeFormat().resolvedOptions().timeZone}
-        className="w-full rounded-xl border p-3"
-      />
+<div className="space-y-2">
+
+  <label className="font-medium">
+    Organization Time Zone
+  </label>
+
+  <TimezoneSelect
+    value={timezone}
+    onChange={setTimezone}
+  />
+
+  <p className="text-sm text-gray-500">
+    All appointments will be stored using this time zone. Customers and workers
+    will see booking times relative to the organization's selected time zone.
+  </p>
+
+</div>
 
       <button
         disabled={loading}

@@ -5,6 +5,7 @@ import BookingStatusButtons from "./booking-status-buttons";
 import CancelBooking from "./cancel-booking";
 import ArchiveBooking from "./archive-booking";
 import OrganizationNotes from "./organization-notes";
+import OrganizationNavbar from "@/components/organization-navbar";
 
 type Props = {
   params: Promise<{
@@ -46,7 +47,7 @@ export default async function BookingPage({
 
   return (
     <main className="mx-auto max-w-4xl p-8">
-
+      <OrganizationNavbar />
       <h1 className="mb-8 text-4xl font-bold">
         Booking Details
       </h1>

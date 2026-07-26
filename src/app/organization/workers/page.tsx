@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { getCurrentProfile } from "@/lib/profile";
 import CopyInviteButton from "./copy-invite-button";
 import RemoveWorkerButton from "./remove-worker-button";
+import OrganizationNavbar from "@/components/organization-navbar";
 
 export default async function WorkersPage() {
   const profile = await getCurrentProfile();
@@ -49,6 +50,8 @@ export default async function WorkersPage() {
 
   return (
     <main className="mx-auto max-w-5xl p-8">
+
+      <OrganizationNavbar />
 
       <div className="mb-10 flex items-center justify-between">
         <h1 className="text-4xl font-bold">

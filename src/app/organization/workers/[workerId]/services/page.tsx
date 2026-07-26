@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { getCurrentProfile } from "@/lib/profile";
 import ServiceForm from "./service-form";
+import OrganizationNavbar from "@/components/organization-navbar";
 
 type Props = {
   params: Promise<{
@@ -60,6 +61,8 @@ const { workerId } = await params;
 
   return (
     <main className="mx-auto max-w-3xl p-8">
+            <OrganizationNavbar />
+
       <h1 className="mb-2 text-4xl font-bold">
         Assign Services
       </h1>

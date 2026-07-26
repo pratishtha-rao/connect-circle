@@ -1,4 +1,9 @@
+
 "use client";
+
+
+import dynamic from "next/dynamic";
+import type { ITimezoneOption } from "react-timezone-select";
 
 import Link from "next/link";
 import { useState } from "react";
@@ -39,6 +44,14 @@ export default function OrganizationSettingsForm({
     organization.description ?? ""
   );
 
+  const TimezoneSelect = dynamic(
+  () => import("react-timezone-select"),
+  {
+    ssr: false,
+  }
+);
+
+
   const [phone, setPhone] = useState(
     organization.phone ?? ""
   );
@@ -55,9 +68,10 @@ export default function OrganizationSettingsForm({
     organization.logo ?? ""
   );
 
-  const [timezone, setTimezone] = useState(
-    organization.timezone ?? ""
-  );
+const [timezone, setTimezone] = useState<ITimezoneOption>({
+  value: organization.timezone ?? "",
+  label: organization.timezone ?? "",
+});
 
   const [bookingNotes, setBookingNotes] = useState(
     organization.bookingNotes ?? ""
@@ -71,6 +85,9 @@ export default function OrganizationSettingsForm({
     const [tags, setTags] = useState<string[]>(
   organization.tags ?? []
 );
+
+const TIMEZONES = Intl.supportedValuesOf("timeZone");
+
 
 const [allowWorkerSelection, setAllowWorkerSelection] =
   useState(
@@ -135,6 +152,7 @@ const [availabilityDays, setAvailabilityDays] =
   }
 }
 
+
   async function save() {
     setSaving(true);
 
@@ -152,7 +170,7 @@ body: JSON.stringify({
   address,
   website,
   logo,
-  timezone,
+timezone: timezone.value,
 
   bookingNotes,
   paymentInstructions,
@@ -228,17 +246,18 @@ if (!res.ok) {
 
           <div>
 
-            <label className="mb-2 block font-medium">
-              Timezone
-            </label>
+<label className="mb-2 block font-medium">
+  Time Zone
+</label>
 
-            <input
-              value={timezone}
-              onChange={(e) =>
-                setTimezone(e.target.value)
-              }
-              className="w-full rounded-lg border p-3"
-            />
+<TimezoneSelect
+  value={timezone}
+  onChange={setTimezone}
+/>
+
+<p className="mt-2 text-sm text-gray-500">
+  Customers and workers will see appointment times in this organization's selected time zone.
+</p>
 
 <div className="space-y-3">
 

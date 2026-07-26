@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import CustomerNavbar from "@/components/customer-navbar";
 
 type Props = {
   params: Promise<{
@@ -46,6 +47,8 @@ const organization = await prisma.organization.findUnique({
 
   return (
     <main className="mx-auto max-w-6xl p-8">
+
+      <CustomerNavbar />
 
       {/* Organization */}
 

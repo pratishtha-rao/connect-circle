@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import CustomerNavbar from "@/components/customer-navbar";
 
 import { prisma } from "@/lib/prisma";
 import { getCurrentProfile } from "@/lib/profile";
@@ -49,6 +50,9 @@ export default async function CustomerBookingPage({
   }
 
   return (
+    <>
+        <CustomerNavbar />
+<main>
     <BookingDetails
       booking={{
         id: booking.id,
@@ -145,5 +149,7 @@ export default async function CustomerBookingPage({
           : null,
       }}
     />
+    </main>
+    </>
   );
 }

@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import OrganizationSearch from "./organization-search";
+import CustomerNavbar from "@/components/customer-navbar";
 
 export default async function CustomerOrganizationsPage() {
 const organizations = await prisma.organization.findMany({
@@ -21,6 +22,7 @@ const organizations = await prisma.organization.findMany({
 
   return (
     <main className="mx-auto max-w-7xl p-8">
+            <CustomerNavbar />
       <h1 className="text-4xl font-bold">
         Browse Organizations
       </h1>

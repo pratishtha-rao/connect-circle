@@ -1,6 +1,7 @@
 import { getCurrentProfile } from "@/lib/profile";
 import { notFound } from "next/navigation";
 import ChangeEmailForm from "./change-email-form";
+import WorkerNavbar from "@/components/worker-navbar";
 
 export default async function ChangeWorkerEmailPage() {
   const profile = await getCurrentProfile();
@@ -11,6 +12,8 @@ export default async function ChangeWorkerEmailPage() {
 
   return (
     <main className="mx-auto max-w-2xl p-8">
+
+      <WorkerNavbar />
 
       <div className="mb-8">
 

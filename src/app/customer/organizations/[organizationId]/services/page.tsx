@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import ServiceSearch from "./service-search";
+import CustomerNavbar from "@/components/customer-navbar";
 
 type Props = {
   params: Promise<{
@@ -47,6 +48,8 @@ services: {
 
   return (
     <main className="mx-auto max-w-7xl p-8">
+            <CustomerNavbar />
+
       <h1 className="text-4xl font-bold">
         {organization.name}
       </h1>

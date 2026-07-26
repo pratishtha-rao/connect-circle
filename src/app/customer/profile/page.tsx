@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { getCurrentProfile } from "@/lib/profile";
 import ProfileForm from "./profile-form";
+import CustomerNavbar from "@/components/customer-navbar";
 
 export default async function CustomerProfilePage() {
   const profile = await getCurrentProfile();
@@ -21,6 +22,8 @@ export default async function CustomerProfilePage() {
 
   return (
     <main className="mx-auto max-w-3xl p-8">
+
+      <CustomerNavbar />
 
       <h1 className="mb-8 text-4xl font-bold">
         Manage Profile

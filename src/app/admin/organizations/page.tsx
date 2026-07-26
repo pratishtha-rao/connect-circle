@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import AdminNavbar from "@/components/admin-navbar";
 
 import { prisma } from "@/lib/prisma";
 import { getCurrentProfile } from "@/lib/profile";
@@ -192,6 +193,8 @@ export default async function OrganizationsPage({
 
   return (
     <main className="mx-auto max-w-7xl p-8">
+
+      <AdminNavbar />
 
       <div className="mb-10 flex items-center justify-between">
 

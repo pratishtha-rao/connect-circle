@@ -1,5 +1,6 @@
 import { getCurrentProfile } from "@/lib/profile";
 import { notFound } from "next/navigation";
+import WorkerNavbar from "@/components/worker-navbar";
 
 import ChangePasswordForm from "./change-password-form";
 
@@ -12,6 +13,8 @@ export default async function ChangeWorkerPasswordPage() {
 
   return (
     <main className="mx-auto max-w-2xl p-8">
+
+      <WorkerNavbar />
 
       <div className="mb-8">
 

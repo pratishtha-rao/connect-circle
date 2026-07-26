@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { getCurrentProfile } from "@/lib/profile";
 import WorkerCancelBooking from "./worker-cancel-booking";
 import WorkerArchiveBooking from "../worker-archive-booking";
+import WorkerNavbar from "@/components/worker-navbar";
 
 type Props = {
   params: Promise<{
@@ -37,12 +38,15 @@ export default async function WorkerBookingPage({
       id: bookingId,
       workerId: worker.id,
     },
+include: {
+  profile: true,
+  payment: true,
+  service: {
     include: {
-      profile: true,
-      service: true,
-      payment: true,
+      organization: true,
     },
-  });
+  },
+},  });
 
   if (!booking) {
     notFound();
@@ -50,6 +54,8 @@ export default async function WorkerBookingPage({
 
   return (
     <main className="mx-auto max-w-4xl p-8">
+
+      <WorkerNavbar />
 
       <div className="mb-8 flex items-center justify-between">
 
@@ -78,12 +84,19 @@ export default async function WorkerBookingPage({
           <p>{booking.service.title}</p>
         </div>
 
-        <div>
-          <strong>Date</strong>
-          <p>{booking.date.toLocaleString()}</p>
-        </div>
+<div>
+  <strong>Appointment</strong>
 
-        <div>
+  <p>{booking.date.toLocaleString()}</p>
+
+  {booking.service.organization?.timezone && (
+    <p className="mt-1 text-sm text-gray-500">
+      <strong> Time Zone: </strong> {booking.service.organization.timezone}
+    </p>
+  )}
+</div>
+
+<div>
 
           <strong>Status</strong>
 

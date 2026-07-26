@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { getCurrentProfile } from "@/lib/profile";
+import OrganizationNavbar from "@/components/organization-navbar";
 
 type Props = {
   params: Promise<{
@@ -64,6 +65,7 @@ export default async function WorkerAvailabilityPage({
 
   return (
     <main className="mx-auto max-w-5xl p-8">
+            <OrganizationNavbar />
       <h1 className="text-4xl font-bold">
         {worker.profile.fullName}
       </h1>

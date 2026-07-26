@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { getCurrentProfile } from "@/lib/profile";
 import WorkerArchiveBooking from "./worker-archive-booking";
 import WorkerBookingFilters from "./booking-filters";
+import WorkerNavbar from "@/components/worker-navbar";
 
 type Props = {
   searchParams: Promise<{
@@ -38,12 +39,15 @@ export default async function WorkerBookingsPage({
       workerId: worker.id,
       workerArchivedAt: null,
     },
+include: {
+  profile: true,
+  payment: true,
+  service: {
     include: {
-      profile: true,
-      service: true,
-      payment: true,
+      organization: true,
     },
-    orderBy: {
+  },
+},    orderBy: {
       date: "asc",
     },
   });
@@ -107,6 +111,9 @@ const total =
 
   return (
     <main className="mx-auto max-w-7xl p-8">
+
+            <WorkerNavbar />
+
       <div className="mb-10 flex items-center justify-between">
         <div>
           <h1 className="text-4xl font-bold">
@@ -259,9 +266,12 @@ function BookingSection({
                       Appointment
                     </p>
 
-                    <p className="mt-1 font-medium">
-                      {booking.date.toLocaleString()}
-                    </p>
+<p className="mt-1 font-medium">
+  {booking.date.toLocaleString()}{" "}
+  <span className="text-sm text-gray-500">
+    ({booking.service.organization?.timezone ?? "No timezone"})
+  </span>
+</p>
                   </div>
 
                   <div>

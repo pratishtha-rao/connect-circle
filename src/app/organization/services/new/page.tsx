@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { getCurrentProfile } from "@/lib/profile";
 import ServiceForm from "../service-form";
+import OrganizationNavbar from "@/components/organization-navbar";
 
 export default async function NewServicePage() {
   const profile = await getCurrentProfile();
@@ -30,6 +31,7 @@ export default async function NewServicePage() {
 
   return (
     <main className="mx-auto max-w-2xl p-8">
+            <OrganizationNavbar />
       <h1 className="mb-8 text-4xl font-bold">
         New Service
       </h1>

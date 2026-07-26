@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { getCurrentProfile } from "@/lib/profile";
 import ProfileForm from "./profile-form";
+import WorkerNavbar from "@/components/worker-navbar";
 
 export default async function WorkerProfilePage() {
 
@@ -21,6 +22,9 @@ if (!profile) {
   }
 
   return (
+    <>
+      <WorkerNavbar />
+
     <main className="mx-auto max-w-3xl p-8">
 
       <h1 className="mb-8 text-4xl font-bold">
@@ -33,5 +37,6 @@ if (!profile) {
       />
 
     </main>
+    </>
   );
 }

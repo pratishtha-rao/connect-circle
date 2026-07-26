@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { getCurrentProfile } from "@/lib/profile";
 import AvailabilityForm from "./availability-form";
+import WorkerNavbar from "@/components/worker-navbar";
 
 export default async function AvailabilityPage() {
   const profile = await getCurrentProfile();
@@ -23,7 +24,10 @@ export default async function AvailabilityPage() {
   }
 
   return (
-    <main className="mx-auto max-w-3xl p-8">
+<> 
+      <WorkerNavbar/>
+
+          <main className="mx-auto max-w-3xl p-8">
 
       <h1 className="mb-8 text-4xl font-bold">
         Weekly Availability
@@ -38,5 +42,6 @@ export default async function AvailabilityPage() {
       />
 
     </main>
+    </>
   );
 }

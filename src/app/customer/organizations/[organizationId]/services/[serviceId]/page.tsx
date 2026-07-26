@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import CustomerNavbar from "@/components/customer-navbar";
 
 type Props = {
   params: Promise<{
@@ -31,6 +32,8 @@ const service = await prisma.service.findFirst({
 
   return (
     <main className="mx-auto max-w-5xl p-8">
+            <CustomerNavbar />
+
       <div className="rounded-2xl border bg-white p-8 shadow-sm">
 
         <h1 className="text-4xl font-bold">

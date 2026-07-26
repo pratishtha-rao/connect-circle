@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import CustomerNavbar from "@/components/customer-navbar";
 
 import { prisma } from "@/lib/prisma";
 import { getCurrentProfile } from "@/lib/profile";
@@ -176,6 +177,8 @@ export default async function CustomerBookingsPage({
     cancelled.length;
       return (
     <main className="mx-auto max-w-7xl p-8">
+
+      <CustomerNavbar />
 
       <div className="mb-10">
 

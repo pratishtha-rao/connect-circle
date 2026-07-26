@@ -2,6 +2,7 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { getCurrentProfile } from "@/lib/profile";
 import { redirect } from "next/navigation";
+import OrganizationNavbar from "@/components/organization-navbar";
 
 export default async function OrganizationPage() {
   const profile = await getCurrentProfile();
@@ -135,7 +136,10 @@ const todaysBookings =
   );
 
     return (
+
     <main className="mx-auto max-w-7xl p-8">
+
+      <OrganizationNavbar />
 
       <h1 className="text-4xl font-bold text-gray-900">
         Organization Dashboard
@@ -321,7 +325,8 @@ const todaysBookings =
           </Link>
         </section>
 
-        {/* Calendar */}
+  {/*
+        **CALENDAR**
 
         <section className="rounded-2xl border bg-white p-6 shadow-sm">
           <h2 className="text-2xl font-semibold">
@@ -339,6 +344,8 @@ const todaysBookings =
             Open Calendar
           </Link>
         </section>
+
+  */}
 
         {/* Settings */}
 
