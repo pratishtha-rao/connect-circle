@@ -40,19 +40,21 @@ export default function AssignWorker({
       }
     );
 
-    if (!res.ok) {
-      alert("Unable to assign worker.");
-      return;
-    }
+const data = await res.json();
 
-alert("Worker assigned!");
+if (!res.ok) {
+  alert(data.error);
+  return;
+}
+
+alert("Employee assigned!");
 window.location.reload();
   }
 
   return (
     <div className="space-y-3">
 
-      <strong>Assigned Worker</strong>
+      <strong>Assigned Employee</strong>
 
       <select
         value={selected}

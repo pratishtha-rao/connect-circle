@@ -139,7 +139,7 @@ export default function BookingFilters({
           className="rounded-xl border p-3"
         >
           <option value="">
-            All Workers
+            All Employees
           </option>
 
           {workers.map((worker) => (

@@ -248,7 +248,7 @@ export default async function OrganizationsPage({
           </option>
 
           <option value="workers">
-            Most Workers
+            Most Employees
           </option>
 
           <option value="alphabetical">

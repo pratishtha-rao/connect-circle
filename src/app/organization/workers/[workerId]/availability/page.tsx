@@ -69,7 +69,7 @@ export default async function WorkerAvailabilityPage({
       </h1>
 
       <p className="mb-8 text-gray-600">
-        Worker Availability
+        Employee Availability
       </p>
 
       {worker.availability.length === 0 ? (

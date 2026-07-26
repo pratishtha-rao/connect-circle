@@ -29,7 +29,7 @@ export async function PATCH(
   if (booking.cancellationReason) {
     return NextResponse.json(
       {
-        error: "This booking was cancelled by the organization and cannot be restored by the worker.",
+        error: "This booking was cancelled by the organization and cannot be restored by the employee.",
       },
       { status: 400 }
     );
@@ -38,7 +38,7 @@ export async function PATCH(
   if (!booking.workerCancellationReason) {
     return NextResponse.json(
       {
-        error: "This booking was not cancelled by the worker.",
+        error: "This booking was not cancelled by the employee.",
       },
       { status: 400 }
     );

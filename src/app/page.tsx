@@ -49,7 +49,7 @@ export default function HomePage() {
         <p className="mt-8 max-w-3xl text-xl text-gray-600">
 
           Connect Circle helps people discover organizations,
-          find trusted workers, book services,
+          find trusted employees, book services,
           and manage appointments in one place.
 
         </p>
@@ -116,7 +116,7 @@ export default function HomePage() {
 
           <p className="mt-4 text-gray-600">
 
-            Book verified workers
+            Book verified employees
             or independent professionals.
 
           </p>

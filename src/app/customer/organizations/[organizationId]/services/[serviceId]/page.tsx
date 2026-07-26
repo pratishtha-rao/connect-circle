@@ -96,7 +96,7 @@ const service = await prisma.service.findFirst({
 
           <ul className="mt-4 list-disc space-y-2 pl-6 text-gray-700">
             <li>
-              Choose your preferred worker (if the organization allows it).
+              Choose your preferred employee (if the organization allows it).
             </li>
 
             <li>
@@ -104,7 +104,7 @@ const service = await prisma.service.findFirst({
             </li>
 
             <li>
-              Add any notes that may help the worker prepare.
+              Add any notes that may help the employee prepare.
             </li>
 
             <li>

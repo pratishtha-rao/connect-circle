@@ -19,6 +19,7 @@ model Profile {
   bookings           Booking[]
   organization       Organization?
   worker             Worker?
+    timezone           String?
 }
 
 model Organization {
@@ -171,10 +172,10 @@ model Booking {
   service                    Service        @relation(fields: [serviceId], references: [id])
   worker                     Worker?        @relation(fields: [workerId], references: [id])
   payment                    Payment?
-  serviceTitleSnapshot       String
+  serviceTitleSnapshot       String?
 serviceDescriptionSnapshot String?
-servicePriceSnapshot       Float
-serviceDurationSnapshot    Int
+servicePriceSnapshot       Float?
+serviceDurationSnapshot    Int?
 serviceInstructionsSnapshot String?
 categoryNameSnapshot String?
 }

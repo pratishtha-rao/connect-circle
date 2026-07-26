@@ -16,6 +16,7 @@ type BookingCardProps = {
 
       organization?: {
         name: string;
+          timezone: string | null;
       } | null;
     };
 
@@ -90,6 +91,7 @@ export default function BookingCard({
 
           <div className="flex flex-wrap items-center gap-3">
 
+
             <h3 className="text-2xl font-bold">
               {booking.service.title}
             </h3>
@@ -115,7 +117,14 @@ export default function BookingCard({
               </p>
 
               <p className="text-sm text-gray-500">
-                {formatDate(booking.date)}
+                {booking.date.toLocaleString()}
+
+{booking.service.organization?.timezone && (
+  <span className="text-gray-500">
+    {" "}
+    ({booking.service.organization.timezone})
+  </span>
+)}
               </p>
 
             </div>
@@ -123,7 +132,7 @@ export default function BookingCard({
             <div>
 
               <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">
-                Worker
+                Employee
               </p>
 
               <p className="mt-1 font-medium">

@@ -52,14 +52,14 @@ export default async function WorkersPage() {
 
       <div className="mb-10 flex items-center justify-between">
         <h1 className="text-4xl font-bold">
-          Workers
+          Employees
         </h1>
 
         <Link
           href="/organization/workers/invite"
           className="rounded-xl bg-orange-500 px-5 py-3 font-semibold text-white hover:bg-orange-600"
         >
-          Invite Worker
+          Invite Employees
         </Link>
       </div>
 
@@ -116,12 +116,12 @@ export default async function WorkersPage() {
       <section>
 
         <h2 className="mb-5 text-2xl font-bold">
-          Active Workers
+          Active Employees
         </h2>
 
         {workers.length === 0 ? (
           <p className="text-gray-500">
-            No workers yet.
+            No employees yet.
           </p>
         ) : (
           <div className="space-y-4">

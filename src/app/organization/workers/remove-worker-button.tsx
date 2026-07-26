@@ -14,7 +14,7 @@ export default function RemoveWorkerButton({
   async function removeWorker() {
     if (
       !confirm(
-        "Remove this worker from your organization?"
+        "Remove this employees from your organization?"
       )
     ) {
       return;
@@ -32,7 +32,7 @@ export default function RemoveWorkerButton({
     setLoading(false);
 
     if (!res.ok) {
-      alert("Unable to remove worker.");
+      alert("Unable to remove employee.");
       return;
     }
 

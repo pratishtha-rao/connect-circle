@@ -17,7 +17,7 @@ if (!profile) {
   });
 
   if (!worker) {
-    return <p>Worker not found.</p>;
+    return <p>Employee not found.</p>;
   }
 
   return (

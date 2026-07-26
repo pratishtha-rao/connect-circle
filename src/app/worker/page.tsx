@@ -38,7 +38,7 @@ export default async function WorkerDashboard() {
   });
 
   if (!worker) {
-    return <p>Worker not found.</p>;
+    return <p>Employee not found.</p>;
   }
 
   const activeBookings = worker.bookings.filter(
@@ -83,7 +83,7 @@ export default async function WorkerDashboard() {
     <main className="mx-auto max-w-7xl p-8">
       <div className="mb-10">
         <h1 className="text-4xl font-bold">
-          Worker Dashboard
+          Employee Dashboard
         </h1>
 
         <p className="mt-2 text-gray-600">
@@ -98,6 +98,10 @@ export default async function WorkerDashboard() {
 
       <div className="mx-auto mb-16 max-w-7xl">
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+
+<div className="mb-4 rounded-lg border border-yellow-300 bg-yellow-50 p-4 text-center text-sm text-yellow-800">
+  <strong>Please note:</strong> All appointment times are displayed in the respective organization's time zone.
+</div>
 
           {/* Pending */}
 
@@ -463,8 +467,9 @@ export default async function WorkerDashboard() {
 
         {/* Calendar */}
 
+{/*
         <section className="flex flex-col rounded-2xl border bg-white p-6 shadow-sm">
-
+ 
           <h2 className="text-2xl font-semibold">
             Calendar
           </h2>
@@ -489,6 +494,8 @@ export default async function WorkerDashboard() {
           </Link>
 
         </section>
+
+        */}
 
       </div>
 

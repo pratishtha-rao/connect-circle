@@ -68,14 +68,6 @@ export async function POST(req: Request) {
       },
     });
 
-    // Temporary: log the invite link until email sending is added.
-    console.log("==================================");
-    console.log("Worker Invite Created");
-    console.log(
-      `http://localhost:3000/invite/${invite.token}`
-    );
-    console.log("==================================");
-
     return NextResponse.json({
       success: true,
       invite,

@@ -51,7 +51,7 @@ return (
               </p>
 
               <p>
-                <strong>Worker:</strong>{" "}
+                <strong>Employee:</strong>{" "}
                 {booking.worker?.profile.fullName ??
                   "Unassigned"}
               </p>

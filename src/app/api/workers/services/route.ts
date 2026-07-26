@@ -49,7 +49,7 @@ export async function POST(
 
     if (!worker) {
       return NextResponse.json(
-        { error: "Worker not found." },
+        { error: "Employee not found." },
         { status: 404 }
       );
     }
@@ -79,7 +79,7 @@ export async function POST(
 
     return NextResponse.json(
       {
-        error: "Failed to update worker services.",
+        error: "Failed to update employee services.",
       },
       {
         status: 500,

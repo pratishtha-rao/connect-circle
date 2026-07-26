@@ -19,7 +19,7 @@ export default async function AvailabilityPage() {
   });
 
   if (!worker) {
-    return <p>Worker not found.</p>;
+    return <p>Employee not found.</p>;
   }
 
   return (
@@ -28,6 +28,10 @@ export default async function AvailabilityPage() {
       <h1 className="mb-8 text-4xl font-bold">
         Weekly Availability
       </h1>
+
+<div className="mb-4 rounded-lg border border-yellow-300 bg-yellow-50 p-4 text-center text-sm text-yellow-800">
+  <strong>Note:</strong> All availability and business hours should be entered in your organization's time zone. You can find your organization's time zone on the Dashboard under the <strong>Organizations</strong> tab.
+</div>
 
       <AvailabilityForm
         existing={worker.availability}

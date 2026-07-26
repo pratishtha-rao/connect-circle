@@ -16,6 +16,7 @@ type Booking = {
   customerCancelledAt: string | null;
   workerCancelledAt: string | null;
   cancelledAt: string | null;
+  
 
   service: {
     id: string;
@@ -30,6 +31,7 @@ type Booking = {
     name: string;
     bookingNotes: string;
     paymentInstructions: string;
+      timezone: string | null;
   };
 
   worker: {
@@ -56,6 +58,11 @@ export default function BookingDetails({
   const [notes, setNotes] = useState(
     booking.notes
   );
+
+  const timezoneLabel =
+  booking.organization.timezone
+    ? ` (${booking.organization.timezone})`
+    : "";
 
   const [saving, setSaving] =
     useState(false);
@@ -144,6 +151,10 @@ export default function BookingDetails({
 
       </div>
 
+<div className="mb-4 rounded-lg border border-yellow-300 bg-yellow-50 p-4 text-center text-sm text-yellow-800">
+  <strong>Please note:</strong> All appointment times are displayed in the respective organization's time zone.
+</div>
+
       <div className="space-y-6">
 
         <section className="rounded-xl border bg-white p-6 shadow-sm">
@@ -179,11 +190,14 @@ export default function BookingDetails({
                 Date
               </p>
 
-              <p>
-                {new Date(
-                  booking.date
-                ).toLocaleString()}
-              </p>
+<p>
+  {new Date(booking.date).toLocaleString()}{" "}
+  {booking.organization.timezone && (
+    <span className="text-gray-500">
+      ({booking.organization.timezone})
+    </span>
+  )}
+</p>
             </div>
 
             <div>
@@ -202,7 +216,7 @@ export default function BookingDetails({
 
             <div>
               <p className="font-semibold">
-                Worker
+                Employee
               </p>
 
               <p>
@@ -384,7 +398,7 @@ export default function BookingDetails({
 {booking.workerCancelledAt && (
   <section className="rounded-xl border bg-orange-50 p-6 shadow-sm">
     <h2 className="text-xl font-bold text-orange-700">
-      Cancelled by Worker
+      Cancelled by Employee
     </h2>
 
     <p className="mt-4">

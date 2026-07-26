@@ -109,6 +109,10 @@ export default async function CustomerBookingPage({
             booking.service.organization?.name ??
             "",
 
+             timezone:
+    booking.service.organization?.timezone ?? null,
+
+
           bookingNotes:
             booking.service.organization
               ?.bookingNotes ?? "",

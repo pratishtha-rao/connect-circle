@@ -28,14 +28,12 @@ export async function POST(req: Request) {
       },
     });
 
-    console.log("WORKER:", worker);
-
     if (!worker) {
       console.log("❌ Worker not found.");
 
       return NextResponse.json(
         {
-          error: "Worker not found.",
+          error: "Employee not found.",
         },
         {
           status: 404,
@@ -44,8 +42,6 @@ export async function POST(req: Request) {
     }
 
     const availability = await req.json();
-
-    console.log("BODY:", availability);
 
     await prisma.availability.deleteMany({
       where: {
@@ -62,16 +58,11 @@ export async function POST(req: Request) {
         endTime: day.endTime,
       }));
 
-    console.log("ROWS TO INSERT:", rows);
-
     if (rows.length > 0) {
       await prisma.availability.createMany({
         data: rows,
       });
     }
-
-    console.log("✅ Availability saved successfully.");
-    console.log("====================================");
 
     return NextResponse.json({
       success: true,

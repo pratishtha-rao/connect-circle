@@ -189,6 +189,10 @@ export default async function CustomerBookingsPage({
 
       </div>
 
+<div className="mb-4 rounded-lg border border-yellow-300 bg-yellow-50 p-4 text-center text-sm text-yellow-800">
+  <strong>Please note:</strong> All appointment times are displayed in the respective organization's time zone.
+</div>
+
       <BookingFilters
         organizations={organizations}
         workers={workers}
@@ -231,11 +235,10 @@ export default async function CustomerBookingsPage({
               <div className="space-y-4">
 
                 {upcoming.map((booking) => (
-                  <BookingCard
-                    key={booking.id}
-                    booking={booking}
-                  />
-                ))}
+<BookingCard
+  key={booking.id}
+  booking={booking}
+/>              ))}
 
               </div>
 
@@ -262,11 +265,10 @@ export default async function CustomerBookingsPage({
               <div className="space-y-4">
 
                 {pending.map((booking) => (
-                  <BookingCard
-                    key={booking.id}
-                    booking={booking}
-                  />
-                ))}
+<BookingCard
+  key={booking.id}
+  booking={booking}
+  />                ))}
 
               </div>
 
@@ -293,11 +295,10 @@ export default async function CustomerBookingsPage({
               <div className="space-y-4">
 
                 {completed.map((booking) => (
-                  <BookingCard
-                    key={booking.id}
-                    booking={booking}
-                  />
-                ))}
+<BookingCard
+  key={booking.id}
+  booking={booking}
+/>                ))}
 
               </div>
 
@@ -323,11 +324,11 @@ export default async function CustomerBookingsPage({
               <div className="space-y-4">
 
                 {cancelled.map((booking) => (
-                  <BookingCard
-                    key={booking.id}
-                    booking={booking}
-                  />
-                ))}
+
+<BookingCard
+  key={booking.id}
+  booking={booking}
+/> ))}
 
               </div>
 

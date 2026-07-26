@@ -78,21 +78,13 @@ export default async function BookingPage({
 <div>
   <strong>Status</strong>
 
-  <p>
-    {booking.status === "PENDING"
-      ? "Pending"
-      : booking.status === "PENDING_PAYMENT"
-      ? "Payment Pending"
-      : booking.status === "CONFIRMED"
-      ? "Confirmed"
-      : booking.status === "COMPLETED"
-      ? "Completed"
-      : booking.status === "CANCELLED"
-      ? "Cancelled"
-      : booking.status.replaceAll("_", " ")}
-  </p>
-</div>
-</div>
+  {booking.status === "PENDING_PAYMENT" ? (
+    <p>Payment Pending</p>
+  ) : (
+    <p>{booking.status}</p>
+  )}
+</div>        </div>
+
         <BookingStatusButtons
           bookingId={booking.id}
           currentStatus={booking.status}

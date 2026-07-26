@@ -64,7 +64,7 @@ export async function POST(req: Request) {
         error:
           error instanceof Error
             ? error.message
-            : "Failed to create worker",
+            : "Failed to create employee",
       },
       {
         status: 500,

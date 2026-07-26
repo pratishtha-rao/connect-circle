@@ -287,18 +287,18 @@ const todaysBookings =
 
         <section className="rounded-2xl border bg-white p-6 shadow-sm">
           <h2 className="text-2xl font-semibold">
-            Workers
+            Employee
           </h2>
 
           <p className="mt-2 text-gray-600">
-            Add workers, assign bookings and manage schedules.
+            Add employees, assign bookings and manage schedules.
           </p>
 
           <Link
             href="/organization/workers"
             className="mt-6 inline-block rounded-lg bg-orange-500 px-5 py-3 font-semibold text-white hover:bg-orange-600"
           >
-            Manage Workers
+            Manage Employees
           </Link>
         </section>
 

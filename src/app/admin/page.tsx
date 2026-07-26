@@ -199,7 +199,7 @@ export default async function AdminPage() {
         />
 
         <StatCard
-          title="Workers"
+          title="Employees"
           value={totalWorkers}
         />
 
@@ -234,7 +234,7 @@ export default async function AdminPage() {
         />
 
         <StatCard
-          title="New Workers"
+          title="New Employees"
           value={workersThisMonth}
         />
 

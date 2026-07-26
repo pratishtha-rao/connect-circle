@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Worker = {
   id: string;
@@ -21,6 +21,10 @@ type Props = {
   organizationNotes: string | null;
   paymentInstructions: string | null;
   workers: Worker[];
+  organizationAvailabilityDays: number[];
+  organizationStartTime: string | null;
+  organizationEndTime: string | null;
+  organizationTimezone: string | null;
 };
 
 export default function BookingForm({
@@ -30,77 +34,99 @@ export default function BookingForm({
   organizationNotes,
   paymentInstructions,
   workers,
+  organizationAvailabilityDays,
+organizationStartTime,
+organizationEndTime,
+organizationTimezone,
 }: Props) {
   const [workerId, setWorkerId] = useState("");
 const [selectedDate, setSelectedDate] = useState("");
 const [selectedTime, setSelectedTime] = useState("");
+const [loadingTimes, setLoadingTimes] = useState(false);
 
 function formatDate(date: Date) {
-  return date.toISOString().split("T")[0];
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+
+  return `${y}-${m}-${d}`;
 }
 
-function generateTimes(
-  start: string,
-  end: string
-) {
-  const times: string[] = [];
+type AvailableSlot = {
+  time: string;
+  workerId: string;
+};
 
-  let [hour, minute] = start
-    .split(":")
-    .map(Number);
-
-  const [endHour, endMinute] = end
-    .split(":")
-    .map(Number);
-
-  while (
-    hour < endHour ||
-    (hour === endHour &&
-      minute < endMinute)
-  ) {
-    times.push(
-      `${hour
-        .toString()
-        .padStart(2, "0")}:${minute
-        .toString()
-        .padStart(2, "0")}`
-    );
-
-    minute += 30;
-
-    if (minute >= 60) {
-      minute = 0;
-      hour++;
-    }
-  }
-
-  return times;
-}
+const [availableTimes, setAvailableTimes] = useState<AvailableSlot[]>([]);
+const [selectedSlot, setSelectedSlot] =
+  useState<AvailableSlot | null>(null);
 
 const selectedWorker = workers.find(
   (w) => w.id === workerId
 );
 
 const weekday = selectedDate
-  ? new Date(selectedDate).getDay()
+  ? (() => {
+      const [year, month, day] = selectedDate
+        .split("-")
+        .map(Number);
+
+      return new Date(
+        year,
+        month - 1,
+        day
+      ).getDay();
+    })()
   : null;
+  
+  useEffect(() => {
+  if (!selectedDate) {
+    setAvailableTimes([]);
+    return;
+  }
 
-const availability =
-  allowWorkerSelection &&
-  selectedWorker &&
-  weekday !== null
-    ? selectedWorker.availability.find(
-        (a) => a.dayOfWeek === weekday
-      )
-    : null;
+  if (allowWorkerSelection && !workerId) {
+    setAvailableTimes([]);
+    return;
+  }
 
-const availableTimes =
-  availability
-    ? generateTimes(
-        availability.startTime,
-        availability.endTime
-      )
-    : [];
+  async function loadAvailability() {
+    setLoadingTimes(true);
+
+    try {
+      const params = new URLSearchParams({
+        serviceId,
+        date: selectedDate,
+      });
+
+      if (workerId) {
+        params.append("workerId", workerId);
+      }
+
+      const res = await fetch(
+        `/api/availability?${params}`
+      );
+
+      const data = await res.json();
+
+      setAvailableTimes(data.times ?? []);
+      setSelectedTime("");
+    } catch (err) {
+      console.error(err);
+      setAvailableTimes([]);
+    } finally {
+      setLoadingTimes(false);
+    }
+  }
+
+  loadAvailability();
+}, [
+  selectedDate,
+  workerId,
+  serviceId,
+  allowWorkerSelection,
+]);
+
 
   const [notes, setNotes] = useState("");
   const [saving, setSaving] = useState(false);
@@ -154,30 +180,31 @@ window.location.href = `/customer/bookings/${data.booking.id}`;    } catch (erro
   return (
     <div className="space-y-8">
 
+{workers.length === 0 && (
+  <div className="mb-4 rounded-lg border border-yellow-300 bg-yellow-50 p-4 text-center text-sm text-yellow-800">
+    No employees are currently assigned to this service.
+    <br />
+    Please contact the organization or choose another service.
+  </div>
+)}
+
       <div className="rounded-xl border bg-white p-8 shadow-sm">
 
 {allowWorkerSelection && (
   <div className="mb-6">
     <label className="mb-2 block font-medium">
-      Choose Worker
+      Choose Employee
     </label>
 
-    {workers.length === 0 ? (
-      <div className="rounded-lg border border-yellow-300 bg-yellow-50 p-4 text-sm text-yellow-800">
-        No workers are currently assigned to this service.
-        <br />
-        Please contact the organization or choose another service.
-      </div>
-    ) : (
-      <select
-        value={workerId}
-        onChange={(e) => {
-          setWorkerId(e.target.value);
-          setSelectedTime("");
-        }}
-        className="w-full rounded-lg border p-3"
-      >
-        <option value="">
+{workers.length > 0 && (
+  <select
+    value={workerId}
+    onChange={(e) => {
+      setWorkerId(e.target.value);
+      setSelectedTime("");
+    }}
+    className="w-full rounded-lg border p-3"
+  >        <option value="">
           Select a worker
         </option>
 
@@ -192,6 +219,12 @@ window.location.href = `/customer/bookings/${data.booking.id}`;    } catch (erro
       </select>
     )}
   </div>
+)}
+
+{organizationTimezone && (
+  <p className="mt-2 text-sm text-gray-500">
+    All appointment times are shown in the organization's timezone ({organizationTimezone}).
+  </p>
 )}
 
 <div className="space-y-5">
@@ -221,27 +254,45 @@ window.location.href = `/customer/bookings/${data.booking.id}`;    } catch (erro
       Appointment Time
     </label>
 
-    <select
-      value={selectedTime}
-      onChange={(e) =>
-        setSelectedTime(e.target.value)
-      }
-      className="w-full rounded-lg border p-3"
-    >
-      <option value="">
-        Select Time
-      </option>
+<select
+  value={selectedTime}
+  onChange={(e) => {
+    const slot = availableTimes.find(
+      (s) => s.time === e.target.value
+    );
 
-      {availableTimes.map((time) => (
-        <option
-          key={time}
-          value={time}
-        >
-          {time}
-        </option>
-      ))}
+    if (!slot) return;
 
-    </select>
+    setSelectedTime(slot.time);
+    setSelectedSlot(slot);
+
+    if (!allowWorkerSelection) {
+      setWorkerId(slot.workerId);
+    }
+  }}
+  className="w-full rounded-lg border p-3"
+>
+    <option value="">
+    {loadingTimes ? "Loading..." : "Select Time"}
+  </option>
+
+{availableTimes.map((slot) => (
+  <option
+    key={`${slot.workerId}-${slot.time}`}
+    value={slot.time}
+  >
+    {slot.time}
+  </option>
+))}
+</select>
+
+{!loadingTimes &&
+  selectedDate &&
+  availableTimes.length === 0 && (
+    <p className="mt-2 text-sm text-red-600">
+      No appointments are available for this day.
+    </p>
+)}
 
 </div>
         </div>
