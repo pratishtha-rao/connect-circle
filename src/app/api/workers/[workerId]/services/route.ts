@@ -2,17 +2,14 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getCurrentProfile } from "@/lib/profile";
 
-type Props = {
-  params: Promise<{
-    workerId: string;
-  }>;
-};
-
 export async function POST(
   req: Request,
-  { params }: Props
-) {
-  try {
+  {
+    params,
+  }: {
+    params: Promise<{ workerId: string }>;
+  }
+) {  try {
     const profile = await getCurrentProfile();
 
     if (!profile) {
