@@ -39,7 +39,7 @@ export default function ChangePasswordForm() {
   }
 
   return (
-    <div className="rounded-2xl border bg-white p-8 shadow-sm space-y-6">
+    <div className="rounded-2xl border bg-blue-100 p-8 shadow-sm space-y-6">
       <div>
         <label className="mb-2 block font-semibold">
           New Password

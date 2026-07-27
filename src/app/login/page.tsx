@@ -43,6 +43,7 @@ async function onSubmit(data: LoginForm) {
 
   return (
     <main className="flex min-h-screen items-center justify-center p-6">
+     
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="w-full max-w-md space-y-4 rounded-xl border p-6"
@@ -52,14 +53,14 @@ async function onSubmit(data: LoginForm) {
         </h1>
 
         <input
-          {...register("email")}
+          {...register("email", { required: true })}
           type="email"
           placeholder="Email"
           className="w-full rounded border p-3"
         />
 
         <input
-          {...register("password")}
+          {...register("password", { required: true })}
           type="password"
           placeholder="Password"
           className="w-full rounded border p-3"

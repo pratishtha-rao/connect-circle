@@ -64,8 +64,10 @@ export default async function WorkerAvailabilityPage({
   }
 
   return (
+    <>             <OrganizationNavbar />
+
     <main className="mx-auto max-w-5xl p-8">
-            <OrganizationNavbar />
+      
       <h1 className="text-4xl font-bold">
         {worker.profile.fullName}
       </h1>
@@ -75,7 +77,7 @@ export default async function WorkerAvailabilityPage({
       </p>
 
       {worker.availability.length === 0 ? (
-        <div className="rounded-xl border bg-white p-6 shadow-sm">
+        <div className="rounded-xl border bg-blue-100 p-6 shadow-sm">
           No availability has been added yet.
         </div>
       ) : (
@@ -83,7 +85,7 @@ export default async function WorkerAvailabilityPage({
           {worker.availability.map((slot) => (
             <div
               key={slot.id}
-              className="rounded-xl border bg-white p-6 shadow-sm"
+              className="rounded-xl border bg-blue-100 p-6 shadow-sm"
             >
               <p className="font-semibold">
                 {DAYS[slot.dayOfWeek]}
@@ -97,5 +99,7 @@ export default async function WorkerAvailabilityPage({
         </div>
       )}
     </main>
+     </>
   );
 }
+

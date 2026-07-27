@@ -136,10 +136,9 @@ const todaysBookings =
   );
 
     return (
+<>       <OrganizationNavbar />
 
     <main className="mx-auto max-w-7xl p-8">
-
-      <OrganizationNavbar />
 
       <h1 className="text-4xl font-bold text-gray-900">
         Organization Dashboard
@@ -201,7 +200,7 @@ const todaysBookings =
 
 </div>
 
-<div className="mt-8 rounded-2xl border bg-white p-6 shadow-sm">
+<div className="mt-8 rounded-2xl border bg-blue-100 p-6 shadow-sm">
 
   <h2 className="text-2xl font-semibold">
     Most Booked Service
@@ -240,12 +239,12 @@ const todaysBookings =
 
         {/* Bookings */}
 
-        <section className="rounded-2xl border bg-white p-6 shadow-sm">
+        <section className="rounded-2xl border bg-blue-100 p-6 shadow-sm">
           <h2 className="text-2xl font-semibold">
             Bookings
           </h2>
 
-          <p className="mt-2 text-gray-600">
+          <p className="mt-2 text-black-600">
             Manage appointments, confirmations, cancellations and archives.
           </p>
 
@@ -253,14 +252,14 @@ const todaysBookings =
 
             <Link
               href="/organization/bookings"
-              className="rounded-lg bg-orange-500 px-5 py-3 font-semibold text-white hover:bg-orange-600"
+              className="rounded-lg bg-orange-500 px-5 py-3 font-timesnewroman text-white hover:bg-orange-600"
             >
               View Bookings
             </Link>
 
             <Link
               href="/organization/bookings/archive"
-              className="rounded-lg border px-5 py-3 hover:bg-gray-50"
+              className="rounded-lg bg-orange-500 px-5 py-3 font-timesnewroman text-white hover:bg-orange-600"
             >
               Archived Bookings
             </Link>
@@ -270,18 +269,18 @@ const todaysBookings =
 
         {/* Services */}
 
-        <section className="rounded-2xl border bg-white p-6 shadow-sm">
+        <section className="rounded-2xl border bg-blue-100 p-6 shadow-sm">
           <h2 className="text-2xl font-semibold">
             Services
           </h2>
 
-          <p className="mt-2 text-gray-600">
+          <p className="mt-2 text-black-600">
             Create and manage all services offered by your organization.
           </p>
 
           <Link
             href="/organization/services"
-            className="mt-6 inline-block rounded-lg bg-orange-500 px-5 py-3 font-semibold text-white hover:bg-orange-600"
+            className="mt-6 inline-block rounded-lg bg-orange-500 px-5 py-3 font-timesnewroman text-white hover:bg-orange-600"
           >
             Manage Services
           </Link>
@@ -289,18 +288,18 @@ const todaysBookings =
 
         {/* Workers */}
 
-        <section className="rounded-2xl border bg-white p-6 shadow-sm">
+        <section className="rounded-2xl border bg-blue-100 p-6 shadow-sm">
           <h2 className="text-2xl font-semibold">
             Employee
           </h2>
 
-          <p className="mt-2 text-gray-600">
+          <p className="mt-2 text-black-600">
             Add employees, assign bookings and manage schedules.
           </p>
 
           <Link
             href="/organization/workers"
-            className="mt-6 inline-block rounded-lg bg-orange-500 px-5 py-3 font-semibold text-white hover:bg-orange-600"
+            className="mt-6 inline-block rounded-lg bg-orange-500 px-5 py-3 font-timesnewroman text-white hover:bg-orange-600"
           >
             Manage Employees
           </Link>
@@ -308,18 +307,18 @@ const todaysBookings =
 
         {/* Categories */}
 
-        <section className="rounded-2xl border bg-white p-6 shadow-sm">
+        <section className="rounded-2xl border bg-blue-100 p-6 shadow-sm">
           <h2 className="text-2xl font-semibold">
             Categories
           </h2>
 
-          <p className="mt-2 text-gray-600">
+          <p className="mt-2 text-black-600">
             Organize your services into categories.
           </p>
 
           <Link
             href="/organization/categories"
-            className="mt-6 inline-block rounded-lg bg-orange-500 px-5 py-3 font-semibold text-white hover:bg-orange-600"
+            className="mt-6 inline-block rounded-lg bg-orange-500 px-5 py-3 font-timesnewroman text-white hover:bg-orange-600"
           >
             Manage Categories
           </Link>
@@ -328,18 +327,18 @@ const todaysBookings =
   {/*
         **CALENDAR**
 
-        <section className="rounded-2xl border bg-white p-6 shadow-sm">
+        <section className="rounded-2xl border bg-blue-100 p-6 shadow-sm">
           <h2 className="text-2xl font-semibold">
             Calendar
           </h2>
 
-          <p className="mt-2 text-gray-600">
+          <p className="mt-2 text-black-600">
             View appointments by day, week or month.
           </p>
 
           <Link
             href="/organization/calendar"
-            className="mt-6 inline-block rounded-lg bg-orange-500 px-5 py-3 font-semibold text-white hover:bg-orange-600"
+            className="mt-6 inline-block rounded-lg bg-orange-500 px-5 py-3 font-timesnewroman text-white hover:bg-orange-600"
           >
             Open Calendar
           </Link>
@@ -349,18 +348,18 @@ const todaysBookings =
 
         {/* Settings */}
 
-        <section className="rounded-2xl border bg-white p-6 shadow-sm">
+        <section className="rounded-2xl border bg-blue-100 p-6 shadow-sm">
           <h2 className="text-2xl font-semibold">
             Settings
           </h2>
 
-          <p className="mt-2 text-gray-600">
+          <p className="mt-2 text-black-600">
             Update organization information and preferences.
           </p>
 
           <Link
             href="/organization/settings"
-            className="mt-6 inline-block rounded-lg bg-orange-500 px-5 py-3 font-semibold text-white hover:bg-orange-600"
+            className="mt-6 inline-block rounded-lg bg-orange-500 px-5 py-3 font-timesnewroman text-white hover:bg-orange-600"
           >
             Organization Settings
           </Link>
@@ -369,6 +368,7 @@ const todaysBookings =
       </div>
 
     </main>
+    </>
   );
 }
 
@@ -382,9 +382,9 @@ function StatCard({
   subtitle?: string;
 }) {
   return (
-    <div className="rounded-xl border bg-white px-5 py-4 shadow-sm">
+    <div className="rounded-xl border bg-blue-100 px-5 py-4 shadow-sm">
 
-      <p className="text-xs uppercase tracking-wide text-gray-500">
+      <p className="text-xs uppercase tracking-wide text-black">
         {title}
       </p>
 
@@ -399,5 +399,6 @@ function StatCard({
       )}
 
     </div>
+    
   );
 }

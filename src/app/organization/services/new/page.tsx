@@ -30,13 +30,16 @@ export default async function NewServicePage() {
   });
 
   return (
-    <main className="mx-auto max-w-2xl p-8">
-            <OrganizationNavbar />
+    <>             <OrganizationNavbar />
+
+    <main className="mx-auto max-w-2xl p-12">
+
       <h1 className="mb-8 text-4xl font-bold">
         New Service
       </h1>
 
       <ServiceForm categories={categories} />
     </main>
+    </>
   );
 }

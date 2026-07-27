@@ -69,7 +69,7 @@ export default function BookingFilters({
   }
 
   return (
-    <div className="rounded-2xl border bg-white p-6 shadow-sm">
+    <div className="rounded-2xl border bg-blue-100 p-6 shadow-sm">
 
       <div className="grid gap-4 lg:grid-cols-5">
 
@@ -80,7 +80,7 @@ export default function BookingFilters({
             defaultValue={
               searchParams.get("search") ?? ""
             }
-            placeholder="Search services, organizations or workers..."
+            placeholder="Search organizations or workers..."
             className="flex-1 rounded-xl border p-3"
             onKeyDown={(e) => {
               if (e.key === "Enter") {
@@ -92,7 +92,7 @@ export default function BookingFilters({
           <button
             type="button"
             onClick={submitSearch}
-            className="rounded-xl bg-orange-500 px-5 font-semibold text-white transition hover:bg-orange-600"
+            className="rounded-xl bg-orange-500 px-5 font-timesnewroman text-white transition hover:bg-orange-600"
           >
             Search
           </button>
@@ -161,6 +161,7 @@ export default function BookingFilters({
           {[
             "ALL",
             "PENDING",
+            "PENDING_PAYMENT",
             "CONFIRMED",
             "COMPLETED",
             "CANCELLED",
@@ -179,10 +180,10 @@ export default function BookingFilters({
                     status
                   )
                 }
-                className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                className={`rounded-full px-4 py-2 text-sm font-timesnewroman transition ${
                   active
                     ? "bg-orange-500 text-white"
-                    : "border bg-white hover:bg-gray-50"
+                    : "border bg-blue-100 hover:bg-blue-300"
                 }`}
               >
                 {status === "ALL"
@@ -209,7 +210,7 @@ export default function BookingFilters({
           onClick={() =>
             router.push(pathname)
           }
-          className="rounded-xl border px-5 py-2 font-medium transition hover:bg-gray-50"
+          className="rounded-xl border px-5 py-2 font-medium transition hover:bg-blue-300"
         >
           Clear Filters
         </button>

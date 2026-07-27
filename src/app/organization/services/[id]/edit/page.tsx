@@ -48,8 +48,10 @@ export default async function EditServicePage({
   });
 
   return (
+    <>
+     <OrganizationNavbar />
+
     <main className="mx-auto max-w-2xl p-8">
-            <OrganizationNavbar />
       <h1 className="mb-8 text-4xl font-bold">
         Edit Service
       </h1>
@@ -59,5 +61,9 @@ export default async function EditServicePage({
         service={service}
       />
     </main>
+  </>
   );
 }
+
+
+

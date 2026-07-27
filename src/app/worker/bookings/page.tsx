@@ -110,9 +110,10 @@ const total =
   cancelled.length;
 
   return (
-    <main className="mx-auto max-w-7xl p-8">
 
-            <WorkerNavbar />
+    <>            
+     <WorkerNavbar />
+    <main className="mx-auto max-w-7xl p-8">
 
       <div className="mb-10 flex items-center justify-between">
         <div>
@@ -128,16 +129,9 @@ const total =
         <div className="flex gap-3">
           <Link
             href="/worker/bookings/archive"
-            className="rounded-lg border px-5 py-3 hover:bg-gray-50"
+            className="rounded-lg border px-5 py-3 hover:bg-orange-200"
           >
             Archived
-          </Link>
-
-          <Link
-            href="/worker"
-            className="rounded-lg border px-5 py-3 hover:bg-gray-50"
-          >
-            Dashboard
           </Link>
         </div>
       </div>
@@ -147,7 +141,7 @@ const total =
       />
 
 {total === 0 ? (
-          <div className="mt-8 rounded-xl border bg-white p-8 shadow-sm">
+          <div className="mt-8 rounded-xl border bg-blue-100 p-8 shadow-sm">
           No bookings found.
         </div>
       ) : (
@@ -196,6 +190,8 @@ const total =
 </div>
        )}
 </main>
+</>
+
 );
 }
       
@@ -237,7 +233,7 @@ function BookingSection({
         {bookings.map((booking) => (
           <div
             key={booking.id}
-            className="rounded-2xl border bg-white p-6 shadow-sm transition hover:shadow-md"
+            className="rounded-2xl border bg-blue-100 p-6 shadow-sm transition hover:shadow-md"
           >
             <div className="flex items-start justify-between gap-6">
 
@@ -295,7 +291,7 @@ function BookingSection({
                   </div>
 
                   {booking.notes && (
-                    <div className="md:col-span-2 rounded-lg border bg-yellow-50 p-4">
+                    <div className="md:col-span-2 rounded-lg border bg-yellow-100 p-4">
                       <h3 className="font-semibold">
                         Customer Notes
                       </h3>
@@ -307,7 +303,7 @@ function BookingSection({
                   )}
 
                   {booking.organizationNotes && (
-                    <div className="md:col-span-2 rounded-lg border bg-orange-50 p-4">
+                    <div className="md:col-span-2 rounded-lg border bg-orange-100 p-4">
                       <h3 className="font-semibold">
                         Organization Notes
                       </h3>
@@ -318,7 +314,7 @@ function BookingSection({
                     </div>
                   )}
                                     {booking.workerCancellationReason && (
-                    <div className="md:col-span-2 rounded-lg border border-red-200 bg-red-50 p-4">
+                    <div className="md:col-span-2 rounded-lg border border-red-200 bg-red-100 p-4">
                       <h3 className="font-semibold text-red-700">
                         Cancelled by You
                       </h3>
@@ -330,8 +326,8 @@ function BookingSection({
                   )}
 
                   {booking.customerCancellationReason && (
-                    <div className="md:col-span-2 rounded-lg border border-blue-200 bg-blue-50 p-4">
-                      <h3 className="font-semibold text-blue-700">
+                    <div className="md:col-span-2 rounded-lg border border-red-200 bg-red-100 p-4">
+                      <h3 className="font-semibold text-black-700">
                         Cancelled by Customer
                       </h3>
 
@@ -342,7 +338,7 @@ function BookingSection({
                   )}
 
                   {booking.cancellationReason && (
-                    <div className="md:col-span-2 rounded-lg border border-red-200 bg-red-50 p-4">
+                    <div className="md:col-span-2 rounded-lg border border-red-200 bg-red-100 p-4">
                       <h3 className="font-semibold text-red-700">
                         Cancelled by Organization
                       </h3>
@@ -392,7 +388,7 @@ function BookingSection({
             <div className="mt-6 flex gap-3">
               <Link
                 href={`/worker/bookings/${booking.id}`}
-                className="rounded-xl bg-orange-500 px-5 py-2 font-semibold text-white transition hover:bg-orange-600"
+                className="rounded-xl bg-orange-500 px-5 py-2 font-timesnewroman text-white transition hover:bg-orange-600"
               >
                 Open Booking
               </Link>

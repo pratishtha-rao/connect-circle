@@ -45,18 +45,21 @@ className="flex h-full items-center px-6 text-base font-medium text-gray-900 tra
 
 </div>
 
+          {/* Logout */}
+
 <div className="ml-auto flex items-center"> </div>
 <div className="flex h-full items-center"> </div>
-          <LogoutButton />
-
-          {/* Logout */}
           <LogoutButton />
 
         </div>
       </nav>
 
-      {/* BIG GAP BELOW NAVBAR */}
-      <div className="h-12" />
     </>
   );
 }
+
+//
+     // {/* BIG GAP BELOW NAVBAR */}
+  //    <div className="h-12" />
+
+  

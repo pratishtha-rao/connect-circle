@@ -3,8 +3,8 @@ import OrganizationNavbar from "@/components/organization-navbar";
 
 export default function InviteWorkerPage() {
   return (
+    <> <OrganizationNavbar/>
     <main className="mx-auto max-w-2xl p-8">
-            <OrganizationNavbar />
 
       <h1 className="mb-3 text-4xl font-bold">
         Invite Employee
@@ -16,6 +16,7 @@ export default function InviteWorkerPage() {
 
       <InviteWorkerForm />
     </main>
+    </>
   );
 }
 

@@ -39,30 +39,32 @@ export default async function WorkerArchivedBookingsPage() {
   });
 
   return (
-    <main className="mx-auto max-w-6xl p-8">
-            <WorkerNavbar />
+    <>             
+    <WorkerNavbar />
 
-      <div className="mb-10 flex items-center justify-between">
+    <main className="mx-auto max-w-6xl p-8">
+
+      <div className="mb-10 flex items-center justify-between gap-10">
         <div>
           <h1 className="text-4xl font-bold">
             Archived Bookings
           </h1>
 
           <p className="mt-2 text-gray-600">
-            Bookings you've archived.
+            Bookings you have archived.
           </p>
         </div>
 
         <Link
           href="/worker/bookings"
-          className="rounded-lg border px-5 py-3 hover:bg-gray-50"
+          className="rounded-lg border px-5 py-3 hover:bg-orange-200"
         >
           Back to Bookings
         </Link>
       </div>
 
       {bookings.length === 0 ? (
-        <div className="rounded-xl border bg-white p-8 shadow-sm">
+        <div className="rounded-xl border bg-blue-100 p-8 shadow-sm">
           No archived bookings.
         </div>
       ) : (
@@ -70,7 +72,7 @@ export default async function WorkerArchivedBookingsPage() {
           {bookings.map((booking) => (
             <div
               key={booking.id}
-              className="rounded-xl border bg-white p-6 shadow-sm"
+              className="rounded-xl border bg-blue-100 p-6 shadow-sm"
             >
               <h2 className="text-xl font-semibold">
                 {booking.service.title}
@@ -92,7 +94,7 @@ export default async function WorkerArchivedBookingsPage() {
               </p>
 
               {booking.organizationNotes && (
-                <div className="mt-4 rounded-lg border bg-orange-50 p-4">
+                <div className="mt-4 rounded-lg border bg-orange-100 p-4">
                   <h3 className="font-semibold">
                     Organization Notes
                   </h3>
@@ -104,7 +106,7 @@ export default async function WorkerArchivedBookingsPage() {
               )}
 
               {booking.notes && (
-                <div className="mt-4 rounded-lg border bg-gray-50 p-4">
+                <div className="mt-4 rounded-lg border bg-yellow-50 p-4">
                   <h3 className="font-semibold">
                     Customer Notes
                   </h3>
@@ -116,8 +118,8 @@ export default async function WorkerArchivedBookingsPage() {
               )}
 
 {booking.customerCancellationReason && (
-  <div className="mt-4 rounded-lg border border-blue-200 bg-blue-50 p-4">
-    <h3 className="font-semibold text-blue-700">
+  <div className="mt-4 rounded-lg border border-blue-200 bg-red-100 p-4">
+    <h3 className="font-semibold text-red-700">
       Cancelled by Customer
     </h3>
 
@@ -129,7 +131,7 @@ export default async function WorkerArchivedBookingsPage() {
 
 
               {booking.cancellationReason && (
-                <div className="mt-4 rounded-lg border border-red-200 bg-red-50 p-4">
+                <div className="mt-4 rounded-lg border border-red-200 bg-red-100 p-4">
                   <h3 className="font-semibold text-red-700">
                     Cancelled by Organization
                   </h3>
@@ -141,8 +143,8 @@ export default async function WorkerArchivedBookingsPage() {
               )}
 
               {booking.workerCancellationReason && (
-                <div className="mt-4 rounded-lg border border-yellow-200 bg-yellow-50 p-4">
-                  <h3 className="font-semibold text-yellow-700">
+                <div className="mt-4 rounded-lg border border-yellow-200 bg-red-100 p-4">
+                  <h3 className="font-semibold text-red-700">
                     Cancelled by You
                   </h3>
 
@@ -162,5 +164,6 @@ export default async function WorkerArchivedBookingsPage() {
         </div>
       )}
     </main>
+  </>
   );
 }

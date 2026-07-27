@@ -31,23 +31,25 @@ export default async function CategoriesPage() {
   });
 
   return (
+    <>
+                <OrganizationNavbar />
+
     <main className="mx-auto max-w-4xl p-8">
-            <OrganizationNavbar />
-      <div className="mb-8 flex items-center justify-between">
-        <h1 className="text-4xl font-bold">
-          Categories
-        </h1>
 
-        <Link
-          href="/organization/categories/new"
-          className="rounded-xl bg-orange-500 px-5 py-3 font-semibold text-white hover:bg-orange-600"
-        >
-          New Category
-        </Link>
-      </div>
+<div className="mb-8 flex items-center gap-30">
+  <h1 className="text-4xl font-bold">
+    Categories
+  </h1>
 
+  <Link
+    href="/organization/categories/new"
+    className="rounded-xl bg-orange-500 px-5 py-3 font-semibold text-white transition hover:bg-orange-600"
+  >
+    New Category
+  </Link>
+</div>
       {categories.length === 0 ? (
-        <p className="text-gray-500">
+        <p mt-6 className="text-blue-200">
           No categories yet.
         </p>
       ) : (
@@ -55,11 +57,12 @@ export default async function CategoriesPage() {
           {categories.map((category) => (
             <div
               key={category.id}
-              className="rounded-xl border border-orange-200 bg-white p-4"
+              className="mt-10 rounded-xl border-blue-200 bg-blue-200 p-4"
             >
-              <h2 className="font-semibold">
+              <h2 className="text-xl font-semibold">
                 {category.name}
               </h2>
+
             <DeleteCategoryButton id={category.id} />
 
             </div>
@@ -69,5 +72,6 @@ export default async function CategoriesPage() {
         </div>
       )}
     </main>
+    </>
   );
 }

@@ -57,9 +57,9 @@ export default function AdminNavbar() {
 
         </div>
       </nav>
-
-      {/* Space below navbar */}
-      <div className="h-12" />
     </>
   );
 }
+
+      {/* Space below navbar */}
+     // <div className="h-12" />

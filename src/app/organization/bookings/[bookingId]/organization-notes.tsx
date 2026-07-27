@@ -43,7 +43,7 @@ export default function OrganizationNotes({
   }
 
   return (
-    <div className="rounded-xl border bg-gray-50 p-6">
+    <div className="rounded-xl border bg-blue-100 p-6">
 
       <h2 className="text-xl font-semibold">
         Organization Notes

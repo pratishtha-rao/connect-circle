@@ -12,8 +12,8 @@ export default async function ChangeOrganizationPasswordPage() {
   }
 
   return (
+    <>       <OrganizationNavbar />
     <main className="mx-auto max-w-2xl p-8">
-      <OrganizationNavbar />
 
       <div className="mb-8">
 
@@ -30,5 +30,6 @@ export default async function ChangeOrganizationPasswordPage() {
       <ChangePasswordForm />
 
     </main>
+    </>
   );
 }

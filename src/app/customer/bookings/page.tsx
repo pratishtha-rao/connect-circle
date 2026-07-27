@@ -159,6 +159,17 @@ export default async function CustomerBookingsPage({
         a.date.getTime()
     );
 
+    const paymentPending = filtered
+  .filter(
+    (booking) =>
+      booking.status === "PENDING_PAYMENT"
+  )
+  .sort(
+    (a, b) =>
+      b.date.getTime() -
+      a.date.getTime()
+  );
+
   const cancelled = filtered
     .filter(
       (booking) =>
@@ -174,11 +185,13 @@ export default async function CustomerBookingsPage({
     upcoming.length +
     pending.length +
     completed.length +
+      paymentPending.length +
     cancelled.length;
       return (
-    <main className="mx-auto max-w-7xl p-8">
+        <>
+              <CustomerNavbar />
 
-      <CustomerNavbar />
+    <main className="mx-auto max-w-7xl p-8">
 
       <div className="mb-10">
 
@@ -203,7 +216,7 @@ export default async function CustomerBookingsPage({
 
       {total === 0 ? (
 
-        <div className="mt-8 rounded-2xl border bg-white p-12 text-center shadow-sm">
+        <div className="mt-8 rounded-2xl border bg-blue-100 p-12 text-center shadow-sm">
 
           <h2 className="text-2xl font-semibold">
             No bookings found
@@ -279,6 +292,37 @@ export default async function CustomerBookingsPage({
 
           )}
 
+{paymentPending.length > 0 && (
+
+  <section>
+
+    <div className="mb-5 flex items-center gap-3">
+
+      <h2 className="text-2xl font-bold">
+        Payment Pending
+      </h2>
+
+      <span className="rounded-full bg-orange-100 px-3 py-1 text-sm font-semibold text-orange-700">
+        {paymentPending.length}
+      </span>
+
+    </div>
+
+    <div className="space-y-4">
+
+      {paymentPending.map((booking) => (
+        <BookingCard
+          key={booking.id}
+          booking={booking}
+        />
+      ))}
+
+    </div>
+
+  </section>
+
+)}
+
           {completed.length > 0 && (
 
             <section>
@@ -344,5 +388,6 @@ export default async function CustomerBookingsPage({
       )}
 
     </main>
+    </>
   );
 }

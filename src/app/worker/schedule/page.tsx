@@ -57,7 +57,7 @@ export default async function WorkerSchedulePage() {
         </p>
 
         {confirmedBookings.length === 0 ? (
-          <div className="rounded-xl border bg-white p-8 shadow-sm">
+          <div className="rounded-xl border bg-blue-100 p-8 shadow-sm">
             No confirmed appointments.
           </div>
         ) : (
@@ -70,7 +70,7 @@ export default async function WorkerSchedulePage() {
 {confirmedBookings.map((booking) => (
   <div
     key={booking.id}
-    className="rounded-xl border bg-white p-8 shadow-sm"
+    className="rounded-xl border bg-blue-100 p-8 shadow-sm"
   >
     {/* Service */}
     <h3 className="text-2xl font-bold text-black-800">
@@ -86,7 +86,7 @@ export default async function WorkerSchedulePage() {
     {/* Date */}
     <p className="mt-4 font-medium text-black-600">
       {booking.date.toLocaleString()}{" "}
-      <span className="text-sm text-gray-500">
+      <span className="text-sm text-black">
         ({booking.service.organization?.timezone ?? "No timezone"})
       </span>
     </p>
@@ -97,7 +97,7 @@ export default async function WorkerSchedulePage() {
         Customer Notes
       </p>
 
-      <div className="mt-2 rounded-lg bg-yellow-50 p-4">
+      <div className="mt-2 rounded-lg border bg-yellow-50 p-4">
         {booking.notes?.trim() ? (
           <p>{booking.notes}</p>
         ) : (
@@ -114,7 +114,7 @@ export default async function WorkerSchedulePage() {
         Organization Notes
       </p>
 
-      <div className="mt-2 rounded-lg bg-yellow-50 p-4">
+      <div className="mt-2 rounded-lg border bg-yellow-50 p-4">
         {booking.organizationNotes?.trim() ? (
           <p>{booking.organizationNotes}</p>
         ) : (

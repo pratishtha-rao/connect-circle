@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { UserRole } from "@prisma/client";
 
-const SUPER_ADMIN_EMAIL = "pratishtha.srao@gmail.com";
+const SUPER_ADMIN_EMAIL = "xxx";
 
 export async function POST(req: Request) {
   try {

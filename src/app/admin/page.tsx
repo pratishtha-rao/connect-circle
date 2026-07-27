@@ -167,11 +167,10 @@ const revenue = bookings.reduce((sum, booking) => {
     .slice(0, 5);
 
   return (
+    <>       <AdminNavbar />
     <main className="mx-auto max-w-7xl p-8">
 
-      <AdminNavbar />
-
-      <div className="mb-10 flex items-center justify-between">
+      <div className="mb-10 flex items-center justify-between gap-6">
 
         <div>
           <h1 className="text-4xl font-bold">
@@ -185,7 +184,7 @@ const revenue = bookings.reduce((sum, booking) => {
 
         <Link
           href="/admin/organizations"
-          className="rounded-lg bg-orange-500 px-6 py-3 font-semibold text-white hover:bg-orange-600"
+          className="rounded-lg bg-orange-500 px-6 py-3 font-xl font-semibold text-blue-100 hover:bg-orange-600"
         >
           Manage Organizations
         </Link>
@@ -264,7 +263,7 @@ const revenue = bookings.reduce((sum, booking) => {
       </div>
             <div className="mt-12 grid gap-8 lg:grid-cols-2">
 
-        <div className="rounded-xl border bg-white p-6 shadow-sm">
+        <div className="rounded-xl border bg-blue-100 p-6 shadow-sm">
 
           <h2 className="mb-5 text-2xl font-bold">
             Most Profitable Organizations
@@ -306,7 +305,7 @@ const revenue = bookings.reduce((sum, booking) => {
 
         </div>
 
-        <div className="rounded-xl border bg-white p-6 shadow-sm">
+        <div className="rounded-xl border bg-blue-100 p-6 shadow-sm">
 
           <h2 className="mb-5 text-2xl font-bold">
             Most Active Organizations
@@ -343,6 +342,7 @@ const revenue = bookings.reduce((sum, booking) => {
       </div>
 
     </main>
+    </>
   );
 }
 
@@ -354,7 +354,7 @@ function StatCard({
   value: string | number;
 }) {
   return (
-    <div className="rounded-xl border bg-white p-6 shadow-sm transition hover:shadow-md">
+    <div className="rounded-xl border bg-blue-100 p-6 shadow-sm transition hover:shadow-md">
 
       <p className="text-sm font-medium text-gray-500">
         {title}

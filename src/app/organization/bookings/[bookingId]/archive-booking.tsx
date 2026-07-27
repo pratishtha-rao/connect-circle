@@ -35,7 +35,7 @@ if (!res.ok) {
   }
 
   return (
-    <div className="mt-10 rounded-xl border border-gray-300 bg-gray-50 p-6">
+    <div className="mt-10 rounded-xl border p-6">
 
       <h2 className="text-xl font-semibold">
         Archive Booking

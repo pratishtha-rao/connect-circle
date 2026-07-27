@@ -46,13 +46,15 @@ export default async function BookingPage({
   });
 
   return (
+    <>       
+    <OrganizationNavbar />
+
     <main className="mx-auto max-w-4xl p-8">
-      <OrganizationNavbar />
       <h1 className="mb-8 text-4xl font-bold">
         Booking Details
       </h1>
 
-      <div className="space-y-6 rounded-xl border bg-white p-8 shadow-sm">
+      <div className="space-y-6 rounded-xl border bg-blue-100 p-8 shadow-sm">
 
         <div>
           <strong>Customer</strong>
@@ -80,7 +82,7 @@ export default async function BookingPage({
   <strong>Status</strong>
 
   {booking.status === "PENDING_PAYMENT" ? (
-    <p>Payment Pending</p>
+    <p>PAYMENT PENDING</p>
   ) : (
     <p>{booking.status}</p>
   )}
@@ -123,8 +125,8 @@ export default async function BookingPage({
         />
 
 {booking.customerCancellationReason && (
-  <div className="mt-4 rounded-lg border border-blue-200 bg-blue-50 p-4">
-    <h3 className="font-semibold text-blue-700">
+  <div className="mt-4 rounded-lg border border-red-200 bg-red-100 p-4">
+    <h3 className="font-semibold text-black-700">
       Cancelled by Customer
     </h3>
 
@@ -181,5 +183,6 @@ export default async function BookingPage({
       </div>
 
     </main>
+    </>
   );
 }

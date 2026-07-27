@@ -50,6 +50,8 @@ export default function BookingCard({
     const styles = {
       PENDING:
         "bg-yellow-100 text-yellow-700",
+          PENDING_PAYMENT:
+    "bg-orange-100 text-orange-700",
       CONFIRMED:
         "bg-blue-100 text-blue-700",
       COMPLETED:
@@ -60,6 +62,7 @@ export default function BookingCard({
 
     const dots = {
       PENDING: "bg-yellow-500",
+      PENDING_PAYMENT: "bg-orange-500",
       CONFIRMED: "bg-blue-500",
       COMPLETED: "bg-green-500",
       CANCELLED: "bg-red-500",
@@ -71,6 +74,7 @@ export default function BookingCard({
           styles[status as keyof typeof styles]
         }`}
       >
+        
         <span
           className={`h-2 w-2 rounded-full ${
             dots[status as keyof typeof dots]
@@ -79,11 +83,12 @@ export default function BookingCard({
 
         {status.replace("_", " ")}
       </span>
+
     );
   }
 
   return (
-    <div className="rounded-2xl border bg-white p-6 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg">
+    <div className="rounded-2xl border bg-blue-100 p-6 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg">
 
       <div className="flex flex-col gap-6 xl:flex-row xl:items-center xl:justify-between">
 
@@ -98,29 +103,30 @@ export default function BookingCard({
 
             <StatusBadge status={booking.status} />
 
+              <p className="font-semibold text-black">
+                Appointment {relativeDate(booking.date)}
+              </p>
+
           </div>
 
-          <p className="mt-2 text-sm text-gray-500">
+          <p className="mt-2 text-lg text-black">
             {booking.service.organization?.name}
           </p>
 
-          <div className="mt-6 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+
+          <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
 
             <div>
 
-              <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">
-                Appointment
+              <p className="text-s font-semibold uppercase tracking-wide text-black">
+                Appointment:
               </p>
 
-              <p className="mt-1 font-semibold">
-                {relativeDate(booking.date)}
-              </p>
-
-              <p className="text-sm text-gray-500">
+              <p className="mt-2 text-lg font-semibold text-orange-600">
                 {booking.date.toLocaleString()}
 
 {booking.service.organization?.timezone && (
-  <span className="text-gray-500">
+  <span className="font-timesnewroman text-black">
     {" "}
     ({booking.service.organization.timezone})
   </span>
@@ -131,11 +137,11 @@ export default function BookingCard({
 
             <div>
 
-              <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">
+              <p className="text-s font-semibold uppercase tracking-wide text-black">
                 Employee
               </p>
 
-              <p className="mt-1 font-medium">
+              <p className="mt-2 text-lg font-timesnewroman text-gray-800">
                 {booking.worker
                   ? booking.worker.profile.fullName
                   : "To be assigned"}
@@ -145,11 +151,11 @@ export default function BookingCard({
 
             <div>
 
-              <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">
+              <p className="text-s font-semibold uppercase tracking-wide text-black">
                 Duration
               </p>
 
-              <p className="mt-1 font-medium">
+              <p className="mt-2 text-lg font-timesnewroman text-gray-800">
                 {booking.service.duration} minutes
               </p>
 
@@ -157,11 +163,11 @@ export default function BookingCard({
 
             <div>
 
-              <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">
+              <p className="text-s font-semibold uppercase tracking-wide text-black">
                 Price
               </p>
 
-              <p className="mt-1 text-lg font-bold text-orange-600">
+              <p className="mt-1 text-lg font-timesnewroman text-gray-800">
                 ${booking.service.price}
               </p>
 

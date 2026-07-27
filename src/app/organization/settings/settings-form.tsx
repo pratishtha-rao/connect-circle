@@ -201,7 +201,7 @@ if (!res.ok) {
 
       {/* Organization */}
 
-      <section className="rounded-2xl border bg-white p-8 shadow-sm">
+      <section className="rounded-2xl border bg-blue-100 p-8 shadow-sm">
 
         <h2 className="text-2xl font-bold">
           Organization Information
@@ -270,7 +270,7 @@ if (!res.ok) {
   {TAG_OPTIONS.map((tag) => (
     <label
       key={tag}
-      className="flex items-center gap-2 rounded-lg border p-2 hover:bg-gray-50"
+      className="flex items-center gap-2 rounded-lg border p-2 hover:bg-orange-100"
     >
       <input
         type="checkbox"
@@ -392,7 +392,7 @@ if (!res.ok) {
             className={`rounded-lg border px-4 py-2 transition ${
               availabilityDays.includes(Number(value))
                 ? "bg-orange-500 text-white border-orange-500"
-                : "bg-white hover:bg-gray-50"
+                : "bg-white hover:bg-orange-200"
             }`}
           >
             {label}
@@ -525,7 +525,7 @@ if (!res.ok) {
 
       {/* Account Security */}
 
-      <section className="rounded-2xl border bg-white p-8 shadow-sm">
+      <section className="rounded-2xl border bg-blue-100 p-8 shadow-sm">
 
         <h2 className="text-2xl font-bold">
           Account Security
@@ -554,7 +554,7 @@ if (!res.ok) {
 
             <Link
               href="/organization/settings/change-email"
-              className="rounded-lg border px-4 py-3 text-center font-medium hover:bg-gray-50"
+              className="rounded-lg border px-4 py-3 text-center font-medium hover:bg-orange-50"
             >
               Change Email
             </Link>
@@ -578,7 +578,7 @@ if (!res.ok) {
 
             <Link
               href="/organization/settings/change-password"
-              className="rounded-lg border px-4 py-3 text-center font-medium hover:bg-gray-50"
+              className="rounded-lg border px-4 py-3 text-center font-medium hover:bg-orange-100"
             >
               Change Password
             </Link>

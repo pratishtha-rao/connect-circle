@@ -111,7 +111,7 @@ export default function ProfileForm({
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="rounded-2xl border bg-white p-8 shadow"
+        className="rounded-2xl border bg-blue-100 p-8 shadow"
       >
 
         <h2 className="mb-6 text-2xl font-bold">
@@ -148,7 +148,7 @@ export default function ProfileForm({
     Email
   </label>
 
-  <div className="w-full rounded-lg border bg-gray-50 px-3 py-3 text-gray-700">
+  <div className="w-full rounded-lg border bg-blue-100 px-3 py-3 text-gray-700">
     {profile.email}
   </div>
 
@@ -185,7 +185,7 @@ export default function ProfileForm({
 
       </form>
 
-      <div className="rounded-2xl border bg-white p-8 shadow">
+      <div className="rounded-2xl border bg-blue-100 p-8 shadow">
 
         <h2 className="text-2xl font-bold">
           Account

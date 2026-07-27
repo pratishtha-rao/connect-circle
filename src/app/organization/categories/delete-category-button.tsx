@@ -30,7 +30,7 @@ export default function DeleteCategoryButton({
   return (
     <button
       onClick={removeCategory}
-      className="mt-3 rounded-lg bg-red-600 px-3 py-2 text-white hover:bg-red-700"
+      className="mt-3 rounded-lg bg-red-500 px-3 py-2 text-white hover:bg-red-700"
     >
       Delete
     </button>

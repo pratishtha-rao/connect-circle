@@ -72,6 +72,7 @@ export default function BookingDetails({
 
   const canCancel =
     booking.status === "PENDING" ||
+      booking.status === "PENDING_PAYMENT" ||
     booking.status === "CONFIRMED";
 
   async function saveNotes() {
@@ -133,6 +134,7 @@ export default function BookingDetails({
   }
 
   return (
+    <>
     <main className="mx-auto max-w-5xl p-8">
 
       <div className="mb-8 flex items-center justify-between">
@@ -151,19 +153,32 @@ export default function BookingDetails({
 
       </div>
 
-<div className="mb-4 rounded-lg border border-yellow-300 bg-yellow-50 p-4 text-center text-sm text-yellow-800">
-  <strong>Please note:</strong> All appointment times are displayed in the respective organization's time zone.
+<div className="mb-4 rounded-lg border border-yellow-400 bg-yellow-100 p-4 text-center text-sm text-yellow-800">
+  <strong>Please note:</strong> All appointment times are displayed in the organization's time zone.
 </div>
 
       <div className="space-y-6">
 
-        <section className="rounded-xl border bg-white p-6 shadow-sm">
+        <section className="rounded-xl border bg-blue-100 p-6 shadow-sm">
 
           <h2 className="text-2xl font-bold">
             Appointment
           </h2>
 
           <div className="mt-6 grid gap-6 md:grid-cols-2">
+
+<div className="mt-3 text-l font-semibold uppercase tracking-wide text-gray-700">
+  Status: 
+</div>
+
+<div className="text-xl font-bold text-orange-600">
+ {booking.status === "PENDING_PAYMENT"
+    ? "Payment Pending"
+    : booking.status
+        .replace("_", " ")
+        .toLowerCase()
+        .replace(/\b\w/g, (c) => c.toUpperCase())}
+</div>
 
             <div>
               <p className="font-semibold">
@@ -190,10 +205,11 @@ export default function BookingDetails({
                 Date
               </p>
 
+
 <p>
   {new Date(booking.date).toLocaleString()}{" "}
   {booking.organization.timezone && (
-    <span className="text-gray-500">
+    <span className="text-gray-800">
       ({booking.organization.timezone})
     </span>
   )}
@@ -244,12 +260,12 @@ export default function BookingDetails({
 
         </section>
 
-        <section className="rounded-xl border bg-white p-6 shadow-sm">
+        <section className="rounded-xl border bg-blue-100 p-6 shadow-sm">
 
           <h2 className="text-xl font-bold">
             Your Notes
           </h2>
-
+                <p>  Add any information you would like the organization and assigned employee to know before your appointment. </p>
           <textarea
             rows={5}
             value={notes}
@@ -264,7 +280,7 @@ export default function BookingDetails({
           <button
             onClick={saveNotes}
             disabled={saving}
-            className="mt-4 rounded-lg bg-orange-500 px-6 py-3 font-semibold text-white hover:bg-orange-600"
+            className="mt-4 rounded-lg bg-orange-500 px-6 py-3 font-timesnewroman text-white hover:bg-orange-600"
           >
             {saving
               ? "Saving..."
@@ -275,7 +291,7 @@ export default function BookingDetails({
 
         {booking.service
           .instructions && (
-          <section className="rounded-xl border bg-white p-6 shadow-sm">
+          <section className="rounded-xl border bg-yellow-100 p-6 shadow-sm">
 
             <h2 className="text-xl font-bold">
               Service Instructions
@@ -293,7 +309,7 @@ export default function BookingDetails({
 
         {booking.organization
           .bookingNotes && (
-          <section className="rounded-xl border bg-blue-50 p-6 shadow-sm">
+          <section className="rounded-xl border bg-violet-200 p-6 shadow-sm">
 
             <h2 className="text-xl font-bold">
               Organization Booking
@@ -313,7 +329,7 @@ export default function BookingDetails({
 
         {booking.organization
           .paymentInstructions && (
-          <section className="rounded-xl border bg-orange-50 p-6 shadow-sm">
+          <section className="rounded-xl border bg-green-100 p-6 shadow-sm">
 
             <h2 className="text-xl font-bold">
               Payment Instructions
@@ -384,7 +400,7 @@ export default function BookingDetails({
         )}
 
 {booking.customerCancelledAt && (
-  <section className="rounded-xl border bg-red-50 p-6 shadow-sm">
+  <section className="rounded-xl border bg-red-100 p-6 shadow-sm">
     <h2 className="text-xl font-bold text-red-700">
       Cancelled by You
     </h2>
@@ -396,7 +412,7 @@ export default function BookingDetails({
 )}
 
 {booking.workerCancelledAt && (
-  <section className="rounded-xl border bg-orange-50 p-6 shadow-sm">
+  <section className="rounded-xl border bg-orange-100 p-6 shadow-sm">
     <h2 className="text-xl font-bold text-orange-700">
       Cancelled by Employee
     </h2>
@@ -408,7 +424,7 @@ export default function BookingDetails({
 )}
 
 {booking.cancelledAt && (
-  <section className="rounded-xl border bg-red-50 p-6 shadow-sm">
+  <section className="rounded-xl border bg-red-100 p-6 shadow-sm">
     <h2 className="text-xl font-bold text-red-700">
       Cancelled by Organization
     </h2>
@@ -422,9 +438,9 @@ export default function BookingDetails({
 
           <Link
             href="/customer"
-            className="rounded-lg border px-6 py-3 font-medium hover:bg-gray-50"
+            className="rounded-lg border px-6 py-3 font-medium hover:bg-gray-200"
           >
-            Back
+            Dashboard
           </Link>
 
           {canCancel && (
@@ -446,5 +462,10 @@ export default function BookingDetails({
       </div>
 
     </main>
+    </>
   );
 }
+
+
+
+

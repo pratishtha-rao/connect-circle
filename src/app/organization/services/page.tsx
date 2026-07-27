@@ -35,8 +35,9 @@ export default async function ServicesPage() {
   });
 
   return (
+    <>             <OrganizationNavbar />
+
     <main className="mx-auto max-w-5xl p-8">
-            <OrganizationNavbar />
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-4xl font-bold">
           Services
@@ -44,21 +45,24 @@ export default async function ServicesPage() {
 </div>
 
 <div className="flex gap-3">
+
+        <Link
+          href="/organization/services/new"
+          className="rounded-xl bg-orange-500 px-5 py-3 font-timesnewroman text-white hover:bg-orange-600"
+        >
+          New Service
+        </Link>
+
   <Link
     href="/organization/services/archived"
-    className="rounded-xl border px-5 py-3"
+    className="rounded-xl bg-gray-300 font-timesnewroman px-5 py-3 hover:bg-gray-400"
   >
     Archived
   </Link>
 
-        <Link
-          href="/organization/services/new"
-          className="rounded-xl bg-orange-500 px-5 py-3 font-semibold text-white hover:bg-orange-600"
-        >
-          New Service
-        </Link>
       </div>
 
+<div className="mt-10"> </div>
       {services.length === 0 ? (
         <p className="text-gray-500">
           No services yet.
@@ -68,7 +72,7 @@ export default async function ServicesPage() {
           {services.map((service) => (
             <div
               key={service.id}
-              className="rounded-xl border border-orange-200 bg-white p-6 shadow-sm"
+              className="rounded-xl border-blue-200 bg-blue-100 p-6 shadow-sm"
             >
               <h2 className="text-xl font-semibold">
                 {service.title}
@@ -105,7 +109,7 @@ export default async function ServicesPage() {
 <div className="mt-6 flex gap-3">
   <Link
     href={`/organization/services/${service.id}/edit`}
-    className="rounded-lg bg-orange-500 px-4 py-2 font-arial text-white hover:bg-orange-700"
+    className="rounded-lg bg-orange-500 px-4 py-2 font-timesnewroman text-white hover:bg-orange-600"
   >
     Edit
   </Link>
@@ -119,5 +123,6 @@ export default async function ServicesPage() {
         </div>
       )}
     </main>
+    </>
   );
 }

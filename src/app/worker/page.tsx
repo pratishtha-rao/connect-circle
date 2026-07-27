@@ -82,21 +82,21 @@ export default async function WorkerDashboard() {
     .slice(0, 5);
 
   return (
+    <>             <WorkerNavbar />
     <main className="mx-auto max-w-7xl p-8">
-            <WorkerNavbar />
 
       <div className="mb-10">
         <h1 className="text-4xl font-bold">
           Employee Dashboard
         </h1>
 
-        <p className="mt-2 text-gray-600">
+        <p className="mt-2 text-black-600">
           Welcome back, {profile.fullName}. Manage your profile,
           availability, services and schedule.
         </p>
       </div>
 
-<div className="mb-4 rounded-lg border border-yellow-300 bg-yellow-50 p-4 text-center text-sm text-yellow-800">
+<div className="mb-10 rounded-lg border border-yellow-400 bg-yellow-100 p-4 text-center text-sm text-yellow-800">
   <strong>Please note:</strong> All appointment times are displayed in the respective organization's time zone.
 </div>
 
@@ -109,7 +109,7 @@ export default async function WorkerDashboard() {
 
           {/* Confirmed */}
 
-          <section className="rounded-2xl border bg-white p-5 shadow-sm">
+          <section className="rounded-2xl border bg-blue-100 p-5 shadow-sm">
             <h2 className="text-xl font-semibold">
               Upcoming Appointments
             </h2>
@@ -118,7 +118,7 @@ export default async function WorkerDashboard() {
 
               {confirmedBookings.length === 0 ? (
 
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-black">
                   No confirmed appointments.
                 </p>
 
@@ -134,7 +134,7 @@ export default async function WorkerDashboard() {
                       {booking.profile.fullName}
                     </p>
 
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-black">
                       {booking.service.title}
                     </p>
 
@@ -152,7 +152,7 @@ export default async function WorkerDashboard() {
 
           {/* Pending */}
 
-          <section className="rounded-2xl border bg-white p-5 shadow-sm">
+          <section className="rounded-2xl border bg-blue-100 p-5 shadow-sm">
             <h2 className="text-xl font-semibold">
               Pending Approval by Organization
             </h2>
@@ -161,7 +161,7 @@ export default async function WorkerDashboard() {
 
               {pendingBookings.length === 0 ? (
 
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-black">
                   No pending bookings.
                 </p>
 
@@ -177,7 +177,7 @@ export default async function WorkerDashboard() {
                       {booking.profile.fullName}
                     </p>
 
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-black">
                       {booking.service.title}
                     </p>
                   </div>
@@ -192,7 +192,7 @@ export default async function WorkerDashboard() {
 
           {/* Completed */}
 
-          <section className="rounded-2xl border bg-white p-5 shadow-sm">
+          <section className="rounded-2xl border bg-blue-100 p-5 shadow-sm">
             <h2 className="text-xl font-semibold">
               Completed Appointments
             </h2>
@@ -201,7 +201,7 @@ export default async function WorkerDashboard() {
 
               {completedBookings.length === 0 ? (
 
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-black">
                   No completed appointments.
                 </p>
 
@@ -217,7 +217,7 @@ export default async function WorkerDashboard() {
                       {booking.profile.fullName}
                     </p>
 
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-black">
                       {booking.service.title}
                     </p>
 
@@ -235,7 +235,7 @@ export default async function WorkerDashboard() {
 
           {/* Cancelled */}
 
-          <section className="rounded-2xl border bg-white p-5 shadow-sm">
+          <section className="rounded-2xl border bg-blue-100 p-5 shadow-sm">
             <h2 className="text-xl font-semibold">
               Cancelled Appointments
             </h2>
@@ -244,7 +244,7 @@ export default async function WorkerDashboard() {
 
               {cancelledBookings.length === 0 ? (
 
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-black">
                   No cancelled appointments.
                 </p>
 
@@ -260,7 +260,7 @@ export default async function WorkerDashboard() {
                       {booking.profile.fullName}
                     </p>
 
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-black">
                       {booking.service.title}
                     </p>
 
@@ -287,12 +287,12 @@ export default async function WorkerDashboard() {
 
               {/* Profile */}
 
-        <section className="flex flex-col rounded-2xl border bg-white p-6 shadow-sm">
+        <section className="flex flex-col rounded-2xl border bg-blue-100 p-6 shadow-sm">
           <h2 className="text-2xl font-semibold">
             Profile
           </h2>
 
-          <p className="mt-2 text-gray-600">
+          <p className="mt-2 text-black">
             Keep your information up to date.
           </p>
 
@@ -334,13 +334,13 @@ export default async function WorkerDashboard() {
 
         {/* Availability */}
 
-        <section className="flex flex-col rounded-2xl border bg-white p-6 shadow-sm">
+        <section className="flex flex-col rounded-2xl border bg-blue-100 p-6 shadow-sm">
 
           <h2 className="text-2xl font-semibold">
             Availability
           </h2>
 
-          <p className="mt-2 text-gray-600">
+          <p className="mt-2 text-black">
             Configure when customers can book you.
           </p>
 
@@ -350,7 +350,7 @@ export default async function WorkerDashboard() {
               {worker.availability.length}
             </p>
 
-            <p className="mt-2 text-gray-600">
+            <p className="mt-2 text-black">
               schedule entries
             </p>
 
@@ -367,13 +367,13 @@ export default async function WorkerDashboard() {
 
         {/* Organizations */}
 
-        <section className="flex flex-col rounded-2xl border bg-white p-6 shadow-sm">
+        <section className="flex flex-col rounded-2xl border bg-blue-100 p-6 shadow-sm">
 
           <h2 className="text-2xl font-semibold">
             Organizations
           </h2>
 
-          <p className="mt-2 text-gray-600">
+          <p className="mt-2 text-black">
             Organizations you're connected with.
           </p>
 
@@ -381,7 +381,7 @@ export default async function WorkerDashboard() {
 
             {worker.organizations.length === 0 ? (
 
-              <p className="text-gray-500">
+              <p className="text-black">
                 No organizations.
               </p>
 
@@ -397,7 +397,7 @@ export default async function WorkerDashboard() {
     {membership.organization.name}
   </p>
 
-  <p className="mt-1 text-sm text-gray-500">
+  <p className="mt-1 text-sm text-black">
     Time Zone:{" "}
     {membership.organization.timezone ?? "Not configured"}
   </p>
@@ -413,13 +413,13 @@ export default async function WorkerDashboard() {
 
         {/* Services */}
 
-        <section className="flex flex-col rounded-2xl border bg-white p-6 shadow-sm">
+        <section className="flex flex-col rounded-2xl border bg-blue-100 p-6 shadow-sm">
 
           <h2 className="text-2xl font-semibold">
             Services
           </h2>
 
-          <p className="mt-2 text-gray-600">
+          <p className="mt-2 text-black-600">
             Services assigned to you.
           </p>
 
@@ -429,7 +429,7 @@ export default async function WorkerDashboard() {
               {worker.services.length}
             </p>
 
-            <p className="mt-2 text-gray-600">
+            <p className="mt-2 text-black-600">
               assigned service
               {worker.services.length !== 1 && "s"}
             </p>
@@ -446,13 +446,13 @@ export default async function WorkerDashboard() {
         </section>
                 {/* My Bookings */}
 
-        <section className="flex flex-col rounded-2xl border bg-white p-6 shadow-sm">
+        <section className="flex flex-col rounded-2xl border bg-blue-100 p-6 shadow-sm">
 
           <h2 className="text-2xl font-semibold">
             My Bookings
           </h2>
 
-          <p className="mt-2 text-gray-600">
+          <p className="mt-2 text-black-600">
             View and manage all appointments assigned to you.
           </p>
 
@@ -462,7 +462,7 @@ export default async function WorkerDashboard() {
               {activeBookings.length}
             </p>
 
-            <p className="mt-2 text-gray-600">
+            <p className="mt-2 text-black-600">
               active bookings
             </p>
 
@@ -480,13 +480,13 @@ export default async function WorkerDashboard() {
         {/* Calendar */}
 
 {/*
-        <section className="flex flex-col rounded-2xl border bg-white p-6 shadow-sm">
+        <section className="flex flex-col rounded-2xl border bg-blue-100 p-6 shadow-sm">
  
           <h2 className="text-2xl font-semibold">
             Calendar
           </h2>
 
-          <p className="mt-2 text-gray-600">
+          <p className="mt-2 text-black-600">
             View your appointments in calendar format.
           </p>
 
@@ -512,5 +512,6 @@ export default async function WorkerDashboard() {
       </div>
 
     </main>
+    </>
 );
 }

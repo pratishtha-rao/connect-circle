@@ -45,7 +45,7 @@ export default async function ServicesPage() {
 <div>
   <Link
     href="/organization/services"
-    className="inline-flex items-center rounded-xl bg-orange-500 px-5 py-3 font-semibold text-white hover:bg-orange-600"
+    className="inline-flex items-center rounded-xl bg-orange-500 px-5 py-3 font-timesnewroman text-white hover:bg-orange-600"
   >
     ← Active Services
   </Link>
@@ -54,7 +54,7 @@ export default async function ServicesPage() {
       </div>
 
       {services.length === 0 ? (
-        <p className="text-gray-500">
+        <p className="text-black">
           No archived services yet.
         </p>
       ) : (
@@ -62,20 +62,20 @@ export default async function ServicesPage() {
               {services.map((service) => (
             <div
               key={service.id}
-              className="rounded-xl border border-orange-200 bg-white p-6 shadow-sm"
+              className="rounded-xl border border-blue-200 bg-blue-100 p-6 shadow-sm"
             >
               <h2 className="text-xl font-semibold">
                 {service.title}
               </h2>
 
 {service.description && (
-  <p className="mt-3 text-gray-600">
+  <p className="mt-3 text-black">
     <strong>Description:</strong>{" "}
     {service.description}
   </p>
 )}
 
-              <div className="mt-4 flex flex-wrap gap-4 text-sm text-gray-700">
+              <div className="mt-4 flex flex-wrap gap-4 text-sm text-black">
                 <span>
                   <strong>Category:</strong>{" "}
                   {service.category?.name ?? "None"}

@@ -181,14 +181,22 @@ window.location.href = `/customer/bookings/${data.booking.id}`;    } catch (erro
     <div className="space-y-8">
 
 {workers.length === 0 && (
-  <div className="mb-4 rounded-lg border border-yellow-300 bg-yellow-50 p-4 text-center text-sm text-yellow-800">
+  <div className="mb-4 rounded-lg border border-red-300 bg-red-50 p-4 text-center text-md text-yellow-800">
     No employees are currently assigned to this service.
     <br />
-    Please contact the organization or choose another service.
+    Please choose another service.
   </div>
 )}
 
-      <div className="rounded-xl border bg-white p-8 shadow-sm">
+{organizationTimezone && (
+    <div className="mb-4 rounded-lg border border-yellow-300 bg-yellow-100 p-4 text-center text-sm">
+  <p className="mt-2 text-md text-black">
+    All appointment times are shown in the organization's timezone ({organizationTimezone}).
+  </p>
+  </div>
+)}
+
+      <div className="rounded-xl border bg-blue-100 p-8 shadow-sm">
 
 {allowWorkerSelection && (
   <div className="mb-6">
@@ -219,12 +227,6 @@ window.location.href = `/customer/bookings/${data.booking.id}`;    } catch (erro
       </select>
     )}
   </div>
-)}
-
-{organizationTimezone && (
-  <p className="mt-2 text-sm text-gray-500">
-    All appointment times are shown in the organization's timezone ({organizationTimezone}).
-  </p>
 )}
 
 <div className="space-y-5">
@@ -309,7 +311,7 @@ window.location.href = `/customer/bookings/${data.booking.id}`;    } catch (erro
             }
             rows={4}
             className="w-full rounded-lg border p-3"
-            placeholder="Anything the organization or worker should know..."
+            placeholder="Anything the organization or employee should know..."
           />
         </div>
 
@@ -319,7 +321,7 @@ window.location.href = `/customer/bookings/${data.booking.id}`;    } catch (erro
 disabled={
   saving ||
   (allowWorkerSelection && workers.length === 0)
-}          className="mt-8 rounded-lg bg-orange-500 px-6 py-3 font-semibold text-white hover:bg-orange-600 disabled:opacity-50"
+}          className="mt-8 rounded-lg bg-orange-500 px-6 py-3 font-timesnewroman text-white hover:bg-orange-600 disabled:opacity-50"
         >
           {saving ? "Booking..." : "Book Appointment"}
         </button>
@@ -327,7 +329,7 @@ disabled={
       </div>
 
       {instructions && (
-        <div className="rounded-xl border bg-white p-6 shadow-sm">
+        <div className="rounded-xl border bg-yellow-100 p-6 shadow-sm">
           <h2 className="text-xl font-bold">
             Service Instructions
           </h2>
@@ -339,7 +341,7 @@ disabled={
       )}
 
       {organizationNotes && (
-        <div className="rounded-xl border bg-white p-6 shadow-sm">
+        <div className="rounded-xl border bg-violet-200 p-6 shadow-sm">
           <h2 className="text-xl font-bold">
             Organization Booking Notes
           </h2>
@@ -351,7 +353,7 @@ disabled={
       )}
 
       {paymentInstructions && (
-        <div className="rounded-xl border bg-orange-50 p-6 shadow-sm">
+        <div className="rounded-xl border bg-green-100 p-6 shadow-sm">
           <h2 className="text-xl font-bold">
             Payment Instructions
           </h2>

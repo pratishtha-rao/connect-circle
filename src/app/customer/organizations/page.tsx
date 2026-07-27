@@ -21,8 +21,9 @@ const organizations = await prisma.organization.findMany({
 });
 
   return (
+    <>             
+    <CustomerNavbar />
     <main className="mx-auto max-w-7xl p-8">
-            <CustomerNavbar />
       <h1 className="text-4xl font-bold">
         Browse Organizations
       </h1>
@@ -33,6 +34,7 @@ const organizations = await prisma.organization.findMany({
 
       <OrganizationSearch organizations={organizations} />
     </main>
+    </>
   );
 }
 

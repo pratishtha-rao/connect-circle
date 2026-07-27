@@ -31,10 +31,10 @@ const service = await prisma.service.findFirst({
   }
 
   return (
+    <>             <CustomerNavbar />
     <main className="mx-auto max-w-5xl p-8">
-            <CustomerNavbar />
 
-      <div className="rounded-2xl border bg-white p-8 shadow-sm">
+      <div className="rounded-2xl border bg-blue-100 p-8 shadow-sm">
 
         <h1 className="text-4xl font-bold">
           {service.title}
@@ -78,7 +78,7 @@ const service = await prisma.service.findFirst({
 
         </div>
 
-        <div className="mt-10 rounded-xl border bg-orange-50 p-6">
+        <div className="mt-10 rounded-xl border bg-yellow-50 p-6">
 
           <h2 className="text-2xl font-bold">
             Instructions
@@ -91,7 +91,7 @@ const service = await prisma.service.findFirst({
 
         </div>
 
-        <div className="mt-10 rounded-xl border bg-blue-50 p-6">
+        <div className="mt-10 rounded-xl border bg-orange-50 p-6">
 
           <h2 className="text-2xl font-bold">
             Booking Information
@@ -127,12 +127,14 @@ const service = await prisma.service.findFirst({
 
         <Link
           href={`/customer/organizations/${organizationId}/services/${service.id}/book`}
-          className="mt-10 inline-block rounded-lg bg-orange-500 px-6 py-3 font-semibold text-white hover:bg-orange-600"
+          className="mt-10 inline-block rounded-lg bg-orange-400 px-6 py-3 font-timesnewroman text-white hover:bg-orange-500"
         >
           Book Appointment
         </Link>
 
       </div>
     </main>
+    </>
+
   );
 }

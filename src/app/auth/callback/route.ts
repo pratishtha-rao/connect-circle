@@ -32,18 +32,6 @@ export async function GET(request: Request) {
 
     await supabase.auth.exchangeCodeForSession(code);
 
-    const {
-  data: { user },
-} = await supabase.auth.getUser();
-
-if (user?.email) {
-  await fetch(new URL("/api/profile/sync-email", url.origin), {
-    method: "POST",
-    headers: {
-      cookie: request.headers.get("cookie") ?? "",
-    },
-  });
-}
   }
 
   return NextResponse.redirect(new URL(next, url.origin));

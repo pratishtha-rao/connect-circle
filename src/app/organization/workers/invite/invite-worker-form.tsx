@@ -49,7 +49,7 @@ export default function InviteWorkerForm() {
       <input
         name="fullName"
         required
-        placeholder="Worker name"
+        placeholder="Employee name"
         className="w-full rounded-xl border border-orange-200 p-3"
       />
 
@@ -57,7 +57,7 @@ export default function InviteWorkerForm() {
         name="email"
         type="email"
         required
-        placeholder="Worker email"
+        placeholder="Employee email"
         className="w-full rounded-xl border border-orange-200 p-3"
       />
 

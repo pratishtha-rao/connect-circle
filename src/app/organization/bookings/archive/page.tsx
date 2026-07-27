@@ -28,8 +28,9 @@ const bookings = await prisma.booking.findMany({
 });
 
 return (
+  <>             <OrganizationNavbar />
+
     <main className="mx-auto max-w-6xl p-8">
-            <OrganizationNavbar />
       <h1 className="mb-8 text-4xl font-bold">
         Archived Bookings
       </h1>
@@ -41,7 +42,7 @@ return (
           {bookings.map((booking) => (
             <div
               key={booking.id}
-              className="rounded-xl border bg-white p-6 shadow-sm"
+              className="rounded-xl border bg-blue-100 p-6 shadow-sm"
             >
               <h2 className="text-xl font-semibold">
                 {booking.service.title}
@@ -64,7 +65,7 @@ return (
               </p>
 
               {booking.organizationNotes && (
-                <div className="mt-4 rounded-lg border bg-orange-50 p-4">
+                <div className="mt-4 rounded-lg border bg-orange-100 p-4">
                   <h3 className="font-semibold">
                     Organization Notes
                   </h3>
@@ -76,7 +77,7 @@ return (
               )}
 
               {booking.notes && (
-                <div className="mt-4 rounded-lg border bg-gray-50 p-4">
+                <div className="mt-4 rounded-lg border bg-yellow-100 p-4">
                   <h3 className="font-semibold">
                     Customer Notes
                   </h3>
@@ -88,7 +89,7 @@ return (
               )}
 
 {booking.customerCancellationReason && (
-  <div className="mt-4 rounded-lg border border-blue-200 bg-blue-50 p-4">
+  <div className="mt-4 rounded-lg border border-blue-200 bg-red-100 p-4">
     <h3 className="font-semibold text-blue-700">
       Cancelled by Customer
     </h3>
@@ -101,7 +102,7 @@ return (
 
 
               {booking.cancellationReason && (
-                <div className="mt-4 rounded-lg border border-red-200 bg-red-50 p-4">
+                <div className="mt-4 rounded-lg border border-red-200 bg-red-100 p-4">
                   <h3 className="font-semibold text-red-700">
                     Cancelled by Organization
                   </h3>
@@ -113,9 +114,9 @@ return (
               )}
 
               {booking.workerCancellationReason && (
-                <div className="mt-4 rounded-lg border border-yellow-200 bg-yellow-50 p-4">
+                <div className="mt-4 rounded-lg border border-yellow-200 bg-red-100 p-4">
                   <h3 className="font-semibold text-yellow-700">
-                    Cancelled by You
+                    Cancelled by Worker
                   </h3>
 
                   <p className="mt-2">
@@ -132,6 +133,7 @@ return (
         </div>
       )}
     </main>
+    </>
   );
 }
 

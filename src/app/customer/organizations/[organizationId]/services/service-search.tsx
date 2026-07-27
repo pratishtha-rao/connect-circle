@@ -109,7 +109,7 @@ const filtered = useMemo(() => {
         {filtered.map((service) => (
           <div
             key={service.id}
-            className="rounded-2xl border bg-white p-6 shadow-sm"
+            className="rounded-2xl border bg-blue-100 p-6 shadow-sm"
           >
             <h2 className="text-2xl font-bold">
               {service.title}
@@ -118,7 +118,7 @@ const filtered = useMemo(() => {
 
 {service.category && (
   <div className="mt-2">
-    <span className="rounded-full bg-orange-100 px-3 py-1 text-xs font-semibold text-orange-700">
+    <span className="rounded-full bg-yellow-100 px-3 py-1 text-xs font-semibold text-gray-700">
       {service.category.name}
     </span>
   </div>
@@ -142,7 +142,7 @@ const filtered = useMemo(() => {
 
             <Link
               href={`/customer/organizations/${organizationId}/services/${service.id}`}
-              className="mt-6 inline-block rounded-lg bg-orange-500 px-5 py-3 font-semibold text-white hover:bg-orange-600"
+              className="mt-6 inline-block rounded-lg bg-orange-400 px-5 py-3 font-timesnewroman text-white hover:bg-orange-600"
             >
               View Service
             </Link>

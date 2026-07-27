@@ -21,9 +21,9 @@ const organization = await prisma.organization.findFirst({
   if (!organization) notFound();
 
 return (
-  <main className="mx-auto max-w-5xl p-8">
+  <>       <OrganizationNavbar />
 
-      <OrganizationNavbar />
+  <main className="mx-auto max-w-5xl p-8">
 
     <div className="mb-10">
 
@@ -42,5 +42,6 @@ return (
     />
 
   </main>
+  </>
 );
 }

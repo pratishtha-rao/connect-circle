@@ -27,9 +27,10 @@ export default async function WorkerServicesPage() {
   }
 
   return (
+    <>                 
+      <WorkerNavbar />
 
-    <main className="mx-auto max-w-5xl p-8">
-                <WorkerNavbar />
+        <main className="mx-auto max-w-5xl p-8">
 
       <h1 className="mb-2 text-4xl font-bold">
         My Services
@@ -48,7 +49,7 @@ export default async function WorkerServicesPage() {
           {worker.services.map((workerService) => (
             <div
               key={workerService.id}
-              className="rounded-xl border bg-white p-6 shadow-sm"
+              className="rounded-xl border bg-blue-100 p-6 shadow-sm"
             >
               <h2 className="text-xl font-semibold">
                 {workerService.service.title}
@@ -73,5 +74,6 @@ export default async function WorkerServicesPage() {
         </div>
       )}
     </main>
+    </>
   );
 }

@@ -69,7 +69,7 @@ window.location.href = "/worker";
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="space-y-6 rounded-2xl border bg-white p-8 shadow"
+      className="space-y-6 rounded-2xl border bg-blue-100 p-8 shadow"
     >
       <div>
         <label className="mb-2 block font-semibold">
@@ -128,7 +128,7 @@ window.location.href = "/worker";
       <button
         type="submit"
         disabled={isSubmitting}
-        className="rounded-xl bg-orange-500 px-6 py-3 font-semibold text-white hover:bg-orange-600 disabled:opacity-50"
+        className="rounded-xl bg-orange-500 px-6 py-3 font-timesnewroman text-white hover:bg-orange-600 disabled:opacity-50"
       >
         {isSubmitting ? "Saving..." : "Save Profile"}
       </button>
@@ -198,7 +198,7 @@ window.location.href = "/worker";
 
   <Link
     href="/worker/profile/change-password"
-    className="rounded-lg border px-4 py-3 text-center font-medium hover:bg-gray-50"
+    className="rounded-lg border px-4 py-3 text-center font-medium hover:bg-orange-100"
   >
     Change Password
   </Link>

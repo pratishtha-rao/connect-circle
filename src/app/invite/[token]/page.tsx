@@ -34,13 +34,13 @@ export default async function InvitePage({ params }: Props) {
 
   return (
     <main className="mx-auto flex min-h-screen max-w-xl items-center justify-center p-8">
-      <div className="w-full rounded-2xl border border-orange-200 bg-white p-8 shadow">
+      <div className="w-full rounded-2xl border border-orange-200 p-8 shadow">
 
         <h1 className="mb-3 text-3xl font-bold">
           You're Invited!
         </h1>
 
-        <p className="text-gray-600">
+        <p className="text-black">
           <strong>{invite.organization.name}</strong> has invited you to join
           their organization.
         </p>

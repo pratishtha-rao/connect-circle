@@ -43,8 +43,8 @@ include: {
   }
 
   return (
+    <>       <CustomerNavbar />
     <main className="mx-auto max-w-4xl p-8">
-      <CustomerNavbar />
 
       <h1 className="text-4xl font-bold">
         Book {service.title}
@@ -89,5 +89,6 @@ include: {
   }))}
 />
     </main>
+    </>
   );
 }

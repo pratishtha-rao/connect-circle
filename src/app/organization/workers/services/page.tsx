@@ -33,8 +33,9 @@ export default async function WorkerServicesPage() {
   }
 
   return (
+    <>             <OrganizationNavbar />
+
     <main className="mx-auto max-w-4xl p-8">
-            <OrganizationNavbar />
 
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-4xl font-bold">
@@ -80,5 +81,6 @@ export default async function WorkerServicesPage() {
         </div>
       )}
     </main>
+    </>
   );
 }

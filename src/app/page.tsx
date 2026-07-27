@@ -2,13 +2,13 @@ import Link from "next/link";
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-orange-100">
 
       {/* Header */}
       <header className="border-b">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-8 py-5">
 
-          <h1 className="text-3xl font-bold text-blue-600">
+          <h1 className="text-3xl font-bold text-orange-600">
             Connect Circle
           </h1>
 
@@ -16,14 +16,14 @@ export default function HomePage() {
 
             <Link
               href="/login"
-              className="rounded-lg border px-5 py-2 font-medium hover:bg-gray-100"
+              className="rounded-lg border px-5 py-2 font-medium hover:bg-orange-200"
             >
               Login
             </Link>
 
             <Link
               href="/signup"
-              className="rounded-lg bg-blue-600 px-5 py-2 font-medium text-white hover:bg-blue-700"
+              className="rounded-lg bg-orange-500 px-5 py-2 font-medium text-white hover:bg-orange-600"
             >
               Sign Up
             </Link>
@@ -40,13 +40,13 @@ export default function HomePage() {
 
           Book Trusted Services
 
-          <span className="text-blue-600">
+          <span className="text-orange-600">
             {" "}Through Your Community
           </span>
 
         </h2>
 
-        <p className="mt-8 max-w-3xl text-xl text-gray-600">
+        <p className="mt-8 max-w-3xl text-timesnewroman text-xl text-gray-600">
 
           Connect Circle helps people discover organizations,
           find trusted employees, book services,
@@ -58,14 +58,14 @@ export default function HomePage() {
 
           <Link
             href="/signup"
-            className="rounded-xl bg-blue-600 px-8 py-4 text-lg font-semibold text-white hover:bg-blue-700"
+            className="rounded-xl bg-orange-500 px-8 py-4 text-lg font-semibold text-white hover:bg-orange-600"
           >
             Get Started
           </Link>
 
           <Link
             href="/login"
-            className="rounded-xl border px-8 py-4 text-lg font-semibold hover:bg-gray-100"
+            className="rounded-xl border px-8 py-4 text-lg font-semibold hover:bg-orange-200"
           >
             Login
           </Link>
@@ -74,56 +74,51 @@ export default function HomePage() {
 
       </section>
 
-      {/* Features */}
-      <section className="mx-auto grid max-w-7xl gap-8 px-8 pb-24 md:grid-cols-3">
+{/* Features */}
+<section className="mx-auto grid max-w-7xl gap-8 px-8 pb-24 md:grid-cols-3">
 
-        <div className="rounded-2xl border p-8 shadow-sm">
+  <div className="rounded-2xl border p-8 shadow-sm transition hover:shadow-md">
 
-          <h3 className="text-2xl font-bold">
-            Organizations
-          </h3>
+    <h3 className="text-2xl font-bold">
+      Organizations
+    </h3>
 
-          <p className="mt-4 text-gray-600">
+    <p className="mt-4 text-gray-600">
+      Streamline your operations with one powerful platform. Manage services,
+      employees, schedules, bookings, and customer communication from just one dashboard.
+    </p>
 
-            Discover temples, nonprofits, businesses,
-            and other organizations.
+  </div>
 
-          </p>
+  <div className="rounded-2xl border p-8 shadow-sm transition hover:shadow-md">
 
-        </div>
+    <h3 className="text-2xl font-bold">
+      Customers
+    </h3>
 
-        <div className="rounded-2xl border p-8 shadow-sm">
+    <p className="mt-4 text-gray-600">
+      Discover trusted organizations, browse available services, and book
+      appointments in minutes. View upcoming bookings, receive updates, and
+      manage everything in one place.
+    </p>
 
-          <h3 className="text-2xl font-bold">
-            Services
-          </h3>
+  </div>
 
-          <p className="mt-4 text-gray-600">
+  <div className="rounded-2xl border p-8 shadow-sm transition hover:shadow-md">
 
-            Browse available services,
-            compare options,
-            and book online.
+    <h3 className="text-2xl font-bold">
+      Employees
+    </h3>
 
-          </p>
+    <p className="mt-4 text-gray-600">
+      Stay organized with a personalized schedule, manage your availability,
+      review appointments, and access booking details so you can focus on
+      delivering excellent service.
+    </p>
 
-        </div>
+  </div>
 
-        <div className="rounded-2xl border p-8 shadow-sm">
-
-          <h3 className="text-2xl font-bold">
-            Trusted Workers
-          </h3>
-
-          <p className="mt-4 text-gray-600">
-
-            Book verified employees
-            or independent professionals.
-
-          </p>
-
-        </div>
-
-      </section>
+</section>
 
     </main>
   );

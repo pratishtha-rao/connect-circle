@@ -50,7 +50,7 @@ export default function OrganizationSearch({
         {filtered.map((organization) => (
           <div
             key={organization.id}
-            className="rounded-2xl border bg-white p-6 shadow-sm"
+            className="rounded-2xl border bg-blue-100 p-6 shadow-sm"
           >
             <h2 className="text-2xl font-bold">
               {organization.name}
@@ -68,7 +68,7 @@ export default function OrganizationSearch({
                 {organization.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-full bg-orange-100 px-3 py-1 text-sm font-medium text-orange-700"
+                    className="bg-yellow-100 px-3 py-1 text-sm font-medium text-orange-700"
                   >
                     {tag}
                   </span>
@@ -123,7 +123,7 @@ export default function OrganizationSearch({
 
             <Link
               href={`/customer/organizations/${organization.id}`}
-              className="mt-6 inline-block rounded-lg bg-orange-500 px-5 py-3 font-semibold text-white hover:bg-orange-600"
+              className="mt-6 inline-block rounded-lg bg-orange-400 px-5 py-3 font-timesnewroman text-white hover:bg-orange-600"
             >
               View Organization
             </Link>

@@ -33,7 +33,7 @@ export default function UnarchiveBooking({
     <button
       onClick={unarchive}
       disabled={loading}
-      className="rounded-lg bg-orange-500 px-5 py-3 font-semibold text-white hover:bg-orange-600 disabled:opacity-50"
+      className="rounded-lg bg-orange-500 px-5 py-3 font-timesnewroman text-white hover:bg-orange-600 disabled:opacity-50"
     >
       {loading ? "Restoring..." : "Restore Booking"}
     </button>

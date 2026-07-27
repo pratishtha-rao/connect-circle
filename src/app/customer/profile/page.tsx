@@ -21,9 +21,8 @@ export default async function CustomerProfilePage() {
   }
 
   return (
+    <>       <CustomerNavbar />
     <main className="mx-auto max-w-3xl p-8">
-
-      <CustomerNavbar />
 
       <h1 className="mb-8 text-4xl font-bold">
         Manage Profile
@@ -34,5 +33,6 @@ export default async function CustomerProfilePage() {
       />
 
     </main>
+    </>
   );
 }

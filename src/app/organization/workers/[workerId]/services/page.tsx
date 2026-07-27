@@ -60,8 +60,8 @@ const { workerId } = await params;
   );
 
   return (
+    <>             <OrganizationNavbar />
     <main className="mx-auto max-w-3xl p-8">
-            <OrganizationNavbar />
 
       <h1 className="mb-2 text-4xl font-bold">
         Assign Services
@@ -77,5 +77,6 @@ const { workerId } = await params;
         selectedServiceIds={selectedServiceIds}
       />
     </main>
+    </>
   );
 }

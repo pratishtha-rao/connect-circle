@@ -41,7 +41,7 @@ export default function ServiceList({
         {filtered.map((service) => (
           <div
             key={service.id}
-            className="rounded-xl border bg-white p-6 shadow-sm"
+            className="rounded-xl border bg-blue-100 p-6 shadow-sm"
           >
             <h3 className="text-xl font-bold">
               {service.title}
@@ -63,7 +63,7 @@ export default function ServiceList({
 
             <Link
               href={`/customer/organizations/${organizationId}/services/${service.id}`}
-              className="mt-6 inline-block rounded-lg bg-orange-500 px-5 py-3 font-semibold text-white"
+              className="mt-6 inline-block rounded-lg bg-orange-400 px-5 py-3 font-timesnewroman text-white"
             >
               View Service
             </Link>

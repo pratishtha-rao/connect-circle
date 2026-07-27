@@ -66,6 +66,7 @@ disabled={saving || customerCancelled}
           Pending
         </button>
 
+
         <button
           disabled={saving}
           onClick={() => updateStatus("PENDING_PAYMENT")}
@@ -73,6 +74,8 @@ disabled={saving || customerCancelled}
         >
           Pending Payment
         </button>
+
+        
 
         <button
           disabled={saving}

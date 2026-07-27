@@ -44,7 +44,7 @@ export default function ArchiveBookingButton({
       type="button"
       disabled={saving}
       onClick={archiveBooking}
-      className="rounded-lg bg-gray-700 px-5 py-2 font-semibold text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
+      className="rounded-lg bg-orange-500 px-5 py-2 font-semibold text-black transition hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-50"
     >
       {saving ? "Archiving..." : "Archive"}
     </button>

@@ -49,9 +49,9 @@ export default async function WorkersPage() {
   });
 
   return (
-    <main className="mx-auto max-w-5xl p-8">
+    <>       <OrganizationNavbar />
 
-      <OrganizationNavbar />
+    <main className="mx-auto max-w-5xl p-8">
 
       <div className="mb-10 flex items-center justify-between">
         <h1 className="text-4xl font-bold">
@@ -82,26 +82,30 @@ export default async function WorkersPage() {
             {invites.map((invite) => (
               <div
                 key={invite.id}
-                className="rounded-xl border border-orange-200 bg-white p-6 shadow"
+                className="rounded-xl border border-blue-200 bg-blue-200 p-6 shadow"
               >
                 <h3 className="text-xl font-semibold">
                   {invite.fullName}
                 </h3>
 
-                <p className="mt-2 text-gray-600">
+                <p className="mt-2 text-black">
                   {invite.email}
                 </p>
 
-                <p className="mt-4 text-sm font-medium text-orange-600">
-                  Status: Pending
+                <p className="mt-4 text-md font-semibold text-black">
+                  Status:
                 </p>
+
+                <p className="text-md font-semibold text-orange-600">
+                    Pending 
+                    </p>
 
                 <div className="mt-6 flex flex-wrap gap-3">
 
                   <input
                     readOnly
                     value={`http://localhost:3000/invite/${invite.token}`}
-                    className="flex-1 rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm"
+                    className="flex-1 rounded-lg border border-black-300 bg-violet-100 p-2 text-sm"
                   />
 
                   <CopyInviteButton token={invite.token} />
@@ -133,32 +137,32 @@ export default async function WorkersPage() {
 
               <div
                 key={worker.id}
-                className="rounded-xl border border-orange-200 bg-white p-6 shadow-sm"
+                className="rounded-xl border border-blue-200 bg-blue-200 p-6 shadow-sm"
               >
                 <h3 className="text-xl font-semibold">
                   {worker.profile.fullName}
                 </h3>
 
-                <p className="mt-2 text-gray-600">
-                  {worker.bio || "No bio yet."}
+                <p className="mt-2 text-black">
+                  Bio: {worker.bio || "No bio yet."}
                 </p>
 
-                <p className="mt-3 text-sm text-gray-500">
-                  {worker.profile.email}
+                <p className="mt-3 text-sm text-black">
+                  Email: {worker.profile.email}
                 </p>
 
 <div className="mt-6 flex gap-3">
 
   <Link
     href={`/organization/workers/${worker.id}/availability`}
-    className="rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700"
+    className="rounded-lg bg-orange-400 px-4 py-2 font-timesnewroman text-white hover:bg-orange-500"
   >
     Availability
   </Link>
 
   <Link
     href={`/organization/workers/${worker.id}/services`}
-    className="rounded-lg bg-green-600 px-4 py-2 font-semibold text-white hover:bg-green-700"
+    className="rounded-lg bg-green-400 px-4 py-2 font-timesnewroman text-white hover:bg-green-500"
   >
     Services
   </Link>
@@ -177,6 +181,7 @@ export default async function WorkersPage() {
       </section>
 
     </main>
+     </>
   );
 }
 

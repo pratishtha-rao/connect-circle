@@ -77,7 +77,7 @@ export default function SignupPage() {
     <main className="flex min-h-screen items-center justify-center bg-background p-6">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-md space-y-5 rounded-2xl border bg-white p-8 shadow"
+        className="w-full max-w-md space-y-5 rounded-2xl border bg-orange-100 p-8 shadow"
       >
         <h1 className="text-3xl font-bold">
           Create Account

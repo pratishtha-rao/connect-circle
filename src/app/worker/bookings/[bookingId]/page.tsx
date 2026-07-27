@@ -53,9 +53,8 @@ include: {
   }
 
   return (
+    <>       <WorkerNavbar />
     <main className="mx-auto max-w-4xl p-8">
-
-      <WorkerNavbar />
 
       <div className="mb-8 flex items-center justify-between">
 
@@ -65,14 +64,14 @@ include: {
 
         <Link
           href="/worker/bookings"
-          className="rounded-lg border px-5 py-3 hover:bg-gray-50"
+          className="rounded-lg border px-5 py-3 hover:bg-orange-200"
         >
           Back
         </Link>
 
       </div>
 
-      <div className="space-y-6 rounded-xl border bg-white p-8 shadow-sm">
+      <div className="space-y-6 rounded-xl border bg-blue-100 p-8 shadow-sm">
 
         <div>
           <strong>Customer</strong>
@@ -90,7 +89,7 @@ include: {
   <p>{booking.date.toLocaleString()}</p>
 
   {booking.service.organization?.timezone && (
-    <p className="mt-1 text-sm text-gray-500">
+    <p className="mt-1 text text-black">
       <strong> Time Zone: </strong> {booking.service.organization.timezone}
     </p>
   )}
@@ -131,7 +130,7 @@ include: {
             Organization Notes
           </h2>
 
-          <div className="mt-3 rounded-lg border bg-orange-50 p-4">
+          <div className="mt-3 rounded-lg border bg-orange-100 p-4">
 
             {booking.organizationNotes ? (
               <p>{booking.organizationNotes}</p>
@@ -151,7 +150,7 @@ include: {
             Customer Notes
           </h2>
 
-          <div className="mt-3 rounded-lg border bg-gray-50 p-4">
+          <div className="mt-3 rounded-lg border bg-yellow-50 p-4">
 
             {booking.notes ? (
               <p>{booking.notes}</p>
@@ -166,8 +165,8 @@ include: {
         </div>
 
 {booking.customerCancellationReason && (
-  <div className="mt-4 rounded-lg border border-blue-200 bg-blue-50 p-4">
-    <h3 className="font-semibold text-blue-700">
+  <div className="mt-4 rounded-lg border border-red-200 bg-red-100 p-4">
+    <h3 className="font-semibold text-red-700">
       Cancelled by Customer
     </h3>
 
@@ -180,7 +179,7 @@ include: {
 
         {booking.cancellationReason && (
 
-          <div className="rounded-xl border border-red-200 bg-red-50 p-5">
+          <div className="rounded-xl border border-red-200 bg-red-100 p-5">
 
             <h2 className="text-lg font-semibold text-red-700">
               Cancelled by Organization
@@ -196,9 +195,9 @@ include: {
 
         {booking.workerCancellationReason && (
 
-          <div className="rounded-xl border border-orange-200 bg-orange-50 p-5">
+          <div className="rounded-xl border border-red-200 bg-red-100 p-5">
 
-            <h2 className="text-lg font-semibold text-orange-700">
+            <h2 className="text-lg font-semibold text-red-700">
               Cancelled by You
             </h2>
 
@@ -235,5 +234,6 @@ include: {
       </div>
 
     </main>
+    </>
   );
 }

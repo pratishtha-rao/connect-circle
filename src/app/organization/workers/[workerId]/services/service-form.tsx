@@ -69,7 +69,7 @@ export default function ServiceForm({
   }
 
   return (
-    <div className="space-y-6 rounded-xl border bg-white p-8 shadow-sm">
+    <div className="space-y-6 rounded-xl border bg-blue-100 p-8 shadow-sm">
       <div className="space-y-3">
         {services.length === 0 ? (
           <p className="text-gray-500">
@@ -79,7 +79,7 @@ export default function ServiceForm({
           services.map((service) => (
             <label
               key={service.id}
-              className="flex items-center gap-3 rounded-lg border p-4 hover:bg-gray-50"
+              className="flex items-center gap-3 rounded-lg border p-4 hover:bg-blue-300"
             >
               <input
                 type="checkbox"

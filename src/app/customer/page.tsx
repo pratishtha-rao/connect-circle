@@ -3,9 +3,11 @@ import CustomerNavbar from "@/components/customer-navbar";
 
 export default function CustomerPage() {
   return (
-    <main className="mx-auto max-w-6xl p-8">
+    <>       
+    
+    <CustomerNavbar/>
 
-      <CustomerNavbar />
+    <main className="mx-auto max-w-6xl p-8">
 
       <h1 className="mb-2 text-4xl font-bold">
         Customer Dashboard
@@ -19,7 +21,7 @@ export default function CustomerPage() {
 
         <Link
           href="/customer/organizations/"
-          className="rounded-2xl border bg-white p-8 shadow-sm transition hover:border-orange-500 hover:shadow-md"
+          className="rounded-2xl border bg-blue-100 p-8 shadow-sm transition hover:border-orange-500 hover:shadow-md"
         >
           <h2 className="text-2xl font-bold">
             Organizations
@@ -32,7 +34,7 @@ export default function CustomerPage() {
 
         <Link
           href="/customer/bookings/"
-          className="rounded-2xl border bg-white p-8 shadow-sm transition hover:border-orange-500 hover:shadow-md"
+          className="rounded-2xl border bg-blue-100 p-8 shadow-sm transition hover:border-orange-500 hover:shadow-md"
         >
           <h2 className="text-2xl font-bold">
             My Bookings
@@ -45,13 +47,13 @@ export default function CustomerPage() {
 
         <Link
           href="/customer/profile/"
-          className="rounded-2xl border bg-white p-8 shadow-sm transition hover:border-orange-500 hover:shadow-md"
+          className="rounded-2xl border bg-blue-100 p-8 shadow-sm transition hover:border-orange-500 hover:shadow-md"
         >
           <h2 className="text-2xl font-bold">
             Profile
           </h2>
 
-          <p className="mt-3 text-gray-600">
+          <p className="mt-3 text-gray-1000">
             Manage your account information and password.
           </p>
         </Link>
@@ -59,5 +61,6 @@ export default function CustomerPage() {
       </div>
 
     </main>
+    </>
   );
 }

@@ -217,8 +217,9 @@ const total =
   paymentPending.length +
   cancelled.length;
         return (
+          <>             <OrganizationNavbar />
+
     <main className="mx-auto max-w-7xl p-8">
-            <OrganizationNavbar />
       <div className="mb-10 flex items-center justify-between">
         <div>
           <h1 className="text-4xl font-bold">
@@ -232,7 +233,7 @@ const total =
 
         <Link
           href="/organization/bookings/archive"
-          className="rounded-xl border px-5 py-3 hover:bg-gray-50"
+          className="rounded-xl border px-5 py-3 hover:bg-orange-200"
         >
           Archived Bookings
         </Link>
@@ -244,7 +245,7 @@ const total =
       />
 
       {total === 0 ? (
-        <div className="mt-8 rounded-2xl border bg-white p-12 text-center shadow-sm">
+        <div className="mt-8 rounded-2xl border bg-blue-100 p-12 text-center shadow-sm">
           <h2 className="text-2xl font-semibold">
             No bookings found
           </h2>
@@ -298,6 +299,8 @@ const total =
         </div>
       )}
     </main>
+          </>
+
   );
 
   function BookingSection({
@@ -338,7 +341,7 @@ const badge =
           {bookings.map((booking) => (
             <div
               key={booking.id}
-              className="rounded-2xl border bg-white p-6 shadow-sm transition hover:shadow-md"
+              className="rounded-2xl border bg-blue-100 p-6 shadow-sm transition hover:shadow-md"
             >
               <div className="flex items-start justify-between gap-6">
 

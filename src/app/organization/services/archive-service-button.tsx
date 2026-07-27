@@ -30,7 +30,7 @@ export default function DeleteServiceButton({
     <button
       type="button"
       onClick={remove}
-      className="rounded-lg border-2 border-red-0 bg-red-500 px-5 py-2 font-arial text-white shadow hover:bg-red-700 hover:border-red-0 transition"
+      className="rounded-lg border-red bg-red-500 px-5 py-2 font-timesnewroman text-white shadow hover:bg-red-600 hover:border-red-0 transition"
     >
       Archive Service
     </button>

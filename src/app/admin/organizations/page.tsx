@@ -192,9 +192,9 @@ export default async function OrganizationsPage({
   );
 
   return (
+    <>      
+     <AdminNavbar />
     <main className="mx-auto max-w-7xl p-8">
-
-      <AdminNavbar />
 
       <div className="mb-10 flex items-center justify-between">
 
@@ -211,13 +211,12 @@ export default async function OrganizationsPage({
 
         </div>
 
-        <Link
-          href="/admin"
-          className="rounded-lg border px-5 py-3 hover:bg-gray-50"
-        >
-          ← Dashboard
-        </Link>
-
+<Link
+  href="/admin"
+  className="ml-8 rounded-lg border px-5 py-3 hover:bg-orange-200"
+>
+  ← Back
+</Link>
       </div>
 
       <form className="mb-8 flex flex-col gap-4 md:flex-row">
@@ -267,7 +266,7 @@ export default async function OrganizationsPage({
       </form>
             {cards.length === 0 ? (
 
-        <div className="rounded-xl border bg-white p-12 text-center">
+        <div className="rounded-xl border bg-blue-200 p-12 text-center">
 
           <h2 className="text-2xl font-semibold">
             No organizations found
@@ -287,7 +286,7 @@ export default async function OrganizationsPage({
 
             <div
               key={organization.id}
-              className="rounded-xl border bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+              className="rounded-xl border p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
             >
 
               <div className="mb-6 flex items-center gap-4">
@@ -378,6 +377,7 @@ export default async function OrganizationsPage({
       )}
 
     </main>
+    </>
   );
 }
 
@@ -389,7 +389,7 @@ function SummaryCard({
   value: string | number;
 }) {
   return (
-    <div className="rounded-xl border bg-white p-6 shadow-sm">
+    <div className="rounded-xl border bg-blue-100 p-6 shadow-sm">
 
       <p className="text-sm font-medium text-gray-500">
         {title}

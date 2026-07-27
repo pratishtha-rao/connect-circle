@@ -46,9 +46,9 @@ const organization = await prisma.organization.findUnique({
   }
 
   return (
-    <main className="mx-auto max-w-6xl p-8">
+    <>       <CustomerNavbar />
 
-      <CustomerNavbar />
+    <main className="mx-auto max-w-6xl p-8">
 
       {/* Organization */}
 
@@ -68,7 +68,7 @@ const organization = await prisma.organization.findUnique({
             {organization.tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-full bg-orange-100 px-3 py-1 text-sm font-medium text-orange-700"
+                className="bg-yellow-100 px-3 py-1 text-sm font-medium text-orange-700"
               >
                 {tag}
               </span>
@@ -120,7 +120,7 @@ const organization = await prisma.organization.findUnique({
 
       {/* Booking Info */}
 
-      <section className="mb-12 rounded-2xl border bg-orange-50 p-8">
+      <section className="mb-12 rounded-2xl border bg-blue-100 p-8">
 
         <h2 className="text-2xl font-bold">
           Booking Information
@@ -164,7 +164,7 @@ const organization = await prisma.organization.findUnique({
 
           <Link
             href={`/customer/organizations/${organization.id}/services`}
-            className="rounded-lg bg-orange-500 px-6 py-3 font-semibold text-white hover:bg-orange-600"
+            className="rounded-lg bg-orange-400 px-6 py-3 font-timesnewroman text-white hover:bg-orange-600"
           >
             View All Services ({organization.services.length})
           </Link>
@@ -174,5 +174,6 @@ const organization = await prisma.organization.findUnique({
       </section>
 
     </main>
+    </>
   );
 }

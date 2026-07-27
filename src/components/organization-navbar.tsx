@@ -54,7 +54,7 @@ export default function OrganizationNavbar() {
             </Link>
 
             <Link
-              href="/organization/profile"
+              href="/organization/settings"
               className="flex h-full items-center px-6 text-base font-medium text-gray-900 transition-colors duration-200 hover:bg-orange-200"
             >
               Profile

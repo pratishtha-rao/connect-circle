@@ -120,7 +120,7 @@ window.location.href = "/worker";
 
       <button
         onClick={save}
-        className="rounded-xl bg-orange-500 px-6 py-3 font-semibold text-white hover:bg-orange-600"
+        className="rounded-xl bg-orange-500 px-6 py-3 font-timesnewroman text-white hover:bg-orange-600"
       >
         Save Availability
       </button>
