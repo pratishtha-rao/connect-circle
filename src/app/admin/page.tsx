@@ -124,7 +124,10 @@ const [
 ]);
 
 const totalRevenue = completedBookings.reduce(
-  (sum, booking) => sum + booking.service.price,
+  (
+    sum: number,
+    booking: (typeof completedBookings)[number]
+  ) => sum + booking.service.price,
   0
 );
 
