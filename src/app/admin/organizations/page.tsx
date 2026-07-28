@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import AdminNavbar from "@/components/admin-navbar";
-import { Prisma } from "@prisma/client";
 
 import { prisma } from "@/lib/prisma";
 import { getCurrentProfile } from "@/lib/profile";
@@ -221,8 +220,11 @@ const cards = organizations.map(
 </Link>
       </div>
 
-      <form className="mb-8 flex flex-col gap-4 md:flex-row">
-
+<form
+  method="GET"
+  className="mb-8 flex flex-col gap-4 md:flex-row"
+>
+  
         <input
           name="search"
           defaultValue={search}
