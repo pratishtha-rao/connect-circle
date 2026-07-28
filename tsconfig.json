@@ -29,7 +29,7 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts" ],
-"exclude": [, "src/app/admin/organizations/page.tsx.disabled"
+"exclude": [
   "node_modules",
   "src/generated"
 ]
