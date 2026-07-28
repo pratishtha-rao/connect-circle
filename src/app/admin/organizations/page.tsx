@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import AdminNavbar from "@/components/admin-navbar";
+import { Prisma } from "@prisma/client";
 
 import { prisma } from "@/lib/prisma";
 import { getCurrentProfile } from "@/lib/profile";
@@ -80,8 +81,11 @@ const organizations = await prisma.organization.findMany({        where: {
       },
     });
 
-  const cards = organizations.map((organization) => {
-    const bookings =
+const cards = organizations.map(
+  (
+    organization: (typeof organizations)[number]
+  ) => {
+        const bookings =
       organization.services.flatMap(
         (service) => service.bookings
       );
