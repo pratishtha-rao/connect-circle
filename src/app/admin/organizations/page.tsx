@@ -34,9 +34,7 @@ export default async function OrganizationsPage({
   const { search = "", sort = "newest" } =
     await searchParams;
 
-  const organizations =
-    await prisma.organization.findMany({
-      where: {
+const organizations = await prisma.organization.findMany({        where: {
         OR: [
           {
             name: {
@@ -402,3 +400,4 @@ function SummaryCard({
     </div>
   );
 }
+

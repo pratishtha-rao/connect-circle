@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useForm } from "react-hook-form";
 import { useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -11,7 +12,7 @@ type SignupForm = {
   role: "USER" | "WORKER" | "ORG_ADMIN";
 };
 
-export default function SignupPage() {
+function SignupFormComponent() {
   const supabase = createClient();
 
   const searchParams = useSearchParams();
@@ -119,17 +120,9 @@ export default function SignupPage() {
             {...register("role")}
             className="w-full rounded-lg border p-3"
           >
-            <option value="USER">
-              Customer
-            </option>
-
-            <option value="WORKER">
-              Employee
-            </option>
-
-            <option value="ORG_ADMIN">
-              Organization
-            </option>
+            <option value="USER">Customer</option>
+            <option value="WORKER">Employee</option>
+            <option value="ORG_ADMIN">Organization</option>
           </select>
         </div>
 
@@ -141,5 +134,13 @@ export default function SignupPage() {
         </button>
       </form>
     </main>
+  );
+}
+
+export default function SignupPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SignupFormComponent />
+    </Suspense>
   );
 }

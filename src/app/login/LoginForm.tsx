@@ -9,7 +9,7 @@ type LoginForm = {
   password: string;
 };
 
-export default function LoginPage() {
+export default function LoginForm() {
   const supabase = createClient();
 
   const searchParams = useSearchParams();
@@ -22,28 +22,32 @@ export default function LoginPage() {
     handleSubmit,
   } = useForm<LoginForm>();
 
-async function onSubmit(data: LoginForm) {
-  const { error } = await supabase.auth.signInWithPassword({
-    email: data.email,
-    password: data.password,
-  });
+  async function onSubmit(data: LoginForm) {
+    const { error } =
+      await supabase.auth.signInWithPassword({
+        email: data.email,
+        password: data.password,
+      });
 
-  if (error) {
-    if (error.message.toLowerCase().includes("invalid login")) {
-      alert("Incorrect email or password.");
-    } else {
-      alert(error.message);
+    if (error) {
+      if (
+        error.message
+          .toLowerCase()
+          .includes("invalid login")
+      ) {
+        alert("Incorrect email or password.");
+      } else {
+        alert(error.message);
+      }
+
+      return;
     }
 
-    return;
+    window.location.href = redirect;
   }
-
-  window.location.href = redirect;
-}
 
   return (
     <main className="flex min-h-screen items-center justify-center p-6">
-     
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="w-full max-w-md space-y-4 rounded-xl border p-6"
