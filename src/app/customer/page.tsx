@@ -1,3 +1,4 @@
+//customer
 import Link from "next/link";
 import CustomerNavbar from "@/components/customer-navbar";
 
