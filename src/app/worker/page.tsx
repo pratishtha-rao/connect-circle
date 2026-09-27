@@ -85,7 +85,7 @@ export default async function WorkerDashboard() {
         </div>
 
         <div className="mb-10 rounded-lg border border-yellow-400 bg-yellow-100 p-4 text-center text-sm text-yellow-800">
-          <strong>Please note:</strong> All appointment times are displayed in the respective organization&apos;s time zone.
+          <strong>Please note: </strong> All appointment times are displayed in the respective organization&apos;s time zone.
         </div>
 
         <h2 className="mb-6 text-center text-3xl font-bold">

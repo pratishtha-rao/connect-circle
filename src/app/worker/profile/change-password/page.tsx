@@ -12,24 +12,22 @@ export default async function ChangeWorkerPasswordPage() {
   }
 
   return (
-    <main className="mx-auto max-w-2xl p-8">
-
+    <>
       <WorkerNavbar />
 
-      <div className="mb-8">
+      <main className="mx-auto max-w-2xl p-8">
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold text-gray-900">
+            Change Password
+          </h1>
 
-        <h1 className="text-4xl font-bold text-gray-900">
-          Change Password
-        </h1>
+          <p className="mt-2 text-gray-600">
+            Choose a strong password to keep your account secure.
+          </p>
+        </div>
 
-        <p className="mt-2 text-gray-600">
-          Choose a strong password to keep your account secure.
-        </p>
-
-      </div>
-
-      <ChangePasswordForm />
-
-    </main>
+        <ChangePasswordForm />
+      </main>
+    </>
   );
 }
