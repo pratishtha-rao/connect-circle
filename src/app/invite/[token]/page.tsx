@@ -37,7 +37,7 @@ export default async function InvitePage({ params }: Props) {
       <div className="w-full rounded-2xl border border-orange-200 p-8 shadow">
 
         <h1 className="mb-3 text-3xl font-bold">
-          You're Invited!
+          You&apos;re Invited!
         </h1>
 
         <p className="text-black">

@@ -2,6 +2,13 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getCurrentProfile } from "@/lib/profile";
 
+type DayAvailability = {
+  dayOfWeek: number;
+  startTime: string;
+  endTime: string;
+  enabled: boolean;
+};
+
 export async function POST(req: Request) {
   try {
     const profile = await getCurrentProfile();
@@ -41,7 +48,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const availability = await req.json();
+    const availability: DayAvailability[] = await req.json();
 
     await prisma.availability.deleteMany({
       where: {
@@ -50,8 +57,8 @@ export async function POST(req: Request) {
     });
 
     const rows = availability
-      .filter((day: any) => day.enabled)
-      .map((day: any) => ({
+      .filter((day: DayAvailability) => day.enabled)
+      .map((day: DayAvailability) => ({
         workerId: worker.id,
         dayOfWeek: day.dayOfWeek,
         startTime: day.startTime,

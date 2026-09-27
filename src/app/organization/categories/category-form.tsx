@@ -1,8 +1,10 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function CategoryForm() {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   async function submit(formData: FormData) {
@@ -21,7 +23,7 @@ export default function CategoryForm() {
 
       const text = await res.text();
 
-      let data: any = {};
+      let data: { error?: string } = {};
 
       try {
         data = JSON.parse(text);
@@ -35,7 +37,8 @@ export default function CategoryForm() {
         return;
       }
 
-      window.location.href = "/organization/categories";
+      router.push("/organization/categories");
+      router.refresh();
     } catch (err) {
       console.error(err);
       alert(err instanceof Error ? err.message : "Something went wrong.");

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 type Profile = {
@@ -30,6 +31,8 @@ export default function ProfileForm({
   profile,
   worker,
 }: Props) {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -62,8 +65,9 @@ export default function ProfileForm({
       return;
     }
 
-alert("Profile updated successfully.");
-window.location.href = "/worker";
+    alert("Profile updated successfully.");
+    router.push("/worker");
+    router.refresh();
   }
 
   return (
@@ -133,21 +137,19 @@ window.location.href = "/worker";
         {isSubmitting ? "Saving..." : "Save Profile"}
       </button>
 
-<div className="my-8 border-t" />
+      <div className="my-8 border-t" />
 
-<div>
+      <div>
+        <h2 className="text-xl font-semibold">
+          Account
+        </h2>
 
-  <h2 className="text-xl font-semibold">
-    Account
-  </h2>
+        <p className="mt-1 text-sm text-gray-500">
+          Manage your login credentials.
+        </p>
+      </div>
 
-  <p className="mt-1 text-sm text-gray-500">
-    Manage your login credentials.
-  </p>
-
-</div>
-
-{/*
+      {/*
 
 <div className="mt-6 flex items-center justify-between rounded-xl border p-5">
 
@@ -180,34 +182,26 @@ window.location.href = "/worker";
 
 */}
 
-<div className="mt-6 flex items-center justify-between py-5">
+      <div className="mt-6 flex items-center justify-between py-5">
+        <div>
+          <p className="font-semibold">
+            Password
+          </p>
 
-  <div>
+          <p className="mt-1 text-gray-500">
+            ••••••••••••••••
+          </p>
+        </div>
 
-    <p className="font-semibold">
-      Password
-    </p>
-
-    <p className="mt-1 text-gray-500">
-      ••••••••••••••••
-    </p>
-
-  </div>
-
-<div>
-
-  <Link
-    href="/worker/profile/change-password"
-    className="rounded-lg border px-4 py-3 text-center font-medium hover:bg-orange-100"
-  >
-    Change Password
-  </Link>
-
-</div>
-
-</div>
-
+        <div>
+          <Link
+            href="/worker/profile/change-password"
+            className="rounded-lg border px-4 py-3 text-center font-medium hover:bg-orange-100"
+          >
+            Change Password
+          </Link>
+        </div>
+      </div>
     </form>
   );
 }
-

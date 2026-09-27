@@ -3,23 +3,25 @@
 import dynamic from "next/dynamic";
 import type { ITimezoneOption } from "react-timezone-select";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-export default function OrganizationForm() {
-  const [loading, setLoading] = useState(false);
-
-  const TimezoneSelect = dynamic(
+const TimezoneSelect = dynamic(
   () => import("react-timezone-select"),
   { ssr: false }
 );
 
-const detectedTimezone =
-  Intl.DateTimeFormat().resolvedOptions().timeZone;
+export default function OrganizationForm() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
-const [timezone, setTimezone] =
-  useState<ITimezoneOption>({
-    value: detectedTimezone,
-    label: detectedTimezone,
-  });
+  const detectedTimezone =
+    Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  const [timezone, setTimezone] =
+    useState<ITimezoneOption>({
+      value: detectedTimezone,
+      label: detectedTimezone,
+    });
 
   async function onSubmit(formData: FormData) {
     setLoading(true);
@@ -36,21 +38,21 @@ const [timezone, setTimezone] =
       }),
     });
     
-if (!res.ok) {
-  const data = await res.json();
+    if (!res.ok) {
+      const data = await res.json();
 
-  alert(data.error ?? "Failed to create organization.");
+      alert(data.error ?? "Failed to create organization.");
 
-  setLoading(false);
-  return;
-}
+      setLoading(false);
+      return;
+    }
 
-    window.location.href = "/organization";
+    router.push("/organization");
+    router.refresh();
   }
 
   return (
     <form action={onSubmit} className="space-y-5">
-
       <input
         name="name"
         placeholder="Organization Name"
@@ -82,23 +84,21 @@ if (!res.ok) {
         className="w-full rounded-xl border p-3"
       />
 
-<div className="space-y-2">
+      <div className="space-y-2">
+        <label className="font-medium">
+          Organization Time Zone
+        </label>
 
-  <label className="font-medium">
-    Organization Time Zone
-  </label>
+        <TimezoneSelect
+          value={timezone}
+          onChange={setTimezone}
+        />
 
-  <TimezoneSelect
-    value={timezone}
-    onChange={setTimezone}
-  />
-
-  <p className="text-sm text-gray-500">
-    All appointments will be stored using this time zone. Customers and workers
-    will see booking times relative to the organization's selected time zone.
-  </p>
-
-</div>
+        <p className="text-sm text-gray-500">
+          All appointments will be stored using this time zone. Customers and workers
+          will see booking times relative to the organization&apos;s selected time zone.
+        </p>
+      </div>
 
       <button
         disabled={loading}
@@ -106,7 +106,6 @@ if (!res.ok) {
       >
         {loading ? "Creating..." : "Create Organization"}
       </button>
-
     </form>
   );
 }

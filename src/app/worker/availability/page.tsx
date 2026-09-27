@@ -34,7 +34,7 @@ export default async function AvailabilityPage() {
       </h1>
 
 <div className="mb-4 rounded-lg border border-yellow-300 bg-yellow-50 p-4 text-center text-sm text-yellow-800">
-  <strong>Note:</strong> All availability and business hours should be entered in your organization's time zone. You can find your organization's time zone on the Dashboard under the <strong>Organizations</strong> tab.
+  <strong>Note:</strong> All availability and business hours should be entered in your organization&apos;s time zone. You can find your organization&apos;s time zone on the Dashboard under the <strong>Organizations</strong> tab.
 </div>
 
       <AvailabilityForm

@@ -4,6 +4,8 @@ import { Suspense } from "react";
 import { useForm } from "react-hook-form";
 import { useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import PublicNavbar from "@/components/PublicNavbar";
+import { useRouter } from "next/navigation";
 
 type SignupForm = {
   fullName: string;
@@ -19,6 +21,8 @@ function SignupFormComponent() {
 
   const redirect =
     searchParams.get("redirect") ?? "/dashboard";
+
+    const router = useRouter();
 
   const {
     register,
@@ -71,7 +75,7 @@ function SignupFormComponent() {
       return;
     }
 
-    window.location.href = redirect;
+router.push(redirect);
   }
 
   return (
@@ -139,8 +143,11 @@ function SignupFormComponent() {
 
 export default function SignupPage() {
   return (
+        <>
+      <PublicNavbar />
     <Suspense fallback={<div>Loading...</div>}>
       <SignupFormComponent />
     </Suspense>
+    </>
   );
 }

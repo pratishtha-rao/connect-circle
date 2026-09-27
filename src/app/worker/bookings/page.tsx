@@ -39,15 +39,16 @@ export default async function WorkerBookingsPage({
       workerId: worker.id,
       workerArchivedAt: null,
     },
-include: {
-  profile: true,
-  payment: true,
-  service: {
     include: {
-      organization: true,
+      profile: true,
+      payment: true,
+      service: {
+        include: {
+          organization: true,
+        },
+      },
     },
-  },
-},    orderBy: {
+    orderBy: {
       date: "asc",
     },
   });
@@ -83,118 +84,133 @@ include: {
   });
 
   const upcoming = filteredBookings
-  .filter((b) => b.status === "CONFIRMED")
-  .sort((a, b) => a.date.getTime() - b.date.getTime());
+    .filter((b) => b.status === "CONFIRMED")
+    .sort((a, b) => a.date.getTime() - b.date.getTime());
 
-const pending = filteredBookings
-  .filter((b) => b.status === "PENDING")
-  .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+  const pending = filteredBookings
+    .filter((b) => b.status === "PENDING")
+    .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 
-const paymentPending = filteredBookings
-  .filter((b) => b.status === "PENDING_PAYMENT")
-  .sort((a, b) => b.date.getTime() - a.date.getTime());
+  const paymentPending = filteredBookings
+    .filter((b) => b.status === "PENDING_PAYMENT")
+    .sort((a, b) => b.date.getTime() - a.date.getTime());
 
-const completed = filteredBookings
-  .filter((b) => b.status === "COMPLETED")
-  .sort((a, b) => b.date.getTime() - a.date.getTime());
+  const completed = filteredBookings
+    .filter((b) => b.status === "COMPLETED")
+    .sort((a, b) => b.date.getTime() - a.date.getTime());
 
-const cancelled = filteredBookings
-  .filter((b) => b.status === "CANCELLED")
-  .sort((a, b) => b.date.getTime() - a.date.getTime());
+  const cancelled = filteredBookings
+    .filter((b) => b.status === "CANCELLED")
+    .sort((a, b) => b.date.getTime() - a.date.getTime());
 
-const total =
-  upcoming.length +
-  pending.length +
-  paymentPending.length +
-  completed.length +
-  cancelled.length;
+  const total =
+    upcoming.length +
+    pending.length +
+    paymentPending.length +
+    completed.length +
+    cancelled.length;
 
   return (
+    <>
+      <WorkerNavbar />
+      <main className="mx-auto max-w-7xl p-8">
+        <div className="mb-10 flex items-center justify-between">
+          <div>
+            <h1 className="text-4xl font-bold">
+              My Bookings
+            </h1>
 
-    <>            
-     <WorkerNavbar />
-    <main className="mx-auto max-w-7xl p-8">
+            <p className="mt-2 text-gray-600">
+              View and manage your assigned appointments.
+            </p>
+          </div>
 
-      <div className="mb-10 flex items-center justify-between">
-        <div>
-          <h1 className="text-4xl font-bold">
-            My Bookings
-          </h1>
-
-          <p className="mt-2 text-gray-600">
-            View and manage your assigned appointments.
-          </p>
+          <div className="flex gap-3">
+            <Link
+              href="/worker/bookings/archive"
+              className="rounded-lg border px-5 py-3 hover:bg-orange-200"
+            >
+              Archived
+            </Link>
+          </div>
         </div>
 
-        <div className="flex gap-3">
-          <Link
-            href="/worker/bookings/archive"
-            className="rounded-lg border px-5 py-3 hover:bg-orange-200"
-          >
-            Archived
-          </Link>
-        </div>
-      </div>
+        <WorkerBookingFilters services={services} />
 
-      <WorkerBookingFilters
-        services={services}
-      />
-
-{total === 0 ? (
+        {total === 0 ? (
           <div className="mt-8 rounded-xl border bg-blue-100 p-8 shadow-sm">
-          No bookings found.
-        </div>
-      ) : (
-<div className="mt-8 space-y-12">
+            No bookings found.
+          </div>
+        ) : (
+          <div className="mt-8 space-y-12">
+            {upcoming.length > 0 && (
+              <BookingSection
+                title="Upcoming"
+                color="blue"
+                bookings={upcoming}
+              />
+            )}
 
-  {upcoming.length > 0 && (
-    <BookingSection
-      title="Upcoming"
-      color="blue"
-      bookings={upcoming}
-    />
-  )}
+            {pending.length > 0 && (
+              <BookingSection
+                title="Pending"
+                color="yellow"
+                bookings={pending}
+              />
+            )}
 
-  {pending.length > 0 && (
-    <BookingSection
-      title="Pending"
-      color="yellow"
-      bookings={pending}
-    />
-  )}
+            {paymentPending.length > 0 && (
+              <BookingSection
+                title="Payment Pending"
+                color="orange"
+                bookings={paymentPending}
+              />
+            )}
 
-  {paymentPending.length > 0 && (
-    <BookingSection
-      title="Payment Pending"
-      color="orange"
-      bookings={paymentPending}
-    />
-  )}
+            {completed.length > 0 && (
+              <BookingSection
+                title="Completed"
+                color="green"
+                bookings={completed}
+              />
+            )}
 
-  {completed.length > 0 && (
-    <BookingSection
-      title="Completed"
-      color="green"
-      bookings={completed}
-    />
-  )}
-
-  {cancelled.length > 0 && (
-    <BookingSection
-      title="Cancelled"
-      color="red"
-      bookings={cancelled}
-    />
-  )}
-
-</div>
-       )}
-</main>
-</>
-
-);
+            {cancelled.length > 0 && (
+              <BookingSection
+                title="Cancelled"
+                color="red"
+                bookings={cancelled}
+              />
+            )}
+          </div>
+        )}
+      </main>
+    </>
+  );
 }
-      
+
+type BookingItem = {
+  id: string;
+  status: string;
+  date: Date;
+  notes: string | null;
+  organizationNotes: string | null;
+  workerCancellationReason: string | null;
+  customerCancellationReason: string | null;
+  cancellationReason: string | null;
+  workerArchivedAt: Date | null;
+  profile: {
+    fullName: string;
+  };
+  service: {
+    title: string;
+    price: number;
+    organization?: {
+      timezone: string | null;
+    } | null;
+  };
+};
+
 function BookingSection({
   title,
   color,
@@ -202,7 +218,7 @@ function BookingSection({
 }: {
   title: string;
   color: "blue" | "yellow" | "green" | "orange" | "red";
-  bookings: any[];
+  bookings: BookingItem[];
 }) {
   const badge =
     color === "blue"
@@ -236,9 +252,7 @@ function BookingSection({
             className="rounded-2xl border bg-blue-100 p-6 shadow-sm transition hover:shadow-md"
           >
             <div className="flex items-start justify-between gap-6">
-
               <div className="flex-1">
-
                 <div className="flex items-center gap-3">
                   <h3 className="text-xl font-bold">
                     {booking.service.title}
@@ -246,7 +260,6 @@ function BookingSection({
                 </div>
 
                 <div className="mt-5 grid gap-5 md:grid-cols-2">
-
                   <div>
                     <p className="text-sm font-semibold text-gray-500">
                       Customer
@@ -262,12 +275,12 @@ function BookingSection({
                       Appointment
                     </p>
 
-<p className="mt-1 font-medium">
-  {booking.date.toLocaleString()}{" "}
-  <span className="text-sm text-gray-500">
-    ({booking.service.organization?.timezone ?? "No timezone"})
-  </span>
-</p>
+                    <p className="mt-1 font-medium">
+                      {booking.date.toLocaleString()}{" "}
+                      <span className="text-sm text-gray-500">
+                        ({booking.service.organization?.timezone ?? "No timezone"})
+                      </span>
+                    </p>
                   </div>
 
                   <div>
@@ -313,7 +326,8 @@ function BookingSection({
                       </p>
                     </div>
                   )}
-                                    {booking.workerCancellationReason && (
+
+                  {booking.workerCancellationReason && (
                     <div className="md:col-span-2 rounded-lg border border-red-200 bg-red-100 p-4">
                       <h3 className="font-semibold text-red-700">
                         Cancelled by You
@@ -327,7 +341,7 @@ function BookingSection({
 
                   {booking.customerCancellationReason && (
                     <div className="md:col-span-2 rounded-lg border border-red-200 bg-red-100 p-4">
-                      <h3 className="font-semibold text-black-700">
+                      <h3 className="font-semibold text-black">
                         Cancelled by Customer
                       </h3>
 
@@ -348,7 +362,6 @@ function BookingSection({
                       </p>
                     </div>
                   )}
-
                 </div>
               </div>
 
@@ -401,7 +414,6 @@ function BookingSection({
                   />
                 )}
             </div>
-
           </div>
         ))}
       </div>

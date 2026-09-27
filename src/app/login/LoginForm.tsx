@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { createClient } from "@/lib/supabase/client";
 
@@ -10,6 +10,7 @@ type LoginForm = {
 };
 
 export default function LoginForm() {
+  const router = useRouter();
   const supabase = createClient();
 
   const searchParams = useSearchParams();
@@ -43,7 +44,8 @@ export default function LoginForm() {
       return;
     }
 
-    window.location.href = redirect;
+    router.push(redirect);
+    router.refresh();
   }
 
   return (

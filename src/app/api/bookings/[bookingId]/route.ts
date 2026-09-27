@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 type Props = {
@@ -13,34 +14,34 @@ export async function PATCH(
 ) {
   const { bookingId } = await params;
 
-const body = await req.json();
+  const body = await req.json();
 
-const booking = await prisma.booking.findUnique({
-  where: {
-    id: bookingId,
-  },
-});
-
-if (!booking) {
-  return NextResponse.json(
-    { error: "Booking not found." },
-    { status: 404 }
-  );
-}
-
-if (booking.customerCancelledAt) {
-  return NextResponse.json(
-    {
-      error:
-        "This booking was cancelled by the customer and cannot be modified.",
+  const booking = await prisma.booking.findUnique({
+    where: {
+      id: bookingId,
     },
-    { status: 403 }
-  );
-}
+  });
 
-const data: any = {
-  status: body.status,
-};
+  if (!booking) {
+    return NextResponse.json(
+      { error: "Booking not found." },
+      { status: 404 }
+    );
+  }
+
+  if (booking.customerCancelledAt) {
+    return NextResponse.json(
+      {
+        error:
+          "This booking was cancelled by the customer and cannot be modified.",
+      },
+      { status: 403 }
+    );
+  }
+
+  const data: Prisma.BookingUpdateInput = {
+    status: body.status,
+  };
 
   if (body.status === "CANCELLED") {
     data.cancellationReason = body.reason;

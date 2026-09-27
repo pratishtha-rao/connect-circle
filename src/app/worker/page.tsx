@@ -3,7 +3,6 @@ import { prisma } from "@/lib/prisma";
 import { getCurrentProfile } from "@/lib/profile";
 import WorkerNavbar from "@/components/worker-navbar";
 
-
 export default async function WorkerDashboard() {
   const profile = await getCurrentProfile();
 
@@ -47,23 +46,12 @@ export default async function WorkerDashboard() {
     (booking) => booking.workerArchivedAt === null
   );
 
-  const now = new Date();
-
-  const upcomingBookings = activeBookings
-    .filter(
-      (booking) =>
-        booking.date >= now &&
-        booking.status !== "COMPLETED" &&
-        booking.status !== "CANCELLED"
-    )
-    .slice(0, 3);
-
   const pendingBookings = activeBookings
     .filter(
       (booking) =>
         booking.status === "PENDING" ||
         booking.status === "PENDING_APPROVAL" ||
-              booking.status === "PENDING_PAYMENT"
+        booking.status === "PENDING_PAYMENT"
     )
     .slice(0, 5);
 
@@ -82,436 +70,360 @@ export default async function WorkerDashboard() {
     .slice(0, 5);
 
   return (
-    <>             <WorkerNavbar />
-    <main className="mx-auto max-w-7xl p-8">
+    <>
+      <WorkerNavbar />
+      <main className="mx-auto max-w-7xl p-8">
+        <div className="mb-10">
+          <h1 className="text-4xl font-bold">
+            Employee Dashboard
+          </h1>
 
-      <div className="mb-10">
-        <h1 className="text-4xl font-bold">
-          Employee Dashboard
-        </h1>
-
-        <p className="mt-2 text-black-600">
-          Welcome back, {profile.fullName}. Manage your profile,
-          availability, services and schedule.
-        </p>
-      </div>
-
-<div className="mb-10 rounded-lg border border-yellow-400 bg-yellow-100 p-4 text-center text-sm text-yellow-800">
-  <strong>Please note:</strong> All appointment times are displayed in the respective organization's time zone.
-</div>
-
-      <h2 className="mb-6 text-center text-3xl font-bold">
-        Appointment Overview
-      </h2>
-
-      <div className="mx-auto mb-16 max-w-7xl">
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-
-          {/* Confirmed */}
-
-          <section className="rounded-2xl border bg-blue-100 p-5 shadow-sm">
-            <h2 className="text-xl font-semibold">
-              Upcoming Appointments
-            </h2>
-
-            <div className="mt-4 space-y-3">
-
-              {confirmedBookings.length === 0 ? (
-
-                <p className="text-sm text-black">
-                  No confirmed appointments.
-                </p>
-
-              ) : (
-
-                confirmedBookings.map((booking) => (
-
-                  <div
-                    key={booking.id}
-                    className="rounded-lg border p-3"
-                  >
-                    <p className="font-semibold">
-                      {booking.profile.fullName}
-                    </p>
-
-                    <p className="text-sm text-black">
-                      {booking.service.title}
-                    </p>
-
-                    <p className="text-xs text-orange-600 mt-1">
-                      {booking.date.toLocaleString()}
-                    </p>
-                  </div>
-
-                ))
-
-              )}
-
-            </div>
-          </section>
-
-          {/* Pending */}
-
-          <section className="rounded-2xl border bg-blue-100 p-5 shadow-sm">
-            <h2 className="text-xl font-semibold">
-              Pending Approval by Organization
-            </h2>
-
-            <div className="mt-4 space-y-3">
-
-              {pendingBookings.length === 0 ? (
-
-                <p className="text-sm text-black">
-                  No pending bookings.
-                </p>
-
-              ) : (
-
-                pendingBookings.map((booking) => (
-
-                  <div
-                    key={booking.id}
-                    className="rounded-lg border p-3"
-                  >
-                    <p className="font-semibold">
-                      {booking.profile.fullName}
-                    </p>
-
-                    <p className="text-sm text-black">
-                      {booking.service.title}
-                    </p>
-                  </div>
-
-                ))
-
-              )}
-
-            </div>
-          </section>
-
-
-          {/* Completed */}
-
-          <section className="rounded-2xl border bg-blue-100 p-5 shadow-sm">
-            <h2 className="text-xl font-semibold">
-              Completed Appointments
-            </h2>
-
-            <div className="mt-4 space-y-3">
-
-              {completedBookings.length === 0 ? (
-
-                <p className="text-sm text-black">
-                  No completed appointments.
-                </p>
-
-              ) : (
-
-                completedBookings.map((booking) => (
-
-                  <div
-                    key={booking.id}
-                    className="rounded-lg border p-3"
-                  >
-                    <p className="font-semibold">
-                      {booking.profile.fullName}
-                    </p>
-
-                    <p className="text-sm text-black">
-                      {booking.service.title}
-                    </p>
-
-                    <p className="text-xs text-green-600 mt-1">
-                      {booking.date.toLocaleString()}
-                    </p>
-                  </div>
-
-                ))
-
-              )}
-
-            </div>
-          </section>
-
-          {/* Cancelled */}
-
-          <section className="rounded-2xl border bg-blue-100 p-5 shadow-sm">
-            <h2 className="text-xl font-semibold">
-              Cancelled Appointments
-            </h2>
-
-            <div className="mt-4 space-y-3">
-
-              {cancelledBookings.length === 0 ? (
-
-                <p className="text-sm text-black">
-                  No cancelled appointments.
-                </p>
-
-              ) : (
-
-                cancelledBookings.map((booking) => (
-
-                  <div
-                    key={booking.id}
-                    className="rounded-lg border p-3"
-                  >
-                    <p className="font-semibold">
-                      {booking.profile.fullName}
-                    </p>
-
-                    <p className="text-sm text-black">
-                      {booking.service.title}
-                    </p>
-
-                    <p className="text-xs text-red-600 mt-1">
-                      {booking.date.toLocaleString()}
-                    </p>
-                  </div>
-
-                ))
-
-              )}
-
-            </div>
-          </section>
-
+          <p className="mt-2 text-gray-600">
+            Welcome back, {profile.fullName}. Manage your profile,
+            availability, services and schedule.
+          </p>
         </div>
-      </div>
 
-      <h2 className="mt-20 mb-6 text-center text-3xl font-bold">
-        Management
-      </h2>
+        <div className="mb-10 rounded-lg border border-yellow-400 bg-yellow-100 p-4 text-center text-sm text-yellow-800">
+          <strong>Please note:</strong> All appointment times are displayed in the respective organization&apos;s time zone.
+        </div>
 
-<div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <h2 className="mb-6 text-center text-3xl font-bold">
+          Appointment Overview
+        </h2>
 
-              {/* Profile */}
+        <div className="mx-auto mb-16 max-w-7xl">
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+            {/* Confirmed */}
+            <section className="rounded-2xl border bg-blue-100 p-5 shadow-sm">
+              <h2 className="text-xl font-semibold">
+                Upcoming Appointments
+              </h2>
 
-        <section className="flex flex-col rounded-2xl border bg-blue-100 p-6 shadow-sm">
-          <h2 className="text-2xl font-semibold">
-            Profile
-          </h2>
+              <div className="mt-4 space-y-3">
+                {confirmedBookings.length === 0 ? (
+                  <p className="text-sm text-black">
+                    No confirmed appointments.
+                  </p>
+                ) : (
+                  confirmedBookings.map((booking) => (
+                    <div
+                      key={booking.id}
+                      className="rounded-lg border p-3"
+                    >
+                      <p className="font-semibold">
+                        {booking.profile.fullName}
+                      </p>
 
-          <p className="mt-2 text-black">
-            Keep your information up to date.
-          </p>
+                      <p className="text-sm text-black">
+                        {booking.service.title}
+                      </p>
 
-          <div className="mt-6 flex-1 space-y-3">
+                      <p className="text-xs text-orange-600 mt-1">
+                        {booking.date.toLocaleString()}
+                      </p>
+                    </div>
+                  ))
+                )}
+              </div>
+            </section>
 
-            <div>
-              <p className="text-sm text-gray-500">
-                Name
-              </p>
+            {/* Pending */}
+            <section className="rounded-2xl border bg-blue-100 p-5 shadow-sm">
+              <h2 className="text-xl font-semibold">
+                Pending Approval by Organization
+              </h2>
 
-              <p>{profile.fullName}</p>
-            </div>
+              <div className="mt-4 space-y-3">
+                {pendingBookings.length === 0 ? (
+                  <p className="text-sm text-black">
+                    No pending bookings.
+                  </p>
+                ) : (
+                  pendingBookings.map((booking) => (
+                    <div
+                      key={booking.id}
+                      className="rounded-lg border p-3"
+                    >
+                      <p className="font-semibold">
+                        {booking.profile.fullName}
+                      </p>
 
-            <div>
-              <p className="text-sm text-gray-500">
-                Email
-              </p>
+                      <p className="text-sm text-black">
+                        {booking.service.title}
+                      </p>
+                    </div>
+                  ))
+                )}
+              </div>
+            </section>
 
-              <p>{profile.email}</p>
-            </div>
+            {/* Completed */}
+            <section className="rounded-2xl border bg-blue-100 p-5 shadow-sm">
+              <h2 className="text-xl font-semibold">
+                Completed Appointments
+              </h2>
 
-            <div>
-              <p className="text-sm text-gray-500">
-                Bio
-              </p>
+              <div className="mt-4 space-y-3">
+                {completedBookings.length === 0 ? (
+                  <p className="text-sm text-black">
+                    No completed appointments.
+                  </p>
+                ) : (
+                  completedBookings.map((booking) => (
+                    <div
+                      key={booking.id}
+                      className="rounded-lg border p-3"
+                    >
+                      <p className="font-semibold">
+                        {booking.profile.fullName}
+                      </p>
 
-              <p>{worker.bio || "Not completed"}</p>
-            </div>
+                      <p className="text-sm text-black">
+                        {booking.service.title}
+                      </p>
 
+                      <p className="text-xs text-green-600 mt-1">
+                        {booking.date.toLocaleString()}
+                      </p>
+                    </div>
+                  ))
+                )}
+              </div>
+            </section>
+
+            {/* Cancelled */}
+            <section className="rounded-2xl border bg-blue-100 p-5 shadow-sm">
+              <h2 className="text-xl font-semibold">
+                Cancelled Appointments
+              </h2>
+
+              <div className="mt-4 space-y-3">
+                {cancelledBookings.length === 0 ? (
+                  <p className="text-sm text-black">
+                    No cancelled appointments.
+                  </p>
+                ) : (
+                  cancelledBookings.map((booking) => (
+                    <div
+                      key={booking.id}
+                      className="rounded-lg border p-3"
+                    >
+                      <p className="font-semibold">
+                        {booking.profile.fullName}
+                      </p>
+
+                      <p className="text-sm text-black">
+                        {booking.service.title}
+                      </p>
+
+                      <p className="text-xs text-red-600 mt-1">
+                        {booking.date.toLocaleString()}
+                      </p>
+                    </div>
+                  ))
+                )}
+              </div>
+            </section>
           </div>
+        </div>
 
-          <Link
-            href="/worker/profile"
-            className="mt-8 rounded-lg bg-orange-500 px-5 py-3 text-center font-semibold text-white hover:bg-orange-600"
-          >
-            Manage Profile
-          </Link>
-        </section>
+        <h2 className="mt-20 mb-6 text-center text-3xl font-bold">
+          Management
+        </h2>
 
-        {/* Availability */}
-
-        <section className="flex flex-col rounded-2xl border bg-blue-100 p-6 shadow-sm">
-
-          <h2 className="text-2xl font-semibold">
-            Availability
-          </h2>
-
-          <p className="mt-2 text-black">
-            Configure when customers can book you.
-          </p>
-
-          <div className="mt-6 flex-1">
-
-            <p className="text-5xl font-bold text-orange-500">
-              {worker.availability.length}
-            </p>
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {/* Profile */}
+          <section className="flex flex-col rounded-2xl border bg-blue-100 p-6 shadow-sm">
+            <h2 className="text-2xl font-semibold">
+              Profile
+            </h2>
 
             <p className="mt-2 text-black">
-              schedule entries
+              Keep your information up to date.
             </p>
 
-          </div>
+            <div className="mt-6 flex-1 space-y-3">
+              <div>
+                <p className="text-sm text-gray-500">
+                  Name
+                </p>
 
-          <Link
-            href="/worker/availability"
-            className="mt-8 rounded-lg bg-orange-500 px-5 py-3 text-center font-semibold text-white hover:bg-orange-600"
-          >
-            Manage Availability
-          </Link>
+                <p>{profile.fullName}</p>
+              </div>
 
-        </section>
+              <div>
+                <p className="text-sm text-gray-500">
+                  Email
+                </p>
 
-        {/* Organizations */}
+                <p>{profile.email}</p>
+              </div>
 
-        <section className="flex flex-col rounded-2xl border bg-blue-100 p-6 shadow-sm">
+              <div>
+                <p className="text-sm text-gray-500">
+                  Bio
+                </p>
 
-          <h2 className="text-2xl font-semibold">
-            Organizations
-          </h2>
+                <p>{worker.bio || "Not completed"}</p>
+              </div>
+            </div>
 
-          <p className="mt-2 text-black">
-            Organizations you're connected with.
-          </p>
+            <Link
+              href="/worker/profile"
+              className="mt-8 rounded-lg bg-orange-500 px-5 py-3 text-center font-semibold text-white hover:bg-orange-600"
+            >
+              Manage Profile
+            </Link>
+          </section>
 
-          <div className="mt-6 flex-1 space-y-3">
+          {/* Availability */}
+          <section className="flex flex-col rounded-2xl border bg-blue-100 p-6 shadow-sm">
+            <h2 className="text-2xl font-semibold">
+              Availability
+            </h2>
 
-            {worker.organizations.length === 0 ? (
+            <p className="mt-2 text-black">
+              Configure when customers can book you.
+            </p>
 
-              <p className="text-black">
-                No organizations.
+            <div className="mt-6 flex-1">
+              <p className="text-5xl font-bold text-orange-500">
+                {worker.availability.length}
               </p>
 
-            ) : (
+              <p className="mt-2 text-black">
+                schedule entries
+              </p>
+            </div>
 
-              worker.organizations.map((membership) => (
+            <Link
+              href="/worker/availability"
+              className="mt-8 rounded-lg bg-orange-500 px-5 py-3 text-center font-semibold text-white hover:bg-orange-600"
+            >
+              Manage Availability
+            </Link>
+          </section>
 
-<div
-  key={membership.id}
-  className="rounded-lg border p-3"
->
-  <p className="font-medium">
-    {membership.organization.name}
-  </p>
+          {/* Organizations */}
+          <section className="flex flex-col rounded-2xl border bg-blue-100 p-6 shadow-sm">
+            <h2 className="text-2xl font-semibold">
+              Organizations
+            </h2>
 
-  <p className="mt-1 text-sm text-black">
-    Time Zone:{" "}
-    {membership.organization.timezone ?? "Not configured"}
-  </p>
-</div>
-
-              ))
-
-            )}
-
-          </div>
-
-        </section>
-
-        {/* Services */}
-
-        <section className="flex flex-col rounded-2xl border bg-blue-100 p-6 shadow-sm">
-
-          <h2 className="text-2xl font-semibold">
-            Services
-          </h2>
-
-          <p className="mt-2 text-black-600">
-            Services assigned to you.
-          </p>
-
-          <div className="mt-6 flex-1">
-
-            <p className="text-5xl font-bold text-orange-500">
-              {worker.services.length}
+            <p className="mt-2 text-black">
+              Organizations you&apos;re connected with.
             </p>
 
-            <p className="mt-2 text-black-600">
-              assigned service
-              {worker.services.length !== 1 && "s"}
+            <div className="mt-6 flex-1 space-y-3">
+              {worker.organizations.length === 0 ? (
+                <p className="text-black">
+                  No organizations.
+                </p>
+              ) : (
+                worker.organizations.map((membership) => (
+                  <div
+                    key={membership.id}
+                    className="rounded-lg border p-3"
+                  >
+                    <p className="font-medium">
+                      {membership.organization.name}
+                    </p>
+
+                    <p className="mt-1 text-sm text-black">
+                      Time Zone:{" "}
+                      {membership.organization.timezone ?? "Not configured"}
+                    </p>
+                  </div>
+                ))
+              )}
+            </div>
+          </section>
+
+          {/* Services */}
+          <section className="flex flex-col rounded-2xl border bg-blue-100 p-6 shadow-sm">
+            <h2 className="text-2xl font-semibold">
+              Services
+            </h2>
+
+            <p className="mt-2 text-gray-600">
+              Services assigned to you.
             </p>
 
-          </div>
+            <div className="mt-6 flex-1">
+              <p className="text-5xl font-bold text-orange-500">
+                {worker.services.length}
+              </p>
 
-          <Link
-            href="/worker/services"
-            className="mt-8 rounded-lg bg-orange-500 px-5 py-3 text-center font-semibold text-white hover:bg-orange-600"
-          >
-            View Services
-          </Link>
+              <p className="mt-2 text-gray-600">
+                assigned service
+                {worker.services.length !== 1 && "s"}
+              </p>
+            </div>
 
-        </section>
-                {/* My Bookings */}
+            <Link
+              href="/worker/services"
+              className="mt-8 rounded-lg bg-orange-500 px-5 py-3 text-center font-semibold text-white hover:bg-orange-600"
+            >
+              View Services
+            </Link>
+          </section>
 
-        <section className="flex flex-col rounded-2xl border bg-blue-100 p-6 shadow-sm">
+          {/* My Bookings */}
+          <section className="flex flex-col rounded-2xl border bg-blue-100 p-6 shadow-sm">
+            <h2 className="text-2xl font-semibold">
+              My Bookings
+            </h2>
 
-          <h2 className="text-2xl font-semibold">
-            My Bookings
-          </h2>
-
-          <p className="mt-2 text-black-600">
-            View and manage all appointments assigned to you.
-          </p>
-
-          <div className="mt-6 flex-1">
-
-            <p className="text-5xl font-bold text-orange-500">
-              {activeBookings.length}
+            <p className="mt-2 text-gray-600">
+              View and manage all appointments assigned to you.
             </p>
 
-            <p className="mt-2 text-black-600">
-              active bookings
+            <div className="mt-6 flex-1">
+              <p className="text-5xl font-bold text-orange-500">
+                {activeBookings.length}
+              </p>
+
+              <p className="mt-2 text-gray-600">
+                active bookings
+              </p>
+            </div>
+
+            <Link
+              href="/worker/bookings"
+              className="mt-8 rounded-lg bg-orange-500 px-5 py-3 text-center font-semibold text-white hover:bg-orange-600"
+            >
+              Open Booking Portal
+            </Link>
+          </section>
+
+          {/* Calendar */}
+          {/*
+          <section className="flex flex-col rounded-2xl border bg-blue-100 p-6 shadow-sm">
+            <h2 className="text-2xl font-semibold">
+              Calendar
+            </h2>
+
+            <p className="mt-2 text-gray-600">
+              View your appointments in calendar format.
             </p>
 
-          </div>
+            <div className="mt-6 flex-1 flex items-center">
+              <p className="text-5xl">
+                📅
+              </p>
+            </div>
 
-          <Link
-            href="/worker/bookings"
-            className="mt-8 rounded-lg bg-orange-500 px-5 py-3 text-center font-semibold text-white hover:bg-orange-600"
-          >
-            Open Booking Portal
-          </Link>
-
-        </section>
-
-        {/* Calendar */}
-
-{/*
-        <section className="flex flex-col rounded-2xl border bg-blue-100 p-6 shadow-sm">
- 
-          <h2 className="text-2xl font-semibold">
-            Calendar
-          </h2>
-
-          <p className="mt-2 text-black-600">
-            View your appointments in calendar format.
-          </p>
-
-          <div className="mt-6 flex-1 flex items-center">
-
-            <p className="text-5xl">
-              📅
-            </p>
-
-          </div>
-
-          <Link
-            href="/worker/calendar"
-            className="mt-8 rounded-lg bg-orange-500 px-5 py-3 text-center font-semibold text-white hover:bg-orange-600"
-          >
-            Open Calendar
-          </Link>
-
-        </section>
-
-        */}
-
-      </div>
-
-    </main>
+            <Link
+              href="/worker/calendar"
+              className="mt-8 rounded-lg bg-orange-500 px-5 py-3 text-center font-semibold text-white hover:bg-orange-600"
+            >
+              Open Calendar
+            </Link>
+          </section>
+          */}
+        </div>
+      </main>
     </>
-);
+  );
 }

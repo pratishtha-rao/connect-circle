@@ -53,7 +53,7 @@ export default async function WorkerServicesPage() {
       {worker.services.length === 0 ? (
         <div className="rounded-xl border p-8">
           <p className="text-gray-500">
-            Your organization hasn't assigned any services yet.
+            Your organization hasn&apos;t assigned any services yet.
           </p>
         </div>
       ) : (

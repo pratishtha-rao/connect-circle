@@ -47,7 +47,7 @@ if (
       </h1>
 
       <p className="mb-8 text-gray-600">
-        Let's set up your organization before you start accepting bookings.
+        Let&apos;s set up your organization before you start accepting bookings.
       </p>
 
       <OrganizationForm />

@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 type FormValues = {
@@ -8,6 +9,8 @@ type FormValues = {
 };
 
 export default function ChangePasswordForm() {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -47,7 +50,8 @@ export default function ChangePasswordForm() {
 
     alert("Password changed successfully.");
 
-    window.location.href = "/customer/profile";
+    router.push("/customer/profile");
+    router.refresh();
   }
 
   return (

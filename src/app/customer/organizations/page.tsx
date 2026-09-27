@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import OrganizationSearch from "./organization-search";
 import CustomerNavbar from "@/components/customer-navbar";
 
+export const dynamic = "force-dynamic";
 export default async function CustomerOrganizationsPage() {
 const organizations = await prisma.organization.findMany({
   orderBy: {

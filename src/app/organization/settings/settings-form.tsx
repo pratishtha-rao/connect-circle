@@ -1,12 +1,17 @@
-
 "use client";
-
 
 import dynamic from "next/dynamic";
 import type { ITimezoneOption } from "react-timezone-select";
 
 import Link from "next/link";
 import { useState } from "react";
+
+const TimezoneSelect = dynamic(
+  () => import("react-timezone-select"),
+  {
+    ssr: false,
+  }
+);
 
 type Props = {
   organization: {
@@ -18,16 +23,16 @@ type Props = {
     logo: string | null;
     timezone: string | null;
 
-bookingNotes: string | null;
-paymentInstructions: string | null;
+    bookingNotes: string | null;
+    paymentInstructions: string | null;
 
-tags: string[];
+    tags: string[];
 
-allowWorkerSelection: boolean;
+    allowWorkerSelection: boolean;
 
-availabilityStartTime: string | null;
-availabilityEndTime: string | null;
-availabilityDays: number[];
+    availabilityStartTime: string | null;
+    availabilityEndTime: string | null;
+    availabilityDays: number[];
 
     owner: {
       email: string;
@@ -44,14 +49,6 @@ export default function OrganizationSettingsForm({
     organization.description ?? ""
   );
 
-  const TimezoneSelect = dynamic(
-  () => import("react-timezone-select"),
-  {
-    ssr: false,
-  }
-);
-
-
   const [phone, setPhone] = useState(
     organization.phone ?? ""
   );
@@ -64,14 +61,12 @@ export default function OrganizationSettingsForm({
     organization.website ?? ""
   );
 
-  const [logo, setLogo] = useState(
-    organization.logo ?? ""
-  );
+  const logo = organization.logo ?? "";
 
-const [timezone, setTimezone] = useState<ITimezoneOption>({
-  value: organization.timezone ?? "",
-  label: organization.timezone ?? "",
-});
+  const [timezone, setTimezone] = useState<ITimezoneOption>({
+    value: organization.timezone ?? "",
+    label: organization.timezone ?? "",
+  });
 
   const [bookingNotes, setBookingNotes] = useState(
     organization.bookingNotes ?? ""
@@ -82,76 +77,72 @@ const [timezone, setTimezone] = useState<ITimezoneOption>({
       organization.paymentInstructions ?? ""
     );
 
-    const [tags, setTags] = useState<string[]>(
-  organization.tags ?? []
-);
-
-const TIMEZONES = Intl.supportedValuesOf("timeZone");
-
-
-const [allowWorkerSelection, setAllowWorkerSelection] =
-  useState(
-    organization.allowWorkerSelection
+  const [tags, setTags] = useState<string[]>(
+    organization.tags ?? []
   );
 
-const [availabilityStartTime, setAvailabilityStartTime] =
-  useState(
-    organization.availabilityStartTime ?? "09:00"
-  );
+  const [allowWorkerSelection, setAllowWorkerSelection] =
+    useState(
+      organization.allowWorkerSelection
+    );
 
-const [availabilityEndTime, setAvailabilityEndTime] =
-  useState(
-    organization.availabilityEndTime ?? "17:00"
-  );
+  const [availabilityStartTime, setAvailabilityStartTime] =
+    useState(
+      organization.availabilityStartTime ?? "09:00"
+    );
 
-const [availabilityDays, setAvailabilityDays] =
-  useState<number[]>(
-    organization.availabilityDays ?? [1,2,3,4,5]
-  );
+  const [availabilityEndTime, setAvailabilityEndTime] =
+    useState(
+      organization.availabilityEndTime ?? "17:00"
+    );
+
+  const [availabilityDays, setAvailabilityDays] =
+    useState<number[]>(
+      organization.availabilityDays ?? [1, 2, 3, 4, 5]
+    );
 
   const TAG_OPTIONS = [
-  "Religious",
-  "Beauty",
-  "Health",
-  "Wellness",
-  "Fitness",
-  "Education",
-  "Professional",
-  "Home Services",
-  "Automotive",
-  "Cleaning",
-  "Child Care",
-  "Pet Care",
-  "Events",
-  "Entertainment",
-  "Photography",
-  "Arts",
-  "Recreation",
-  "Food & Drink",
-  "Retail",
-  "Technology",
-  "Travel",
-  "Community",
-  "Nonprofit",
-  "Government",
-  "Other",
-];
+    "Religious",
+    "Beauty",
+    "Health",
+    "Wellness",
+    "Fitness",
+    "Education",
+    "Professional",
+    "Home Services",
+    "Automotive",
+    "Cleaning",
+    "Child Care",
+    "Pet Care",
+    "Events",
+    "Entertainment",
+    "Photography",
+    "Arts",
+    "Recreation",
+    "Food & Drink",
+    "Retail",
+    "Technology",
+    "Travel",
+    "Community",
+    "Nonprofit",
+    "Government",
+    "Other",
+  ];
 
   const [saving, setSaving] = useState(false);
 
   function toggleDay(day: number) {
-  if (availabilityDays.includes(day)) {
-    setAvailabilityDays(
-      availabilityDays.filter((d) => d !== day)
-    );
-  } else {
-    setAvailabilityDays([
-      ...availabilityDays,
-      day,
-    ]);
+    if (availabilityDays.includes(day)) {
+      setAvailabilityDays(
+        availabilityDays.filter((d) => d !== day)
+      );
+    } else {
+      setAvailabilityDays([
+        ...availabilityDays,
+        day,
+      ]);
+    }
   }
-}
-
 
   async function save() {
     setSaving(true);
@@ -163,46 +154,45 @@ const [availabilityDays, setAvailabilityDays] =
         headers: {
           "Content-Type": "application/json",
         },
-body: JSON.stringify({
-  name,
-  description,
-  phone,
-  address,
-  website,
-  logo,
-timezone: timezone.value,
+        body: JSON.stringify({
+          name,
+          description,
+          phone,
+          address,
+          website,
+          logo,
+          timezone: timezone.value,
 
-  bookingNotes,
-  paymentInstructions,
+          bookingNotes,
+          paymentInstructions,
 
-  tags,
-  allowWorkerSelection,
+          tags,
+          allowWorkerSelection,
 
-  availabilityStartTime,
-  availabilityEndTime,
-  availabilityDays,
-}),      }
+          availabilityStartTime,
+          availabilityEndTime,
+          availabilityDays,
+        }),
+      }
     );
 
     setSaving(false);
 
-if (!res.ok) {
-  const error = await res.json();
-  console.error(error);
-  alert(error.error ?? JSON.stringify(error));
-  return;
-}
+    if (!res.ok) {
+      const error = await res.json();
+      console.error(error);
+      alert(error.error ?? JSON.stringify(error));
+      return;
+    }
 
     alert("Settings updated.");
   }
 
   return (
     <div className="space-y-8">
-
       {/* Organization */}
 
       <section className="rounded-2xl border bg-blue-100 p-8 shadow-sm">
-
         <h2 className="text-2xl font-bold">
           Organization Information
         </h2>
@@ -212,9 +202,7 @@ if (!res.ok) {
         </p>
 
         <div className="mt-8 space-y-6">
-
           <div>
-
             <label className="mb-2 block font-medium">
               Organization Name
             </label>
@@ -224,11 +212,9 @@ if (!res.ok) {
               onChange={(e) => setName(e.target.value)}
               className="w-full rounded-lg border p-3"
             />
-
           </div>
 
           <div>
-
             <label className="mb-2 block font-medium">
               Description
             </label>
@@ -241,180 +227,153 @@ if (!res.ok) {
               }
               className="w-full rounded-lg border p-3"
             />
-
           </div>
 
           <div>
+            <label className="mb-2 block font-medium">
+              Time Zone
+            </label>
 
-<label className="mb-2 block font-medium">
-  Time Zone
-</label>
+            <TimezoneSelect
+              value={timezone}
+              onChange={setTimezone}
+            />
 
-<TimezoneSelect
-  value={timezone}
-  onChange={setTimezone}
-/>
+            <p className="mt-2 text-sm text-gray-500">
+              Customers and workers will see appointment times in this organization&apos;s selected time zone.
+            </p>
 
-<p className="mt-2 text-sm text-gray-500">
-  Customers and workers will see appointment times in this organization's selected time zone.
-</p>
+            <div className="space-y-3">
+              <label className="block font-medium">
+                Categories
+              </label>
 
-<div className="space-y-3">
+              <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
+                {TAG_OPTIONS.map((tag) => (
+                  <label
+                    key={tag}
+                    className="flex items-center gap-2 rounded-lg border p-2 hover:bg-orange-100"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={tags.includes(tag)}
+                      onChange={() => {
+                        if (tags.includes(tag)) {
+                          setTags(tags.filter((t) => t !== tag));
+                        } else {
+                          setTags([...tags, tag]);
+                        }
+                      }}
+                    />
+                    <span>{tag}</span>
+                  </label>
+                ))}
 
-  <label className="block font-medium">
-    Categories
-  </label>
+                <div>
+                  <label className="mb-2 block font-medium">
+                    Booking Options
+                  </label>
 
-<div className="grid grid-cols-2 gap-2 md:grid-cols-3">
+                  <label className="flex items-center gap-3">
+                    <input
+                      type="checkbox"
+                      checked={allowWorkerSelection}
+                      onChange={(e) =>
+                        setAllowWorkerSelection(
+                          e.target.checked
+                        )
+                      }
+                    />
 
-  {TAG_OPTIONS.map((tag) => (
-    <label
-      key={tag}
-      className="flex items-center gap-2 rounded-lg border p-2 hover:bg-orange-100"
-    >
-      <input
-        type="checkbox"
-        checked={tags.includes(tag)}
-        onChange={() => {
-          if (tags.includes(tag)) {
-            setTags(tags.filter((t) => t !== tag));
-          } else {
-            setTags([...tags, tag]);
-          }
-        }}
-      />
-      <span>{tag}</span>
-    </label>
-  ))}
+                    <span>
+                      Allow customers to choose a worker
+                    </span>
+                  </label>
 
-<div>
+                  <p className="mt-2 text-sm text-gray-500">
+                    If disabled, customers will simply choose an available appointment time and the organization can assign a worker later.
+                  </p>
+                </div>
 
-  <label className="mb-2 block font-medium">
-    Booking Options
-  </label>
+                {!allowWorkerSelection && (
+                  <div className="rounded-xl border bg-orange-50 p-5">
+                    <h3 className="text-lg font-semibold">
+                      Organization Availability
+                    </h3>
 
-  <label className="flex items-center gap-3">
+                    <p className="mt-2 mb-5 text-sm text-gray-600">
+                      Customers will only be allowed to book during these days and times.
+                    </p>
 
-    <input
-      type="checkbox"
-      checked={allowWorkerSelection}
-      onChange={(e) =>
-        setAllowWorkerSelection(
-          e.target.checked
-        )
-      }
-    />
+                    <div className="grid gap-6 md:grid-cols-2">
+                      <div>
+                        <label className="mb-2 block font-medium">
+                          Opening Time
+                        </label>
 
-    <span>
-      Allow customers to choose a worker
-    </span>
+                        <input
+                          type="time"
+                          value={availabilityStartTime}
+                          onChange={(e) =>
+                            setAvailabilityStartTime(e.target.value)
+                          }
+                          className="w-full rounded-lg border p-3"
+                        />
+                      </div>
 
-  </label>
+                      <div>
+                        <label className="mb-2 block font-medium">
+                          Closing Time
+                        </label>
 
-  <p className="mt-2 text-sm text-gray-500">
-    If disabled, customers will simply choose an available appointment time and the organization can assign a worker later.
-  </p>
+                        <input
+                          type="time"
+                          value={availabilityEndTime}
+                          onChange={(e) =>
+                            setAvailabilityEndTime(e.target.value)
+                          }
+                          className="w-full rounded-lg border p-3"
+                        />
+                      </div>
+                    </div>
 
-</div>
+                    <div className="mt-6">
+                      <label className="mb-3 block font-medium">
+                        Available Days
+                      </label>
 
-{!allowWorkerSelection && (
-
-  <div className="rounded-xl border bg-orange-50 p-5">
-
-    <h3 className="text-lg font-semibold">
-      Organization Availability
-    </h3>
-
-    <p className="mt-2 mb-5 text-sm text-gray-600">
-      Customers will only be allowed to book during these days and times.
-    </p>
-
-    <div className="grid gap-6 md:grid-cols-2">
-
-      <div>
-
-        <label className="mb-2 block font-medium">
-          Opening Time
-        </label>
-
-        <input
-          type="time"
-          value={availabilityStartTime}
-          onChange={(e) =>
-            setAvailabilityStartTime(e.target.value)
-          }
-          className="w-full rounded-lg border p-3"
-        />
-
-      </div>
-
-      <div>
-
-        <label className="mb-2 block font-medium">
-          Closing Time
-        </label>
-
-        <input
-          type="time"
-          value={availabilityEndTime}
-          onChange={(e) =>
-            setAvailabilityEndTime(e.target.value)
-          }
-          className="w-full rounded-lg border p-3"
-        />
-
-      </div>
-
-    </div>
-
-    <div className="mt-6">
-
-      <label className="mb-3 block font-medium">
-        Available Days
-      </label>
-
-      <div className="flex flex-wrap gap-2">
-
-        {[
-          ["Mon",1],
-          ["Tue",2],
-          ["Wed",3],
-          ["Thu",4],
-          ["Fri",5],
-          ["Sat",6],
-          ["Sun",0],
-        ].map(([label,value]) => (
-
-          <button
-            type="button"
-            key={String(value)}
-            onClick={() => toggleDay(Number(value))}
-            className={`rounded-lg border px-4 py-2 transition ${
-              availabilityDays.includes(Number(value))
-                ? "bg-orange-500 text-white border-orange-500"
-                : "bg-white hover:bg-orange-200"
-            }`}
-          >
-            {label}
-          </button>
-
-        ))}
-
-      </div>
-
-    </div>
-
-  </div>
-
-)}
-
-  </div>
-
-</div>
+                      <div className="flex flex-wrap gap-2">
+                        {[
+                          ["Mon", 1],
+                          ["Tue", 2],
+                          ["Wed", 3],
+                          ["Thu", 4],
+                          ["Fri", 5],
+                          ["Sat", 6],
+                          ["Sun", 0],
+                        ].map(([label, value]) => (
+                          <button
+                            type="button"
+                            key={String(value)}
+                            onClick={() => toggleDay(Number(value))}
+                            className={`rounded-lg border px-4 py-2 transition ${
+                              availabilityDays.includes(Number(value))
+                                ? "bg-orange-500 text-white border-orange-500"
+                                : "bg-white hover:bg-orange-200"
+                            }`}
+                          >
+                            {label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
 
           <div>
-
             <label className="mb-2 block font-medium">
               Organization Booking Notes
             </label>
@@ -428,11 +387,9 @@ if (!res.ok) {
               placeholder="General booking information customers should know..."
               className="w-full rounded-lg border p-3"
             />
-
           </div>
 
           <div>
-
             <label className="mb-2 block font-medium">
               Payment Instructions
             </label>
@@ -448,17 +405,13 @@ if (!res.ok) {
               placeholder="Explain how customers should pay before confirmation..."
               className="w-full rounded-lg border p-3"
             />
-
           </div>
-
         </div>
 
         {/* Contact */}
 
         <div className="mt-8 space-y-6">
-
           <div>
-
             <label className="mb-2 block font-medium">
               Phone Number
             </label>
@@ -470,11 +423,9 @@ if (!res.ok) {
               }
               className="w-full rounded-lg border p-3"
             />
-
           </div>
 
           <div>
-
             <label className="mb-2 block font-medium">
               Website
             </label>
@@ -486,11 +437,9 @@ if (!res.ok) {
               }
               className="w-full rounded-lg border p-3"
             />
-
           </div>
 
           <div>
-
             <label className="mb-2 block font-medium">
               Address
             </label>
@@ -502,11 +451,9 @@ if (!res.ok) {
               }
               className="w-full rounded-lg border p-3"
             />
-
           </div>
 
           <div className="flex justify-end">
-
             <button
               onClick={save}
               disabled={saving}
@@ -516,17 +463,13 @@ if (!res.ok) {
                 ? "Saving..."
                 : "Save Changes"}
             </button>
-
           </div>
-
         </div>
-
       </section>
 
       {/* Account Security */}
 
       <section className="rounded-2xl border bg-blue-100 p-8 shadow-sm">
-
         <h2 className="text-2xl font-bold">
           Account Security
         </h2>
@@ -536,7 +479,6 @@ if (!res.ok) {
         </p>
 
         <div className="mt-8">
-
           {/*
           <div className="flex items-center justify-between border-b py-5">
 
@@ -563,9 +505,7 @@ if (!res.ok) {
           */}
 
           <div className="flex items-center justify-between py-5">
-
             <div>
-
               <p className="font-semibold">
                 Password
               </p>
@@ -573,7 +513,6 @@ if (!res.ok) {
               <p className="mt-1 text-gray-500">
                 ••••••••••••••••
               </p>
-
             </div>
 
             <Link
@@ -582,13 +521,9 @@ if (!res.ok) {
             >
               Change Password
             </Link>
-
           </div>
-
         </div>
-
       </section>
-
     </div>
   );
 }
