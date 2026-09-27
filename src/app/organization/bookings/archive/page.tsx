@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import UnarchiveBooking from "./unarchive-booking";
 import OrganizationNavbar from "@/components/organization-navbar";
 
+export const dynamic = "force-dynamic";
 export default async function ArchiveBookingsPage() {
 const bookings = await prisma.booking.findMany({
   where: {
